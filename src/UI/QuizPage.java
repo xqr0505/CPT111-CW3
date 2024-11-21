@@ -13,6 +13,7 @@ import xjtlu.cpt111.assignment.quiz.model.Option;
 import QuestionManagement.QuestionManager;
 import QuestionManagement.Exceptions.NoTopicFoundException;
 
+import java.io.IOException;
 import java.util.*;
 
 public class QuizPage extends Application {
@@ -244,6 +245,15 @@ private void showScore() {
 
   // 将成绩记录到用户的ScoreRecords中
   currentUser.NewRecord(subject, totalScore);
+
+  try {
+    // 保存成绩信息
+    Logical.getInstance().getUserManager().SaveUserInfo("resources/u.csv", "resources/s.csv");
+  } catch (IOException ex) {
+    // 处理保存错误
+    Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error saving score information.", ButtonType.OK);
+    errorAlert.showAndWait();
+  }
 
   // 返回Dashboard
   Dashboard dashboard = new Dashboard(currentUser);

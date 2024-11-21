@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <questions>
-    <question difficulty="HARD">
+    <question difficulty="EASY">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 1</questionString>
         <option answer="true">option 1-1</option>
@@ -16,13 +16,13 @@
         <option>option 2-3</option>
         <option>option 2-4</option>
     </question>
-    <question difficulty="MEDIUM">
+    <question difficulty="EASY">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 3</questionString>
         <option answer="true">option 3-1</option>
         <option>option 3-2</option>
     </question>
-    <question difficulty="VERY_HARD">
+    <question difficulty="EASY">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 4</questionString>
         <option answer="true">option 4-1</option>
@@ -30,7 +30,7 @@
         <option>option 4-3</option>
         <option>option 4-4</option>
     </question>
-    <question difficulty="HARD">
+    <question difficulty="MEDIUM">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 5</questionString>
         <option answer="true">option 5-1</option>
@@ -38,7 +38,7 @@
         <option>option 5-3</option>
         <option>option 5-4</option>
     </question>
-    <question difficulty="EASY">
+    <question difficulty="MEDIUM">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 6</questionString>
         <option answer="true">option 6-1</option>
@@ -51,7 +51,7 @@
         <option answer="true">option 7-1</option>
         <option>option 7-2</option>
     </question>
-    <question difficulty="VERY_HARD">
+    <question difficulty="MEDIUM">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 8</questionString>
         <option answer="true">option 8-1</option>
@@ -67,7 +67,7 @@
         <option>option 9-3</option>
         <option>option 9-4</option>
     </question>
-    <question difficulty="EASY">
+    <question difficulty="HARD">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 10</questionString>
         <option answer="true">option 10-1</option>
@@ -75,13 +75,13 @@
         <option>option 10-3</option>
         <option>option 10-4</option>
     </question>
-    <question difficulty="MEDIUM">
+    <question difficulty="HARD">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 11</questionString>
         <option answer="true">option 11-1</option>
         <option>option 11-2</option>
     </question>
-    <question difficulty="VERY_HARD">
+    <question difficulty="HARD">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 12</questionString>
         <option answer="true">option 12-1</option>
@@ -89,7 +89,7 @@
         <option>option 12-3</option>
         <option>option 12-4</option>
     </question>
-    <question difficulty="HARD">
+    <question difficulty="VERY_HARD">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 13</questionString>
         <option answer="true">option 13-1</option>
@@ -97,7 +97,7 @@
         <option>option 13-3</option>
         <option>option 13-4</option>
     </question>
-    <question difficulty="EASY">
+    <question difficulty="VERY_HARD">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 14</questionString>
         <option answer="true">option 14-1</option>
@@ -105,7 +105,7 @@
         <option>option 14-3</option>
         <option>option 14-4</option>
     </question>
-    <question difficulty="MEDIUM">
+    <question difficulty="VERY_HARD">
         <topic>Mathematics</topic>
         <questionString>Mathematics Question 15</questionString>
         <option answer="true">option 15-1</option>

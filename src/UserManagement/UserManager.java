@@ -6,6 +6,9 @@ import CsvUtils.Exceptions;
 import CsvUtils.Table;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Logger;
@@ -39,99 +42,103 @@ public Map<String, List<ScoreEntry>> GetRecords() {
   return ret;
 }
 
-/**
- * Load User Account and Score information
- *
- * @param infofp  account information file
- * @param scorefp score record information file
- * @return self, for chain-call
- * @throws IOException if file is not readable
- */
+
 public UserManager LoadUserInfo(String infofp, String scorefp) throws IOException {
-  // Account info
-  var file = new File(infofp);
-  if (! file.exists() || file.isDirectory()) {
-    throw new FileNotFoundException("No such file to be read");
-  }
-  var content = new byte[((int)file.length())];
-  try (var inputStream = new FileInputStream(file)) {
-    var v   = inputStream.read(content);
-    var csv = CsvReader.ConstructTableFromCSV(new String(content));
-    LoadAccountInfoFromTable(csv);
-  } catch (DuplicateUserException e) {
-    System.out.println(e.getMessage());
+  // 加载用户信息
+  var infoFile = new File(infofp);
+  if (!infoFile.exists() || infoFile.isDirectory()) {
+    throw new FileNotFoundException("User info file not found: " + infofp);
   }
 
-  // Score
-  file = new File(scorefp);
-  if (! file.exists() || file.isDirectory()) {
-    throw new FileNotFoundException("No such file to be read");
+  String content = Files.readString(Paths.get(infofp), StandardCharsets.UTF_8);
+  var csv = CsvReader.ConstructTableFromCSV(content);
+  LoadAccountInfoFromTable(csv);
+
+  // 加载成绩信息
+  var scoreFile = new File(scorefp);
+  if (!scoreFile.exists() || scoreFile.isDirectory()) {
+    throw new FileNotFoundException("Score file not found: " + scorefp);
   }
-  content = new byte[((int)file.length())];
-  try (var inputStream = new FileInputStream(file)) {
-    var v   = inputStream.read(content);
-    var csv = CsvReader.ConstructTableFromCSV(new String(content));
-    LoadScoreInfoFromTable(csv);
-  } catch (DuplicateUserException | NumberFormatException e) {
-    System.out.println(e.getMessage());
-  }
+
+  content = Files.readString(Paths.get(scorefp), StandardCharsets.UTF_8);
+  var scoreTable = CsvReader.ConstructTableFromCSV(content);
+  LoadScoreInfoFromTable(scoreTable);
 
   return this;
 }
 
-/**
- * Save User Account and Score Information to file
- *
- * @param infofp  account file path
- * @param scorefp score record file path
- * @return self, for chain-call
- * @throws IOException if file is not writable
- */
+//public UserManager SaveUserInfo(String infofp, String scorefp) throws IOException {
+//  var file = new File(infofp);
+//  if (! file.exists() || file.isDirectory()) {
+//    throw new FileNotFoundException("No such file to be read");
+//  }
+//  try (var printer = new PrintWriter(file)) {
+//    printer.print(CsvWriter.GenerateContent(ExportAccountInfoToTable()));
+//  }
+//  file = new File(scorefp);
+//  if (! file.exists() || file.isDirectory()) {
+//    throw new FileNotFoundException("No such file to be read");
+//  }
+//  try (var printer = new PrintWriter(file)) {
+//    printer.print(CsvWriter.GenerateContent(ExportScoreInfoToTable()));
+//  }
+//  return this;
+//}
 public UserManager SaveUserInfo(String infofp, String scorefp) throws IOException {
-  var file = new File(infofp);
-  if (! file.exists() || file.isDirectory()) {
-    throw new FileNotFoundException("No such file to be read");
+  // 保存用户信息
+  var infoFile = new File(infofp);
+  try (var writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(infoFile), StandardCharsets.UTF_8))) {
+    writer.print(CsvWriter.GenerateContent(ExportAccountInfoToTable()));
   }
-  try (var printer = new PrintWriter(file)) {
-    printer.print(CsvWriter.GenerateContent(ExportAccountInfoToTable()));
+
+  // 保存成绩信息
+  var scoreFile = new File(scorefp);
+  try (var writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(scoreFile), StandardCharsets.UTF_8))) {
+    writer.print(CsvWriter.GenerateContent(ExportScoreInfoToTable()));
   }
-  file = new File(scorefp);
-  if (! file.exists() || file.isDirectory()) {
-    throw new FileNotFoundException("No such file to be read");
-  }
-  try (var printer = new PrintWriter(file)) {
-    printer.print(CsvWriter.GenerateContent(ExportScoreInfoToTable()));
-  }
+
   return this;
 }
 
+//public UserManager RegisterUser(Users user) {
+//  m_users_.forEach((x) -> {
+//    if (user.GetId()
+//            .equals(x.GetId())) {
+//      throw new DuplicateUserException("There exists a user whose id is " + user.GetId());
+//    }
+//  });
+//  m_users_.add(user);
+//  return this;
+//}
 public UserManager RegisterUser(Users user) {
-  m_users_.forEach((x) -> {
-    if (user.GetId()
-            .equals(x.GetId())) {
+  for (Users existingUser : m_users_) {
+    if (user.GetId().equals(existingUser.GetId())) {
       throw new DuplicateUserException("There exists a user whose id is " + user.GetId());
     }
-  });
+  }
   m_users_.add(user);
   return this;
 }
 
-/**
- * Detect weather ith passwd is matching id
- *
- * @param id     id to login
- * @param passwd passwd
- * @return null if not matching, user if correct
- */
+
+
+//public Users CheckLogin(String id, String passwd) {
+//  AtomicReference<Users> ret = new AtomicReference<>();
+//  m_users_.forEach(u -> {
+//    if (u.GetId()
+//         .equals(id) && u.CheckPasswd(passwd)) {
+//      ret.set(u);
+//    }
+//  });
+//  return ret.get();
+//}
 public Users CheckLogin(String id, String passwd) {
-  AtomicReference<Users> ret = new AtomicReference<>();
-  m_users_.forEach(u -> {
-    if (u.GetId()
-         .equals(id) && u.CheckPasswd(passwd)) {
-      ret.set(u);
+  for (Users user : m_users_) {
+    if (user.GetId().equals(id) && user.CheckPasswd(passwd)) {
+      return user;
     }
-  });
-  return ret.get();
+  }
+  return null; // 如果没有找到匹配的用户，返回null
 }
 
 /**
@@ -199,6 +206,10 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     String userId = l[0].trim();
     String userName = l[1].trim();
     String password = l[2].trim();
+
+    // 添加调试输出
+    System.out.println("Loading user: ID='" + userId + "', Name='" + userName + "', Password='" + password + "'");
+
     if (userId.isEmpty()) {
       System.out.println("Invalid user data: " + Arrays.toString(l));
       throw new UserManagement.Exceptions.UserInformationInvalidException("User ID cannot be empty");
@@ -209,12 +220,28 @@ public UserManager LoadAccountInfoFromTable(Table table) {
   return this;
 }
 
-/**
- * Load score info from table
- *
- * @param table score info table
- * @return self, for chain-call
- */
+
+//public UserManager LoadScoreInfoFromTable(Table table) {
+//  for (var l : table.GetTable()) {
+//    if (l.length <= 0) {
+//      continue;
+//    } else if (l.length < 5) {
+//      throw new Exceptions.IllegalSyntaxException("The Format of CSV file is not matching.");
+//    }
+//    m_users_.stream()
+//            .filter(x -> x.GetId()
+//                          .equals(l[0]))
+//            .toList()
+//            .get(0)
+//            .NewRecord(l[1], l[2].isEmpty() ? null : Integer.parseInt(l[2]))
+//            .NewRecord(l[1], l[3].isEmpty() ? null : Integer.parseInt(l[3]))
+//            .NewRecord(l[1], l[4].isEmpty() ? null : Integer.parseInt(l[4]));
+//    Logger.getLogger("global")
+//          .info("Load one user's score record: id:" + l[0]);
+//  }
+//
+//  return this;
+//}
 public UserManager LoadScoreInfoFromTable(Table table) {
   for (var l : table.GetTable()) {
     if (l.length <= 0) {
@@ -222,16 +249,21 @@ public UserManager LoadScoreInfoFromTable(Table table) {
     } else if (l.length < 5) {
       throw new Exceptions.IllegalSyntaxException("The Format of CSV file is not matching.");
     }
-    m_users_.stream()
-            .filter(x -> x.GetId()
-                          .equals(l[0]))
-            .toList()
-            .get(0)
-            .NewRecord(l[1], l[2].isEmpty() ? null : Integer.parseInt(l[2]))
-            .NewRecord(l[1], l[3].isEmpty() ? null : Integer.parseInt(l[3]))
-            .NewRecord(l[1], l[4].isEmpty() ? null : Integer.parseInt(l[4]));
-    Logger.getLogger("global")
-          .info("Load one user's score record: id:" + l[0]);
+    Users user = null;
+    for (Users u : m_users_) {
+      if (u.GetId().equals(l[0])) {
+        user = u;
+        break;
+      }
+    }
+    if (user != null) {
+      user.NewRecord(l[1], l[2].isEmpty() ? null : Integer.parseInt(l[2]))
+          .NewRecord(l[1], l[3].isEmpty() ? null : Integer.parseInt(l[3]))
+          .NewRecord(l[1], l[4].isEmpty() ? null : Integer.parseInt(l[4]));
+      Logger.getLogger("global").info("Load one user's score record: id:" + l[0]);
+    } else {
+      Logger.getLogger("global").warning("User not found for score record: " + Arrays.toString(l));
+    }
   }
 
   return this;

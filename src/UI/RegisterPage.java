@@ -9,6 +9,8 @@ import UserManagement.Users;
 import UserManagement.UserManager;
 import UserManagement.Exceptions.DuplicateUserException;
 
+import java.io.IOException;
+
 public class RegisterPage extends Application {
 
 private UserManager userManager = Logical.getInstance().getUserManager();
@@ -55,11 +57,15 @@ public void start(Stage primaryStage) {
     try {
       Users newUser = new Users(userId, userName, password);
       userManager.RegisterUser(newUser);
+      // 注册成功后，保存用户信息
+      userManager.SaveUserInfo("resources/u.csv", "resources/s.csv");
       messageLabel.setText("Registration successful! Please login.");
     } catch (DuplicateUserException ex) {
       messageLabel.setText("User ID already exists.");
     } catch (UserManagement.Exceptions.UserInformationInvalidException ex) {
       messageLabel.setText("Invalid user information.");
+    } catch (IOException ex) {
+      messageLabel.setText("Error saving user information.");
     }
   });
 
