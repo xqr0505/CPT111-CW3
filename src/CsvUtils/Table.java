@@ -11,7 +11,11 @@ protected       ArrayList<String>             m_tableTitle_;  // title
 protected       boolean                       m_hasTitle_ = false;              // weather the table has title
 protected       int                           m_rows_     = 0;                  // rows
 protected       int                           m_columns_  = 0;                  // cols
+private final   List<String[]>                table;
 
+public Table() {
+  table = new ArrayList<>();
+}
 /**
  * Get total rows of the table
  *
@@ -149,7 +153,7 @@ public Table InsertElement(int row, String val) throws IndexOutOfBoundsException
   return this;
 }
 /**
- * Set the value element that lays on `row' row and `col' column
+ * Set the value element that lies on `row' row and `col' column
  *
  * @param row    row of the element
  * @param val    new value for the element
@@ -185,6 +189,9 @@ public Table InsertLine() {
   return this;
 }
 
+public void InsertLine(String[] fields) {
+  table.add(fields);
+}
 /**
  * Insert a new line
  *
@@ -193,13 +200,17 @@ public Table InsertLine() {
  * @throws IllegalArgumentException if the line is not cols long
  */
 public Table InsertLine(List<String> line) throws IllegalArgumentException {
-  if (line.size() != m_columns_) {
+  if (m_columns_ == 0) {
+    // 动态设置列数为插入行的长度
+    m_columns_ = line.size();
+  } else if (line.size() != m_columns_) {
     throw new IllegalArgumentException(String.format("Inserted line is not length of %s", m_columns_));
   }
   m_table_.add(new ArrayList<>(line));
   m_rows_++;
   return this;
 }
+
 
 /**
  * Insert an emtpy line after `index'

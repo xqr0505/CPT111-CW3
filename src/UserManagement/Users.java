@@ -1,20 +1,13 @@
 package UserManagement;
 
+import java.util.List;
+
 public class Users {
+private final String m_id_;
+private final String m_name_;
+private final ScoreRecords m_record_ = new ScoreRecords();
+private String m_passwd_;
 
-private final String       m_id_;                             // user's id, should be unique, and cannot be empty
-private final String       m_name_;                           // user's name cannot be empty
-private final ScoreRecords m_record_ = new ScoreRecords(100);
-private       String       m_passwd_;                         // user's passwd
-
-/**
- * Construct a new User
- *
- * @param id     user's id, can't be empty or duplicate
- * @param name   user's name, can't be empty
- * @param passwd user's passwd,
- * @throws Exceptions.UserInformationInvalidException if the content is not matching the requirement
- */
 public Users(String id, String name, String passwd) throws Exceptions.UserInformationInvalidException {
   if (id.isEmpty()) {
     throw new Exceptions.UserInformationInvalidException("User ID cannot be empty");
@@ -22,99 +15,94 @@ public Users(String id, String name, String passwd) throws Exceptions.UserInform
   if (name.isEmpty()) {
     throw new Exceptions.UserInformationInvalidException("User's name cannot be empty");
   }
-  m_id_     = id;
-  m_name_   = name;
+  m_id_ = id;
+  m_name_ = name;
   m_passwd_ = passwd;
 }
 
-/**
- * Get User password
- *
- * @return User password, notnull
- */
 public String GetPasswd() {
   return m_passwd_;
 }
 
-/**
- * Check wether the passwd provided matching the user
- *
- * @param passwd given passwd
- * @return if it is matching
- */
 public boolean CheckPasswd(String passwd) {
   return m_passwd_.equals(passwd);
 }
 
-/**
- * Set a new passwd
- *
- * @param passwd new passwd
- * @return self, for chain-call
- */
 public Users setPasswd(String passwd) {
   this.m_passwd_ = passwd;
   return this;
 }
 
-/**
- * Get User Real Name
- *
- * @return User Name, notnull
- */
 public String GetName() {
   return m_name_;
 }
 
-/**
- * Get User ID
- *
- * @return User ID, notnull
- */
 public String GetId() {
   return m_id_;
 }
 
-/**
- * Get User Score Record Database
- *
- * @return User Score Record Database
- */
 public ScoreRecords GetRecords() {
   return m_record_;
 }
 
 /**
- * Wrapper for ScoreRecord::AddRecord
+ * Add a new score record
  *
- * @param topic Specified topic
- * @param score New record
- * @return This, for chain-call
+ * @param topic the name of the topic
+ * @param score the score
+ * @return the user object
  */
 public Users NewRecord(String topic, Integer score) {
-  m_record_.NewRecord(topic, score);
+  if (score == null) {
+    return this; // 如果分数为空，直接返回
+  }
+  m_record_.addScore(topic, score);
+  // 自动更新最高分
+  Integer currentHighest = GetTopicSpecifiedHighestRecord(topic);
+  if (currentHighest == null || score > currentHighest) {
+    SetTopicSpecifiedHighestRecord(topic, score);
+  }
   return this;
 }
 
 /**
- * Wrapper for ScoreRecord::GetRecordTopics
+ * Get all topics the user has answered
  *
- * @return All Topics Answered
+ * @return an array of all answered topics
  */
 public String[] GetAnsweredTopics() {
-  return m_record_.GetRecordTopics();
+  return m_record_.getAllRecords().keySet().toArray(new String[0]);
 }
 
 /**
- * Wrapper for ScoreRecord::GetRecord
+ * Get the most recent three scores for a specific topic
  *
- * @param topic specific topic
- * @return records associated with the topic
+ * @param topic the name of the topic
+ * @return a list of the most recent three scores for the specified topic
  */
-public Integer[] GetTopicSpecifiedRecords(String topic) {
-  return m_record_.GetRecord(topic);
+public List<Integer> GetTopicSpecifiedRecentRecords(String topic) {
+  ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
+  return ts != null ? ts.getRecentScores() : List.of(); // 返回空列表以防止空指针异常
 }
 
-// TODO: PortToCSV
+/**
+ * Get the highest score for a specific topic
+ *
+ * @param topic the name of the topic
+ * @return the highest score for the specified topic
+ */
+public Integer GetTopicSpecifiedHighestRecord(String topic) {
+  ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
+  return ts != null ? ts.getHighestScore() : null;
+}
 
+/**
+ * Set the highest score for a specific topic
+ *
+ * @param topic the name of the topic
+ * @param score the highest score to set
+ */
+public void SetTopicSpecifiedHighestRecord(String topic, Integer score) {
+  m_record_.setHighestScore(topic, score);
+}
 }

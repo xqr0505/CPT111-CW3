@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import UserManagement.Users;
 import java.util.Arrays;
+import java.util.List;
 
 public class HistoryScorePage extends Application {
 
@@ -61,25 +62,34 @@ public void start(Stage primaryStage) {
 }
 
 private void showHistoryScores(Stage primaryStage, String subject) {
-  // 获取用户的历史成绩
-  Integer[] scores = currentUser.GetTopicSpecifiedRecords(subject);
+  // 获取用户的最近三次成绩
+  List<Integer> scoresList = currentUser.GetTopicSpecifiedRecentRecords(subject);
 
-  if (scores == null || scores.length == 0) {
+  if (scoresList == null || scoresList.isEmpty()) {
     Alert alert = new Alert(Alert.AlertType.INFORMATION, "No history scores for this subject.", ButtonType.OK);
     alert.showAndWait();
     return;
   }
 
+  // 获取最高分
+  Integer highestScore = currentUser.GetTopicSpecifiedHighestRecord(subject);
+
   // 构建成绩显示字符串
   StringBuilder scoreText = new StringBuilder("Your last 3 scores for " + subject + ":\n");
-  for (int i = 0; i < scores.length; i++) {
-    if (scores[i] != null) {
-      scoreText.append("Attempt ").append(i + 1).append(": ").append(scores[i]).append("\n");
+  for (int i = 0; i < scoresList.size(); i++) {
+    Integer score = scoresList.get(i);
+    if (score != null) {
+      scoreText.append("Attempt ").append(i + 1).append(": ").append(score).append("\n");
     }
+  }
+
+  if (highestScore != null) {
+    scoreText.append("Highest Score: ").append(highestScore).append("\n");
   }
 
   // 显示成绩
   Alert alert = new Alert(Alert.AlertType.INFORMATION, scoreText.toString(), ButtonType.OK);
   alert.showAndWait();
 }
+
 }

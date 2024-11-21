@@ -1,4 +1,5 @@
 package UI;
+
 import core.Logical;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -55,11 +56,18 @@ public void start(Stage primaryStage) {
     }
 
     try {
+      // 创建新用户并注册
       Users newUser = new Users(userId, userName, password);
       userManager.RegisterUser(newUser);
-      // 注册成功后，保存用户信息
+
+      // 保存用户信息到文件
       userManager.SaveUserInfo("resources/u.csv", "resources/s.csv");
-      messageLabel.setText("Registration successful! Please login.");
+
+      // 自动登录并跳转到 Dashboard
+      messageLabel.setText("Registration successful! Logging you in...");
+      Dashboard dashboard = new Dashboard(newUser); // 创建 Dashboard 页面
+      dashboard.start(primaryStage); // 跳转到 Dashboard
+
     } catch (DuplicateUserException ex) {
       messageLabel.setText("User ID already exists.");
     } catch (UserManagement.Exceptions.UserInformationInvalidException ex) {

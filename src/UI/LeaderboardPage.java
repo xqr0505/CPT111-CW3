@@ -1,21 +1,22 @@
 package UI;
+
 import core.Logical;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import UserManagement.Users;
 import UserManagement.UserManager;
-import UserManagement.UserManager.ScoreEntry;
+import UserManagement.Users;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class LeaderboardPage extends Application {
 
+private final UserManager userManager = Logical.getInstance().getUserManager();
 private Users currentUser;
-private UserManager userManager = Logical.getInstance().getUserManager();
 
 public LeaderboardPage(Users user) {
   this.currentUser = user;
@@ -23,17 +24,17 @@ public LeaderboardPage(Users user) {
 
 @Override
 public void start(Stage primaryStage) {
-  // 提示信息
+  // 创建提示信息
   Label promptLabel = new Label("Please choose the subject to view the leaderboard:");
 
   // 创建科目按钮
   Button csButton = new Button("Computer Science");
   Button eeButton = new Button("Electronic Engineering");
   Button englishButton = new Button("English");
-  Button mathButton = new Button("Math");
+  Button mathButton = new Button("Mathematics");
   Button returnButton = new Button("Return");
 
-  double buttonWidth = 250; // 指定按钮宽度
+  double buttonWidth = 250; // 按钮宽度
   csButton.setPrefWidth(buttonWidth);
   eeButton.setPrefWidth(buttonWidth);
   englishButton.setPrefWidth(buttonWidth);
@@ -44,7 +45,7 @@ public void start(Stage primaryStage) {
   csButton.setOnAction(e -> showLeaderboard(primaryStage, "Computer Science"));
   eeButton.setOnAction(e -> showLeaderboard(primaryStage, "Electronic Engineering"));
   englishButton.setOnAction(e -> showLeaderboard(primaryStage, "English"));
-  mathButton.setOnAction(e -> showLeaderboard(primaryStage, "Math"));
+  mathButton.setOnAction(e -> showLeaderboard(primaryStage, "Mathematics"));
   returnButton.setOnAction(e -> {
     Dashboard dashboard = new Dashboard(currentUser);
     dashboard.start(primaryStage);
@@ -64,46 +65,36 @@ public void start(Stage primaryStage) {
 }
 
 private void showLeaderboard(Stage primaryStage, String subject) {
-  // 获取所有用户的成绩
-  Map<String, List<ScoreEntry>> records = userManager.GetRecords();
+  // 获取所有用户
+  List<Users> allUsers = List.copyOf(userManager.GetAllUsers());
 
-  List<ScoreEntry> scoreEntries = records.get(subject);
+  String topUserId = null;
+  String topUserName = null;
+  int highestScore = -1;
 
-  if (scoreEntries == null || scoreEntries.isEmpty()) {
-    Alert alert = new Alert(Alert.AlertType.INFORMATION, "No scores for this subject.", ButtonType.OK);
-    alert.showAndWait();
-    return;
-  }
-
-  // 计算每个用户的最高成绩
-  Map<String, Integer> userBestScores = new HashMap<>();
-  for (ScoreEntry entry : scoreEntries) {
-    if (entry.score != null) {
-      userBestScores.merge(entry.id, entry.score, Math::max);
+  // 遍历所有用户，查找最高分
+  for (Users user : allUsers) {
+    Integer userHighestScore = user.GetTopicSpecifiedHighestRecord(subject);
+    System.out.println("User: " + user.GetId() + ", Subject: " + subject + ", Highest Score: " + userHighestScore);
+    if (userHighestScore != null && userHighestScore > highestScore) {
+      highestScore = userHighestScore;
+      topUserId = user.GetId();
+      topUserName = user.GetName();
     }
   }
 
-  // 按成绩排序，取前三名
-  List<Map.Entry<String, Integer>> topScores = userBestScores.entrySet()
-                                                             .stream()
-                                                             .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                                                             .limit(3)
-                                                             .collect(Collectors.toList());
-
-  // 构建排行榜显示字符串
-  StringBuilder leaderboardText = new StringBuilder("Top 3 users for " + subject + ":\n");
-  int rank = 1;
-  for (Map.Entry<String, Integer> entry : topScores) {
-    // 获取用户名
-    Users user = userManager.getUserById(entry.getKey());
-    String userName = user != null ? user.GetName() : entry.getKey();
-    leaderboardText.append(rank).append(". ").append(userName).append(": ").append(entry.getValue()).append("\n");
-    rank++;
+  // 构建显示信息
+  String result;
+  if (topUserId != null) {
+    result = String.format("Top User for %s:\n%s (ID: %s) with a score of %d",
+                           subject, topUserName, topUserId, highestScore);
+  } else {
+    result = "No scores available for this subject.";
   }
 
-  // 显示排行榜
-  Alert alert = new Alert(Alert.AlertType.INFORMATION, leaderboardText.toString(), ButtonType.OK);
+  // 显示结果
+  Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
+  alert.setHeaderText("Leaderboard");
   alert.showAndWait();
 }
 }
-

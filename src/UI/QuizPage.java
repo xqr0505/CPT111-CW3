@@ -14,6 +14,7 @@ import QuestionManagement.QuestionManager;
 import QuestionManagement.Exceptions.NoTopicFoundException;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class QuizPage extends Application {
@@ -243,7 +244,7 @@ private void showScore() {
   Alert alert = new Alert(Alert.AlertType.INFORMATION, "Quiz finished!\nYour total score is: " + totalScore, ButtonType.OK);
   alert.showAndWait();
 
-  // 将成绩记录到用户的ScoreRecords中
+  // 将成绩记录到用户的 ScoreRecords 中
   currentUser.NewRecord(subject, totalScore);
 
   try {
@@ -253,10 +254,15 @@ private void showScore() {
     // 处理保存错误
     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error saving score information.", ButtonType.OK);
     errorAlert.showAndWait();
+    ex.printStackTrace();
   }
 
-  // 返回Dashboard
+  // 返回 Dashboard
   Dashboard dashboard = new Dashboard(currentUser);
-  dashboard.start(primaryStage);
+  try {
+    dashboard.start(primaryStage);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
 }
 }

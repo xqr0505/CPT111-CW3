@@ -1,83 +1,128 @@
 package UserManagement;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ScoreRecords {
-private static final int                    s_MAXIMUM_RECORDS = 3;               // How many records need to record for a topic
-private final        Map<String, Integer[]> m_scoreRecords_   = new HashMap<>(); // Topic and corresponding scores
-private final        int                    m_maximScore_;                       // Maximum score
 
-/**
- * Constructor for ScoreRecords
- *
- * @param maximScore max score
- */
-public ScoreRecords(int maximScore) {
-  m_maximScore_ = maximScore;
+private final Map<String, TopicScores> records;
+
+public ScoreRecords() {
+  this.records = new HashMap<>();
 }
 
 /**
- * <p>Add a record, If the record not exist, create it, otherwise, update it.</p>
+ * Add a new score record
  *
- * @param topic specific topic
- * @param score score to be recorded
- * @return self, for chain-call
- * @throws Exceptions.ScoreValueOutOfRangeException if the score provide is neither null nor meaningful value
+ * @param topic the name of the topic
+ * @param score the score
  */
-public ScoreRecords NewRecord(String topic, Integer score) throws Exceptions.ScoreValueOutOfRangeException {
-  // Assume null means no record,
-  // Thus if it is larger than max score or less than 0, the score is meaningless
-  if (score != null && (score > m_maximScore_ || score < 0)) {
-    throw new Exceptions.ScoreValueOutOfRangeException(
-        String.format("Maximum score is %d, while providing %d", m_maximScore_, score));
+public void addScore(String topic, Integer score) {
+  records.putIfAbsent(topic, new TopicScores());
+  TopicScores ts = records.get(topic);
+  ts.addScore(score);
+}
+
+/**
+ * Get all score records for all topics
+ *
+ * @return a map of topics and their corresponding score records
+ */
+public Map<String, TopicScores> getAllRecords() {
+  return records;
+}
+
+/**
+ * Get score records for a specific topic
+ *
+ * @param topic the name of the topic
+ * @return the score records for the specified topic
+ */
+public TopicScores getRecordsByTopic(String topic) {
+  return records.getOrDefault(topic, new TopicScores());
+}
+
+/**
+ * Get score records for a specific topic
+ *
+ * @param topic the name of the topic
+ * @return the score records for the specified topic, or null if not found
+ */
+public TopicScores getTopicScores(String topic) {
+  return records.get(topic);
+}
+
+/**
+ * Set the highest score for a specific topic
+ *
+ * @param topic the name of the topic
+ * @param score the highest score to set
+ */
+public void setHighestScore(String topic, Integer score) {
+  TopicScores ts = records.get(topic);
+  if (ts == null) {
+    ts = new TopicScores();
+    records.put(topic, ts);
+  }
+  ts.setHighestScore(score);
+}
+
+/**
+ * Inner class representing the score records for a topic
+ */
+public static class TopicScores {
+  private final LinkedList<Integer> recentScores;
+  private Integer highestScore;
+
+  public TopicScores() {
+    this.recentScores = new LinkedList<>();
+    this.highestScore = null;
   }
 
-  // If the given is stored
-  if (m_scoreRecords_.containsKey(topic)) {
-    for (int i = s_MAXIMUM_RECORDS - 1; i > 0; i--) {
-      m_scoreRecords_.get(topic)[i] = m_scoreRecords_.get(topic)[i - 1];
+  /**
+   * Add a score record
+   *
+   * @param score the score
+   */
+  public void addScore(Integer score) {
+    if (score == null) return;
+
+    // Keep the most recent three scores
+    if (recentScores.size() == 3) {
+      recentScores.removeLast();
     }
-    m_scoreRecords_.get(topic)[0] = score;
-  } else {
-    // Create and store it to the first slot
-    m_scoreRecords_.put(topic, new Integer[s_MAXIMUM_RECORDS]);
-    m_scoreRecords_.get(topic)[0] = score;
+    recentScores.addFirst(score);
+
+    // Update the highest score
+    if (highestScore == null || score > highestScore) {
+      highestScore = score;
+    }
   }
 
-  return this;
+  /**
+   * Get the recent scores
+   *
+   * @return an unmodifiable list of recent scores
+   */
+  public List<Integer> getRecentScores() {
+    return Collections.unmodifiableList(recentScores);
+  }
+
+  /**
+   * Get the highest score
+   *
+   * @return the highest score
+   */
+  public Integer getHighestScore() {
+    return highestScore;
+  }
+
+  /**
+   * Set the highest score
+   *
+   * @param score the highest score to set
+   */
+  public void setHighestScore(Integer score) {
+    this.highestScore = score;
+  }
 }
-
-/**
- * Get all topics answered
- *
- * @return Topics answered
- */
-public String[] GetRecordTopics() {
-  return m_scoreRecords_.keySet()
-                        .toArray(new String[0]);
-}
-
-/**
- * Get all Record according to given topic
- *
- * @param topic specific topic
- * @return Records of the given topic
- */
-public Integer[] GetRecord(String topic) {
-  return m_scoreRecords_.get(topic)
-                        .clone();
-}
-
-/**
- * Get Maximum Score
- *
- * @return Maximum Score
- */
-public Integer GetMaxScore() {
-  return m_maximScore_;
-}
-
-// TODO: Port To CSV
-
 }

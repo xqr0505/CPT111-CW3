@@ -18,16 +18,16 @@ private final QuestionManager         m_questions_    = new QuestionManager();
 private final List<CallBackHook.Hook> m_prepareHooks_ = new ArrayList<>();
 private final List<CallBackHook.Hook> m_quitHooks_    = new ArrayList<>();
 
+private Logical() {
+  m_questions_.LoadQuestions("resources/questionsBank");
+}
+
 public static Logical getInstance() {
   return s_instance_;
 }
 
 public UserManager getUserManager() {
   return m_users_;
-}
-
-private Logical() {
-  m_questions_.LoadQuestions("resources/questionsBank");
 }
 
 public QuestionManager getQuestionManager() {
