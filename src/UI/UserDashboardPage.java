@@ -38,6 +38,9 @@ public void start(Stage primaryStage) {
   Button englishButton = new Button("English");
   Button mathButton = new Button("Mathematics");
   Button returnButton = new Button("Return");
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
 
   double buttonWidth = 250; // Specify button width
   csButton.setPrefWidth(buttonWidth);

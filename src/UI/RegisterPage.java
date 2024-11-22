@@ -23,15 +23,19 @@ private UserManager userManager = Logical.getInstance()
 @Override
 public void start(Stage primaryStage) {
   // Create input fields
+  Label userIdLabel = new Label("New User ID:");
   TextField userIdField = new TextField();
   userIdField.setPromptText("User ID");
 
+  Label usernameLabel = new Label("New User Name:");
   TextField userNameField = new TextField();
   userNameField.setPromptText("User Name");
 
+  Label passwordLabel = new Label("New Password:");
   PasswordField passwordField = new PasswordField();
   passwordField.setPromptText("Password");
 
+  Label confirmLabel = new Label("Confirm your Password:");
   PasswordField confirmPasswordField = new PasswordField();
   confirmPasswordField.setPromptText("Confirm Password");
 
@@ -39,6 +43,13 @@ public void start(Stage primaryStage) {
   Button signupButton = new Button("Sign Up");
   Button returnButton = new Button("Return");
 
+  double buttonWidth = 100;
+  signupButton.setPrefWidth(buttonWidth);
+  returnButton.setPrefWidth(buttonWidth);
+
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
   // Message label
   Label messageLabel = new Label();
 
@@ -87,7 +98,10 @@ public void start(Stage primaryStage) {
   });
 
   // Layout settings
-  VBox root = new VBox(10, userIdField, userNameField, passwordField, confirmPasswordField, signupButton, returnButton, messageLabel);
+  VBox root = new VBox(10, userIdLabel,userIdField, usernameLabel,
+                       userNameField, passwordLabel,passwordField,
+                       confirmLabel,confirmPasswordField, signupButton,
+                       returnButton, messageLabel);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
   // Create scene

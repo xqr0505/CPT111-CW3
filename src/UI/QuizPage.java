@@ -79,7 +79,9 @@ public void start(Stage primaryStage) {
   nextButton.setPrefWidth(150);
   returnButton = new Button("Return");
   returnButton.setPrefWidth(150);
-
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
   // Set button click events
   nextButton.setOnAction(e -> handleNextAction());
   returnButton.setOnAction(e -> {

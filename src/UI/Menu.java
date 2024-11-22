@@ -33,7 +33,10 @@ public void start(Stage primaryStage) {
   Button attemptQuizButton = new Button("Attempt Quiz");
   Button historyScoreButton = new Button("User Dashboard");
   Button leaderboardButton = new Button("Leaderboard");
-  Button returnButton = new Button("Return");
+  Button returnButton = new Button("Log Out");
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
 
   double buttonWidth = 200; // Specify button width
   attemptQuizButton.setPrefWidth(buttonWidth);

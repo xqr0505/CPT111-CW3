@@ -19,9 +19,11 @@ private UserManager userManager = Logical.getInstance().getUserManager();
 @Override
 public void start(Stage primaryStage) {
   // Create input fields
+  Label userIdLabel = new Label("User ID:");
   TextField userIdField = new TextField();
   userIdField.setPromptText("User ID");
 
+  Label passwordLabel = new Label("Password:");
   PasswordField passwordField = new PasswordField();
   passwordField.setPromptText("Password");
 
@@ -29,6 +31,13 @@ public void start(Stage primaryStage) {
   Button loginButton = new Button("Log In");
   Button returnButton = new Button("Return");
 
+  double buttonWidth = 100;
+  loginButton.setPrefWidth(buttonWidth);
+  returnButton.setPrefWidth(buttonWidth);
+
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
   // Message label
   Label messageLabel = new Label();
 
@@ -58,7 +67,8 @@ public void start(Stage primaryStage) {
   });
 
   // Layout settings
-  VBox root = new VBox(10, userIdField, passwordField, loginButton, returnButton, messageLabel);
+  VBox root = new VBox(10, userIdLabel,userIdField, passwordLabel,
+                       passwordField, loginButton, returnButton, messageLabel);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
   // Create scene

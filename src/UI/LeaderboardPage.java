@@ -49,7 +49,9 @@ public void start(Stage primaryStage) {
   englishButton.setPrefWidth(buttonWidth);
   mathButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
-
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
   // Set button click events
   csButton.setOnAction(e -> showLeaderboard(primaryStage, "Computer Science"));
   eeButton.setOnAction(e -> showLeaderboard(primaryStage, "Electronic Engineering"));
