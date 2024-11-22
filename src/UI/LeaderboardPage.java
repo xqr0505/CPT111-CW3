@@ -75,7 +75,6 @@ private void showLeaderboard(Stage primaryStage, String subject) {
   // 遍历所有用户，查找最高分
   for (Users user : allUsers) {
     Integer userHighestScore = user.GetTopicSpecifiedHighestRecord(subject);
-    System.out.println("User: " + user.GetId() + ", Subject: " + subject + ", Highest Score: " + userHighestScore);
     if (userHighestScore != null && userHighestScore > highestScore) {
       highestScore = userHighestScore;
       topUserId = user.GetId();

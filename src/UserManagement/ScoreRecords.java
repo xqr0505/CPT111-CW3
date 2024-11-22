@@ -28,7 +28,7 @@ public void addScore(String topic, Integer score) {
  * @return a map of topics and their corresponding score records
  */
 public Map<String, TopicScores> getAllRecords() {
-  return records;
+  return Collections.unmodifiableMap(records);
 }
 
 /**
@@ -37,40 +37,15 @@ public Map<String, TopicScores> getAllRecords() {
  * @param topic the name of the topic
  * @return the score records for the specified topic
  */
-public TopicScores getRecordsByTopic(String topic) {
-  return records.getOrDefault(topic, new TopicScores());
-}
-
-/**
- * Get score records for a specific topic
- *
- * @param topic the name of the topic
- * @return the score records for the specified topic, or null if not found
- */
 public TopicScores getTopicScores(String topic) {
   return records.get(topic);
-}
-
-/**
- * Set the highest score for a specific topic
- *
- * @param topic the name of the topic
- * @param score the highest score to set
- */
-public void setHighestScore(String topic, Integer score) {
-  TopicScores ts = records.get(topic);
-  if (ts == null) {
-    ts = new TopicScores();
-    records.put(topic, ts);
-  }
-  ts.setHighestScore(score);
 }
 
 /**
  * Inner class representing the score records for a topic
  */
 public static class TopicScores {
-  private final LinkedList<Integer> recentScores;
+  private final List<Integer> recentScores;
   private Integer highestScore;
 
   public TopicScores() {
@@ -84,15 +59,10 @@ public static class TopicScores {
    * @param score the score
    */
   public void addScore(Integer score) {
-    if (score == null) return;
-
-    // Keep the most recent three scores
     if (recentScores.size() == 3) {
-      recentScores.removeLast();
+      recentScores.remove(0);
     }
-    recentScores.addFirst(score);
-
-    // Update the highest score
+    recentScores.add(score);
     if (highestScore == null || score > highestScore) {
       highestScore = score;
     }
@@ -122,7 +92,7 @@ public static class TopicScores {
    * @param score the highest score to set
    */
   public void setHighestScore(Integer score) {
-    this.highestScore = score;
+    highestScore = score;
   }
 }
 }

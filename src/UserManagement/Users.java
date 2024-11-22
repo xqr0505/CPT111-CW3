@@ -93,7 +93,8 @@ public List<Integer> GetTopicSpecifiedRecentRecords(String topic) {
  */
 public Integer GetTopicSpecifiedHighestRecord(String topic) {
   ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
-  return ts != null ? ts.getHighestScore() : null;
+  Integer highest = ts != null ? ts.getHighestScore() : null;
+  return highest;
 }
 
 /**
@@ -103,6 +104,12 @@ public Integer GetTopicSpecifiedHighestRecord(String topic) {
  * @param score the highest score to set
  */
 public void SetTopicSpecifiedHighestRecord(String topic, Integer score) {
-  m_record_.setHighestScore(topic, score);
+  ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
+  if (ts == null) {
+    // 如果该科目不存在，则添加并设置最高分
+    m_record_.addScore(topic, score);
+    ts = m_record_.getTopicScores(topic);
+  }
+  ts.setHighestScore(score);
 }
 }

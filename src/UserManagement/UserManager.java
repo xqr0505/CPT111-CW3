@@ -52,7 +52,7 @@ public UserManager LoadUserInfo(String infofp, String scorefp) throws IOExceptio
  * Save User Account and Score Information to file
  *
  * @param infofp  account file path
- * @param scorefp score record file path
+ * @param scorefp score record information file path
  * @return self, for chain-call
  * @throws IOException if file is not writable
  */
@@ -112,10 +112,9 @@ public Users CheckLogin(String id, String passwd) {
 public Table ExportAccountInfoToTable() {
   Table table = new Table();
   for (Users u : m_users_) {
-    table.InsertLine(List.of(new String[] {
+    table.InsertLine(List.of(new String[]{
         u.GetId(), u.GetName(), u.GetPasswd()
     }));
-    Logger.getLogger("global").info("Write one user's account info: id=" + u.GetId());
   }
   return table;
 }
@@ -131,21 +130,34 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     if (l.length <= 0) {
       continue;
     } else if (l.length < 3) {
-      throw new Exceptions.IllegalSyntaxException("The Format of CSV file is not matching.");
+      Logger.getLogger("global").warning("Skipping line due to insufficient fields: " + Arrays.toString(l));
+      continue;
     }
+
     String userId = l[0].trim();
     String userName = l[1].trim();
     String password = l[2].trim();
 
-    // Add debug output
+    // 跳过所有字段均为空的行
+    if (userId.isEmpty() && userName.isEmpty() && password.isEmpty()) {
+      continue;
+    }
+
+    // 添加调试输出
     System.out.println("Loading user: ID='" + userId + "', Name='" + userName + "', Password='" + password + "'");
 
-    if (userId.isEmpty()) {
-      System.out.println("Invalid user data: " + Arrays.toString(l));
-      throw new UserManagement.Exceptions.UserInformationInvalidException("User ID cannot be empty");
+    // 检查单个字段是否为空
+    if (userId.isEmpty() || userName.isEmpty() || password.isEmpty()) {
+      Logger.getLogger("global").warning("Invalid user data: " + Arrays.toString(l));
+      continue;
     }
-    RegisterUser(new Users(userId, userName, password));
-    Logger.getLogger("global").info("Load one user: id=" + userId);
+
+    try {
+      RegisterUser(new Users(userId, userName, password));
+      Logger.getLogger("global").info("Load one user: id=" + userId);
+    } catch (UserManagement.Exceptions.UserInformationInvalidException e) {
+      Logger.getLogger("global").warning("Failed to register user: " + e.getMessage());
+    }
   }
   return this;
 }
@@ -170,11 +182,10 @@ public Table ExportScoreInfoToTable() {
       String score3 = recentScores.size() >= 3 ? recentScores.get(2).toString() : "";
       String highest = highestScore != null ? highestScore.toString() : "";
 
-      table.InsertLine(List.of(new String[] {
+      table.InsertLine(List.of(new String[]{
           u.GetId(), topic, score1, score2, score3, highest
       }));
 
-      Logger.getLogger("global").info("Write one user's score record: id=" + u.GetId() + ", topic=" + topic + ", scores=[" + score1 + "," + score2 + "," + score3 + "], highest=" + highest);
     }
   }
   return table;
@@ -241,9 +252,6 @@ public UserManager LoadScoreInfoFromTable(Table table) {
           Logger.getLogger("global").warning("Invalid highest score format: " + highestScoreStr);
         }
       }
-
-      Logger.getLogger("global").info("Load one user's score record: id=" + userId + ", topic=" + topic
-                                      + ", scores=[" + score1Str + "," + score2Str + "," + score3Str + "], highest=" + highestScoreStr);
     } else {
       Logger.getLogger("global").warning("User not found for score record: " + Arrays.toString(l));
     }
@@ -275,6 +283,4 @@ public Users getUserById(String id) {
 public Set<Users> GetAllUsers() {
   return Collections.unmodifiableSet(m_users_);
 }
-
-
 }
