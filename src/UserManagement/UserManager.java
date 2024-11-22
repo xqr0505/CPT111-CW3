@@ -144,7 +144,7 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     }
 
     // 添加调试输出
-    System.out.println("Loading user: ID='" + userId + "', Name='" + userName + "', Password='" + password + "'");
+    System.out.println("Loading user: ID='" + userId);
 
     // 检查单个字段是否为空
     if (userId.isEmpty() || userName.isEmpty() || password.isEmpty()) {
@@ -154,7 +154,6 @@ public UserManager LoadAccountInfoFromTable(Table table) {
 
     try {
       RegisterUser(new Users(userId, userName, password));
-      Logger.getLogger("global").info("Load one user: id=" + userId);
     } catch (UserManagement.Exceptions.UserInformationInvalidException e) {
       Logger.getLogger("global").warning("Failed to register user: " + e.getMessage());
     }

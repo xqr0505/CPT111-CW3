@@ -23,7 +23,7 @@ public void start(Stage primaryStage) {
   passwordField.setPromptText("Password");
 
   // 创建按钮
-  Button loginButton  = new Button("Login");
+  Button loginButton  = new Button("Log In");
   Button returnButton = new Button("Return");
 
   // 提示标签

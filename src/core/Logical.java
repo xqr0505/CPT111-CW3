@@ -19,7 +19,6 @@ private final List<CallBackHook.Hook> m_prepareHooks_ = new ArrayList<>();
 private final List<CallBackHook.Hook> m_quitHooks_    = new ArrayList<>();
 
 private Logical() {
-  m_questions_.LoadQuestions("resources/questionsBank");
 }
 
 public static Logical getInstance() {
