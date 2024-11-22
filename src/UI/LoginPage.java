@@ -44,9 +44,9 @@ public void start(Stage primaryStage) {
 
     Users user = userManager.CheckLogin(userId, password);
     if (user != null) {
-      // Login successful, navigate to Dashboard
-      Dashboard dashboard = new Dashboard(user);
-      dashboard.start(primaryStage);
+      // Login successful, navigate to menu
+      Menu menu = new Menu(user);
+      menu.start(primaryStage);
     } else {
       messageLabel.setText("Invalid User ID or Password.");
     }

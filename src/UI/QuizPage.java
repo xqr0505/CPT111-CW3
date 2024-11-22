@@ -285,10 +285,10 @@ private void showScore() {
     ex.printStackTrace();
   }
 
-  // Return to Dashboard
-  Dashboard dashboard = new Dashboard(currentUser);
+  // Return to Menu
+  Menu menu = new Menu(currentUser);
   try {
-    dashboard.start(primaryStage);
+    menu.start(primaryStage);
   } catch (Exception e) {
     e.printStackTrace();
   }

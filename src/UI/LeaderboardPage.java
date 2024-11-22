@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 import UserManagement.UserManager;
 import UserManagement.Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,8 +56,8 @@ public void start(Stage primaryStage) {
   englishButton.setOnAction(e -> showLeaderboard(primaryStage, "English"));
   mathButton.setOnAction(e -> showLeaderboard(primaryStage, "Mathematics"));
   returnButton.setOnAction(e -> {
-    Dashboard dashboard = new Dashboard(currentUser);
-    dashboard.start(primaryStage);
+    Menu menu = new Menu(currentUser);
+    menu.start(primaryStage);
   });
 
   // Layout settings
@@ -82,25 +83,28 @@ private void showLeaderboard(Stage primaryStage, String subject) {
   // Get all users
   List<Users> allUsers = List.copyOf(userManager.GetAllUsers());
 
-  String topUserId = null;
-  String topUserName = null;
+  List<String> topUsers = new ArrayList<>();
   int highestScore = -1;
 
   // Iterate through all users to find the highest score
   for (Users user : allUsers) {
     Integer userHighestScore = user.GetTopicSpecifiedHighestRecord(subject);
-    if (userHighestScore != null && userHighestScore > highestScore) {
-      highestScore = userHighestScore;
-      topUserId = user.GetId();
-      topUserName = user.GetName();
+    if (userHighestScore != null) {
+      if (userHighestScore > highestScore) {
+        highestScore = userHighestScore;
+        topUsers.clear();
+        topUsers.add(String.format("%s (ID: %s)", user.GetName(), user.GetId()));
+      } else if (userHighestScore == highestScore) {
+        topUsers.add(String.format("%s (ID: %s)", user.GetName(), user.GetId()));
+      }
     }
   }
 
   // Build the display message
   String result;
-  if (topUserId != null) {
-    result = String.format("Top User for %s:\n%s (ID: %s) with a score of %d",
-                           subject, topUserName, topUserId, highestScore);
+  if (!topUsers.isEmpty()) {
+    result = String.format("Top Users for %s with a score of %d:\n%s",
+                           subject, highestScore, String.join("\n", topUsers));
   } else {
     result = "No scores available for this subject.";
   }
@@ -108,6 +112,7 @@ private void showLeaderboard(Stage primaryStage, String subject) {
   // Display the result
   Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
   alert.setHeaderText("Leaderboard");
+  alert.setTitle("Leaderboard");
   alert.showAndWait();
 }
 }

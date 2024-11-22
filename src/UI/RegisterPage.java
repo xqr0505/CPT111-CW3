@@ -67,10 +67,10 @@ public void start(Stage primaryStage) {
       // Save user information to file
       userManager.SaveUserInfo("resources/u.csv", "resources/s.csv");
 
-      // Auto login and navigate to Dashboard
+      // Auto login and navigate to Menu
       messageLabel.setText("Registration successful! Logging you in...");
-      Dashboard dashboard = new Dashboard(newUser); // Create Dashboard page
-      dashboard.start(primaryStage); // Navigate to Dashboard
+      Menu menu = new Menu(newUser); // Create Menu page
+      menu.start(primaryStage); // Navigate to Menu
 
     } catch (DuplicateUserException ex) {
       messageLabel.setText("User ID already exists.");

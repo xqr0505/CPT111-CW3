@@ -49,8 +49,8 @@ public void start(Stage primaryStage) {
   englishButton.setOnAction(e -> startQuiz(primaryStage, "English"));
   mathButton.setOnAction(e -> startQuiz(primaryStage, "Mathematics"));
   returnButton.setOnAction(e -> {
-    Dashboard dashboard = new Dashboard(currentUser);
-    dashboard.start(primaryStage);
+    Menu menu = new Menu(currentUser);
+    menu.start(primaryStage);
   });
 
   // Layout settings
