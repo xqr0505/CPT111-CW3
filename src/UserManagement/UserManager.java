@@ -201,10 +201,10 @@ public Table ExportScoreInfoToTable() {
  */
 public UserManager LoadScoreInfoFromTable(Table table) {
   for (String[] l : table.GetTable()) {
-    if (l.length <= 0) {
+    // Skip empty lines or lines with insufficient fields
+    if (l.length < 6 || Arrays.stream(l).allMatch(String::isEmpty)) {
+      Logger.getLogger("global").warning("Skipping invalid or empty score record: " + Arrays.toString(l));
       continue;
-    } else if (l.length < 6) { // 6 columns: userId, topic, score1, score2, score3, highestScore
-      throw new Exceptions.IllegalSyntaxException("The Format of CSV file is not matching.");
     }
 
     String userId = l[0].trim();
@@ -216,43 +216,18 @@ public UserManager LoadScoreInfoFromTable(Table table) {
 
     Users user = getUserById(userId);
     if (user != null) {
-      // Add the first three score records
-      if (!score1Str.isEmpty()) {
-        try {
-          int score1 = Integer.parseInt(score1Str);
-          user.NewRecord(topic, score1);
-        } catch (NumberFormatException e) {
-          Logger.getLogger("global").warning("Invalid score format for score1: " + score1Str);
+      try {
+        // Add the first three score records
+        if (!score1Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score1Str));
+        if (!score2Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score2Str));
+        if (!score3Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score3Str));
+        // Update the highest score
+        if (!highestScoreStr.isEmpty()) {
+          int highestScore = Integer.parseInt(highestScoreStr);
+          user.SetTopicSpecifiedHighestRecord(topic, highestScore);
         }
-      }
-      if (!score2Str.isEmpty()) {
-        try {
-          int score2 = Integer.parseInt(score2Str);
-          user.NewRecord(topic, score2);
-        } catch (NumberFormatException e) {
-          Logger.getLogger("global").warning("Invalid score format for score2: " + score2Str);
-        }
-      }
-      if (!score3Str.isEmpty()) {
-        try {
-          int score3 = Integer.parseInt(score3Str);
-          user.NewRecord(topic, score3);
-        } catch (NumberFormatException e) {
-          Logger.getLogger("global").warning("Invalid score format for score3: " + score3Str);
-        }
-      }
-
-      // Update the highest score
-      if (!highestScoreStr.isEmpty()) {
-        try {
-          Integer highestScore = Integer.parseInt(highestScoreStr);
-          Integer currentHighest = user.GetTopicSpecifiedHighestRecord(topic);
-          if (currentHighest == null || highestScore > currentHighest) {
-            user.SetTopicSpecifiedHighestRecord(topic, highestScore);
-          }
-        } catch (NumberFormatException e) {
-          Logger.getLogger("global").warning("Invalid highest score format: " + highestScoreStr);
-        }
+      } catch (NumberFormatException e) {
+        Logger.getLogger("global").warning("Invalid score format in record: " + Arrays.toString(l));
       }
     } else {
       Logger.getLogger("global").warning("User not found for score record: " + Arrays.toString(l));
