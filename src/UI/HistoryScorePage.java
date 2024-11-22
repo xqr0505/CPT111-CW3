@@ -103,6 +103,7 @@ private void showHistoryScores(Stage primaryStage, String subject) {
 
   // Display the scores
   Alert alert = new Alert(Alert.AlertType.INFORMATION, scoreText.toString(), ButtonType.OK);
+  alert.setHeaderText("History Score");
   alert.showAndWait();
 }
 }
