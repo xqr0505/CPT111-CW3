@@ -133,7 +133,6 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     if (l.length <= 0) {
       continue;
     } else if (l.length < 3) {
-      Logger.getLogger("global").warning("Skipping line due to insufficient fields: " + Arrays.toString(l));
       continue;
     }
 
