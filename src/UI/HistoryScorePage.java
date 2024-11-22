@@ -36,7 +36,7 @@ public void start(Stage primaryStage) {
   Button csButton = new Button("Computer Science");
   Button eeButton = new Button("Electronic Engineering");
   Button englishButton = new Button("English");
-  Button mathButton = new Button("Math");
+  Button mathButton = new Button("Mathematics");
   Button returnButton = new Button("Return");
 
   double buttonWidth = 250; // Specify button width
@@ -50,7 +50,7 @@ public void start(Stage primaryStage) {
   csButton.setOnAction(e -> showHistoryScores(primaryStage, "Computer Science"));
   eeButton.setOnAction(e -> showHistoryScores(primaryStage, "Electronic Engineering"));
   englishButton.setOnAction(e -> showHistoryScores(primaryStage, "English"));
-  mathButton.setOnAction(e -> showHistoryScores(primaryStage, "Math"));
+  mathButton.setOnAction(e -> showHistoryScores(primaryStage, "Mathematics"));
   returnButton.setOnAction(e -> {
     Dashboard dashboard = new Dashboard(currentUser);
     dashboard.start(primaryStage);
