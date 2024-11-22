@@ -140,17 +140,11 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     String userName = l[1].trim();
     String password = l[2].trim();
 
-    // Skip lines where all fields are empty
-    if (userId.isEmpty() && userName.isEmpty() && password.isEmpty()) {
-      continue;
-    }
-
     // Debug output
     System.out.println("Loading user: ID='" + userId);
 
     // Check if any field is empty
     if (userId.isEmpty() || userName.isEmpty() || password.isEmpty()) {
-      Logger.getLogger("global").warning("Invalid user data: " + Arrays.toString(l));
       continue;
     }
 
