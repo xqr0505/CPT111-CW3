@@ -1,4 +1,5 @@
 package UI;
+
 import core.Logical;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -8,30 +9,32 @@ import javafx.stage.Stage;
 import UserManagement.Users;
 import UserManagement.UserManager;
 
+/**
+ * LoginPage class representing the user interface for user login.
+ */
 public class LoginPage extends Application {
 
-private UserManager userManager = Logical.getInstance()
-                                         .getUserManager();
+private UserManager userManager = Logical.getInstance().getUserManager();
 
 @Override
 public void start(Stage primaryStage) {
-  // 创建输入字段
+  // Create input fields
   TextField userIdField = new TextField();
   userIdField.setPromptText("User ID");
 
   PasswordField passwordField = new PasswordField();
   passwordField.setPromptText("Password");
 
-  // 创建按钮
-  Button loginButton  = new Button("Log In");
+  // Create buttons
+  Button loginButton = new Button("Log In");
   Button returnButton = new Button("Return");
 
-  // 提示标签
+  // Message label
   Label messageLabel = new Label();
 
-  // 设置按钮点击事件
+  // Set button click events
   loginButton.setOnAction(e -> {
-    String userId   = userIdField.getText();
+    String userId = userIdField.getText();
     String password = passwordField.getText();
 
     if (userId.isEmpty() || password.isEmpty()) {
@@ -41,7 +44,7 @@ public void start(Stage primaryStage) {
 
     Users user = userManager.CheckLogin(userId, password);
     if (user != null) {
-      // 登录成功，跳转到Dashboard
+      // Login successful, navigate to Dashboard
       Dashboard dashboard = new Dashboard(user);
       dashboard.start(primaryStage);
     } else {
@@ -54,14 +57,14 @@ public void start(Stage primaryStage) {
     mainPage.start(primaryStage);
   });
 
-  // 布局设置
+  // Layout settings
   VBox root = new VBox(10, userIdField, passwordField, loginButton, returnButton, messageLabel);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
-  // 创建场景
+  // Create scene
   Scene scene = new Scene(root, 400, 300);
 
-  // 设置舞台
+  // Set stage
   primaryStage.setTitle("User Login");
   primaryStage.setScene(scene);
   primaryStage.show();

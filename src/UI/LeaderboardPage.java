@@ -13,35 +13,43 @@ import UserManagement.Users;
 
 import java.util.List;
 
+/**
+ * LeaderboardPage class representing the user interface for viewing the leaderboard.
+ */
 public class LeaderboardPage extends Application {
 
 private final UserManager userManager = Logical.getInstance().getUserManager();
 private Users currentUser;
 
+/**
+ * Constructor for LeaderboardPage.
+ *
+ * @param user the current user
+ */
 public LeaderboardPage(Users user) {
   this.currentUser = user;
 }
 
 @Override
 public void start(Stage primaryStage) {
-  // 创建提示信息
+  // Prompt message
   Label promptLabel = new Label("Please choose the subject to view the leaderboard:");
 
-  // 创建科目按钮
+  // Create subject buttons
   Button csButton = new Button("Computer Science");
   Button eeButton = new Button("Electronic Engineering");
   Button englishButton = new Button("English");
   Button mathButton = new Button("Mathematics");
   Button returnButton = new Button("Return");
 
-  double buttonWidth = 250; // 按钮宽度
+  double buttonWidth = 250; // Specify button width
   csButton.setPrefWidth(buttonWidth);
   eeButton.setPrefWidth(buttonWidth);
   englishButton.setPrefWidth(buttonWidth);
   mathButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
 
-  // 设置按钮点击事件
+  // Set button click events
   csButton.setOnAction(e -> showLeaderboard(primaryStage, "Computer Science"));
   eeButton.setOnAction(e -> showLeaderboard(primaryStage, "Electronic Engineering"));
   englishButton.setOnAction(e -> showLeaderboard(primaryStage, "English"));
@@ -51,28 +59,34 @@ public void start(Stage primaryStage) {
     dashboard.start(primaryStage);
   });
 
-  // 布局设置
+  // Layout settings
   VBox root = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
-  // 创建场景
+  // Create scene
   Scene scene = new Scene(root, 400, 400);
 
-  // 设置舞台
+  // Set stage
   primaryStage.setTitle("Leaderboard");
   primaryStage.setScene(scene);
   primaryStage.show();
 }
 
+/**
+ * Show leaderboard for the specified subject.
+ *
+ * @param primaryStage the primary stage
+ * @param subject the subject to view the leaderboard for
+ */
 private void showLeaderboard(Stage primaryStage, String subject) {
-  // 获取所有用户
+  // Get all users
   List<Users> allUsers = List.copyOf(userManager.GetAllUsers());
 
   String topUserId = null;
   String topUserName = null;
   int highestScore = -1;
 
-  // 遍历所有用户，查找最高分
+  // Iterate through all users to find the highest score
   for (Users user : allUsers) {
     Integer userHighestScore = user.GetTopicSpecifiedHighestRecord(subject);
     if (userHighestScore != null && userHighestScore > highestScore) {
@@ -82,7 +96,7 @@ private void showLeaderboard(Stage primaryStage, String subject) {
     }
   }
 
-  // 构建显示信息
+  // Build the display message
   String result;
   if (topUserId != null) {
     result = String.format("Top User for %s:\n%s (ID: %s) with a score of %d",
@@ -91,7 +105,7 @@ private void showLeaderboard(Stage primaryStage, String subject) {
     result = "No scores available for this subject.";
   }
 
-  // 显示结果
+  // Display the result
   Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
   alert.setHeaderText("Leaderboard");
   alert.showAndWait();

@@ -1,8 +1,14 @@
 package UserManagement;
 
+/**
+ * This class contains custom exceptions for user management.
+ */
 public class Exceptions {
-public static class ScoreValueOutOfRangeException
-    extends RuntimeException {
+
+/**
+ * Exception thrown when the score value is out of range.
+ */
+public static class ScoreValueOutOfRangeException extends RuntimeException {
   public ScoreValueOutOfRangeException() {
     super();
   }
@@ -10,22 +16,25 @@ public static class ScoreValueOutOfRangeException
   public ScoreValueOutOfRangeException(String e) {
     super(e);
   }
-
 }
 
-public static class UserInformationInvalidException
-    extends RuntimeException {
-  UserInformationInvalidException() {
+/**
+ * Exception thrown when user information is invalid.
+ */
+public static class UserInformationInvalidException extends RuntimeException {
+  public UserInformationInvalidException() {
     super();
   }
 
-  UserInformationInvalidException(String e) {
+  public UserInformationInvalidException(String e) {
     super(e);
   }
 }
 
-public static class DuplicateUserException
-    extends RuntimeException {
+/**
+ * Exception thrown when a duplicate user is found.
+ */
+public static class DuplicateUserException extends RuntimeException {
   public DuplicateUserException() {
     super();
   }

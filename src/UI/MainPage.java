@@ -7,12 +7,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * MainPage class representing the main user interface for the quiz system.
+ */
 public class MainPage extends Application {
 
 @Override
 public void start(Stage primaryStage) {
   Label promptLabel = new Label("Login or Register to start the quiz.");
-  // 创建按钮
+
+  // Create buttons
   Button loginButton = new Button("User Login");
   Button registerButton = new Button("User Register");
 
@@ -20,7 +24,7 @@ public void start(Stage primaryStage) {
   loginButton.setPrefWidth(buttonWidth);
   registerButton.setPrefWidth(buttonWidth);
 
-  // 设置按钮点击事件
+  // Set button click events
   loginButton.setOnAction(e -> {
     LoginPage loginPage = new LoginPage();
     loginPage.start(primaryStage);
@@ -31,16 +35,15 @@ public void start(Stage primaryStage) {
     registerPage.start(primaryStage);
   });
 
-  // 布局设置
-  VBox root = new VBox(20, promptLabel,loginButton, registerButton);
+  // Layout settings
+  VBox root = new VBox(20, promptLabel, loginButton, registerButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
-  // 创建场景
+  // Create scene
   Scene scene = new Scene(root, 400, 300);
 
-  // 设置主舞台
+  // Set primary stage
   primaryStage.setTitle("Quiz System");
-
   primaryStage.setScene(scene);
   primaryStage.show();
 }

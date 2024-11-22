@@ -12,13 +12,17 @@ import UserManagement.Exceptions.DuplicateUserException;
 
 import java.io.IOException;
 
+/**
+ * RegisterPage class representing the user interface for user registration.
+ */
 public class RegisterPage extends Application {
 
-private UserManager userManager = Logical.getInstance().getUserManager();
+private UserManager userManager = Logical.getInstance()
+                                         .getUserManager();
 
 @Override
 public void start(Stage primaryStage) {
-  // 创建输入字段
+  // Create input fields
   TextField userIdField = new TextField();
   userIdField.setPromptText("User ID");
 
@@ -31,14 +35,14 @@ public void start(Stage primaryStage) {
   PasswordField confirmPasswordField = new PasswordField();
   confirmPasswordField.setPromptText("Confirm Password");
 
-  // 创建按钮
+  // Create buttons
   Button signupButton = new Button("Sign Up");
   Button returnButton = new Button("Return");
 
-  // 提示标签
+  // Message label
   Label messageLabel = new Label();
 
-  // 设置按钮点击事件
+  // Set button click events
   signupButton.setOnAction(e -> {
     String userId = userIdField.getText();
     String userName = userNameField.getText();
@@ -56,17 +60,17 @@ public void start(Stage primaryStage) {
     }
 
     try {
-      // 创建新用户并注册
+      // Create new user and register
       Users newUser = new Users(userId, userName, password);
       userManager.RegisterUser(newUser);
 
-      // 保存用户信息到文件
+      // Save user information to file
       userManager.SaveUserInfo("resources/u.csv", "resources/s.csv");
 
-      // 自动登录并跳转到 Dashboard
+      // Auto login and navigate to Dashboard
       messageLabel.setText("Registration successful! Logging you in...");
-      Dashboard dashboard = new Dashboard(newUser); // 创建 Dashboard 页面
-      dashboard.start(primaryStage); // 跳转到 Dashboard
+      Dashboard dashboard = new Dashboard(newUser); // Create Dashboard page
+      dashboard.start(primaryStage); // Navigate to Dashboard
 
     } catch (DuplicateUserException ex) {
       messageLabel.setText("User ID already exists.");
@@ -82,14 +86,14 @@ public void start(Stage primaryStage) {
     mainPage.start(primaryStage);
   });
 
-  // 布局设置
+  // Layout settings
   VBox root = new VBox(10, userIdField, userNameField, passwordField, confirmPasswordField, signupButton, returnButton, messageLabel);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
-  // 创建场景
+  // Create scene
   Scene scene = new Scene(root, 400, 400);
 
-  // 设置舞台
+  // Set stage
   primaryStage.setTitle("User Registration");
   primaryStage.setScene(scene);
   primaryStage.show();

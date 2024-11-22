@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * QuizPage class representing the user interface for taking a quiz.
+ */
 public class QuizPage extends Application {
 
 private Users currentUser;
@@ -38,11 +41,17 @@ private QuestionManager questionManager = Logical.getInstance().getQuestionManag
 // Map difficulty to score
 private final Map<String, Integer> difficultyScoreMap = new HashMap<>();
 
+/**
+ * Constructor for QuizPage.
+ *
+ * @param user the current user
+ * @param subject the subject of the quiz
+ */
 public QuizPage(Users user, String subject) {
   this.currentUser = user;
   this.subject = subject;
 
-  // 初始化难度与分数映射
+  // Initialize difficulty to score mapping
   difficultyScoreMap.put("EASY", 5);
   difficultyScoreMap.put("MEDIUM", 10);
   difficultyScoreMap.put("HARD", 15);
@@ -53,7 +62,7 @@ public QuizPage(Users user, String subject) {
 public void start(Stage primaryStage) {
   this.primaryStage = primaryStage;
 
-  // 初始化界面组件
+  // Initialize UI components
   questionLabel = new Label();
   questionLabel.setWrapText(true);
   questionLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
@@ -72,48 +81,51 @@ public void start(Stage primaryStage) {
   returnButton = new Button("Return");
   returnButton.setPrefWidth(150);
 
-  // 设置按钮点击事件
+  // Set button click events
   nextButton.setOnAction(e -> handleNextAction());
   returnButton.setOnAction(e -> {
-    // 返回科目选择界面
+    // Return to subject selection page
     SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);
     subjectChoosePage.start(primaryStage);
   });
 
-  // 布局设置
+  // Layout settings
   VBox root = new VBox(15, questionLabel);
   root.setStyle("-fx-padding: 20px;");
   root.setAlignment(Pos.CENTER);
 
-  // 添加选项按钮
+  // Add option buttons
   for (RadioButton optionButton : optionButtons) {
     root.getChildren().add(optionButton);
   }
 
-  // 添加控制按钮
+  // Add control buttons
   HBox buttonBox = new HBox(20, nextButton, returnButton);
   buttonBox.setAlignment(Pos.CENTER);
   root.getChildren().add(buttonBox);
 
-  // 创建场景
+  // Create scene
   Scene scene = new Scene(root, 600, 400);
 
-  // 设置舞台
+  // Set stage
   primaryStage.setTitle("Quiz - " + subject);
   primaryStage.setScene(scene);
   primaryStage.show();
 
-  // 确保题目已经加载
+  // Ensure questions are loaded
   loadQuestions();
 
-  // 显示第一题
+  // Show the first question
   showQuestion();
 }
 
+/**
+ * Load questions for the quiz.
+ */
 private void loadQuestions() {
-  // 按新规则加载题目：每种难度2道，共8道
+  // Load questions according to the new rule: 2 questions per difficulty, 8 questions in total
   try {
-    // 获取所有题目
+    // Get all questions
     Question[] allQuestions = questionManager.GetQuestions(subject);
     List<Question> easy = new ArrayList<>();
     List<Question> medium = new ArrayList<>();
@@ -121,7 +133,7 @@ private void loadQuestions() {
     List<Question> veryHard = new ArrayList<>();
 
     for (Question q : allQuestions) {
-      String difficulty = q.getDifficulty().toString(); // 假设getDifficulty返回字符串
+      String difficulty = q.getDifficulty().toString(); // Assume getDifficulty returns a string
       switch (difficulty) {
         case "EASY":
           easy.add(q);
@@ -136,41 +148,48 @@ private void loadQuestions() {
           veryHard.add(q);
           break;
         default:
-          // 未识别的难度，可以记录日志或忽略
+          // Unrecognized difficulty, can log or ignore
           break;
       }
     }
 
-    // 随机选择2道题
+    // Randomly select 2 questions
     List<Question> selectedQuestions = new ArrayList<>();
     selectedQuestions.addAll(selectRandomQuestions(easy, 2));
     selectedQuestions.addAll(selectRandomQuestions(medium, 2));
     selectedQuestions.addAll(selectRandomQuestions(hard, 2));
     selectedQuestions.addAll(selectRandomQuestions(veryHard, 2));
 
-    // 打乱题目顺序
+    // Shuffle question order
     Collections.shuffle(selectedQuestions);
 
     questions = selectedQuestions;
 
-    // 打乱每道题的选项顺序
+    // Shuffle options for each question
     for (Question q : questions) {
       List<Option> optionList = new ArrayList<>(Arrays.asList(q.getOptions()));
       Collections.shuffle(optionList);
-      // 假设Option类可以通过构造函数或其他方式重新排列
+      // Assume Option class can be rearranged via constructor or other methods
       q.setOptions(List.of(optionList.toArray(new Option[0])));
     }
 
   } catch (NoTopicFoundException e) {
-    // 如果没有找到题目，显示错误信息并返回
+    // If no questions found, show error message and return
     Alert alert = new Alert(Alert.AlertType.ERROR, "No questions found for this subject.", ButtonType.OK);
     alert.showAndWait();
-    // 返回科目选择界面
+    // Return to subject selection page
     SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);
     subjectChoosePage.start(primaryStage);
   }
 }
 
+/**
+ * Select random questions from a list.
+ *
+ * @param questions the list of questions
+ * @param count the number of questions to select
+ * @return the selected questions
+ */
 private List<Question> selectRandomQuestions(List<Question> questions, int count) {
   List<Question> selected = new ArrayList<>();
   Collections.shuffle(questions);
@@ -180,24 +199,27 @@ private List<Question> selectRandomQuestions(List<Question> questions, int count
   return selected;
 }
 
+/**
+ * Show the current question.
+ */
 private void showQuestion() {
   if (currentQuestionIndex >= questions.size()) {
-    // 所有题目已完成，显示分数
+    // All questions completed, show score
     showScore();
     return;
   }
 
   Question currentQuestion = questions.get(currentQuestionIndex);
 
-  // 显示题干
+  // Display question text
   questionLabel.setText("Question " + (currentQuestionIndex + 1) + ": " + currentQuestion.getQuestionStatement());
 
-  // 获取选项
+  // Get options
   Option[] options = currentQuestion.getOptions();
   List<Option> optionList = Arrays.asList(options);
-  // 随机打乱选项顺序已经在loadQuestions()中进行了
+  // Shuffle options already done in loadQuestions()
 
-  // 显示选项
+  // Display options
   for (int i = 0; i < optionButtons.size(); i++) {
     RadioButton optionButton = optionButtons.get(i);
     if (i < optionList.size()) {
@@ -209,7 +231,7 @@ private void showQuestion() {
     }
   }
 
-  // 最后一题时，将“Next”按钮文字改为“Submit”
+  // Change "Next" button text to "Submit" for the last question
   if (currentQuestionIndex == questions.size() - 1) {
     nextButton.setText("Submit");
   } else {
@@ -217,47 +239,53 @@ private void showQuestion() {
   }
 }
 
+/**
+ * Handle the action for the next button.
+ */
 private void handleNextAction() {
-  // 检查用户选择
+  // Check user selection
   Toggle selectedToggle = optionsGroup.getSelectedToggle();
   if (selectedToggle != null) {
     Option selectedOption = (Option) selectedToggle.getUserData();
     if (selectedOption.isCorrectAnswer()) {
-      // 根据题目难度分配分数
+      // Assign score based on question difficulty
       String difficulty = questions.get(currentQuestionIndex).getDifficulty().toString();
       int score = difficultyScoreMap.getOrDefault(difficulty, 0);
       totalScore += score;
     }
   }
-  // 未选择则视为错误，不加分
+  // No selection is considered incorrect, no score added
 
-  // 清除选择
+  // Clear selection
   optionsGroup.selectToggle(null);
 
-  // 进入下一题
+  // Move to the next question
   currentQuestionIndex++;
   showQuestion();
 }
 
+/**
+ * Show the total score and save the result.
+ */
 private void showScore() {
-  // 显示总分并保存成绩
+  // Display total score and save the result
   Alert alert = new Alert(Alert.AlertType.INFORMATION, "Quiz finished!\nYour total score is: " + totalScore, ButtonType.OK);
   alert.showAndWait();
 
-  // 将成绩记录到用户的 ScoreRecords 中
+  // Record the score in the user's ScoreRecords
   currentUser.NewRecord(subject, totalScore);
 
   try {
-    // 保存成绩信息
+    // Save score information
     Logical.getInstance().getUserManager().SaveUserInfo("resources/u.csv", "resources/s.csv");
   } catch (IOException ex) {
-    // 处理保存错误
+    // Handle save error
     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error saving score information.", ButtonType.OK);
     errorAlert.showAndWait();
     ex.printStackTrace();
   }
 
-  // 返回 Dashboard
+  // Return to Dashboard
   Dashboard dashboard = new Dashboard(currentUser);
   try {
     dashboard.start(primaryStage);

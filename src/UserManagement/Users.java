@@ -2,12 +2,23 @@ package UserManagement;
 
 import java.util.List;
 
+/**
+ * Represents a user with an ID, name, password, and score records.
+ */
 public class Users {
 private final String m_id_;
 private final String m_name_;
 private final ScoreRecords m_record_ = new ScoreRecords();
 private String m_passwd_;
 
+/**
+ * Constructs a new user.
+ *
+ * @param id the user ID
+ * @param name the user name
+ * @param passwd the user password
+ * @throws Exceptions.UserInformationInvalidException if the ID or name is empty
+ */
 public Users(String id, String name, String passwd) throws Exceptions.UserInformationInvalidException {
   if (id.isEmpty()) {
     throw new Exceptions.UserInformationInvalidException("User ID cannot be empty");
@@ -20,33 +31,65 @@ public Users(String id, String name, String passwd) throws Exceptions.UserInform
   m_passwd_ = passwd;
 }
 
+/**
+ * Gets the user password.
+ *
+ * @return the user password
+ */
 public String GetPasswd() {
   return m_passwd_;
 }
 
+/**
+ * Checks if the provided password matches the user's password.
+ *
+ * @param passwd the password to check
+ * @return true if the password matches, false otherwise
+ */
 public boolean CheckPasswd(String passwd) {
   return m_passwd_.equals(passwd);
 }
 
+/**
+ * Sets the user password.
+ *
+ * @param passwd the new password
+ * @return the user object
+ */
 public Users setPasswd(String passwd) {
   this.m_passwd_ = passwd;
   return this;
 }
 
+/**
+ * Gets the user name.
+ *
+ * @return the user name
+ */
 public String GetName() {
   return m_name_;
 }
 
+/**
+ * Gets the user ID.
+ *
+ * @return the user ID
+ */
 public String GetId() {
   return m_id_;
 }
 
+/**
+ * Gets the user's score records.
+ *
+ * @return the score records
+ */
 public ScoreRecords GetRecords() {
   return m_record_;
 }
 
 /**
- * Add a new score record
+ * Adds a new score record.
  *
  * @param topic the name of the topic
  * @param score the score
@@ -54,10 +97,9 @@ public ScoreRecords GetRecords() {
  */
 public Users NewRecord(String topic, Integer score) {
   if (score == null) {
-    return this; // 如果分数为空，直接返回
+    return this;
   }
   m_record_.addScore(topic, score);
-  // 自动更新最高分
   Integer currentHighest = GetTopicSpecifiedHighestRecord(topic);
   if (currentHighest == null || score > currentHighest) {
     SetTopicSpecifiedHighestRecord(topic, score);
@@ -66,7 +108,7 @@ public Users NewRecord(String topic, Integer score) {
 }
 
 /**
- * Get all topics the user has answered
+ * Gets all topics the user has answered.
  *
  * @return an array of all answered topics
  */
@@ -75,18 +117,18 @@ public String[] GetAnsweredTopics() {
 }
 
 /**
- * Get the most recent three scores for a specific topic
+ * Gets the most recent three scores for a specific topic.
  *
  * @param topic the name of the topic
  * @return a list of the most recent three scores for the specified topic
  */
 public List<Integer> GetTopicSpecifiedRecentRecords(String topic) {
   ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
-  return ts != null ? ts.getRecentScores() : List.of(); // 返回空列表以防止空指针异常
+  return ts != null ? ts.getRecentScores() : List.of();
 }
 
 /**
- * Get the highest score for a specific topic
+ * Gets the highest score for a specific topic.
  *
  * @param topic the name of the topic
  * @return the highest score for the specified topic
@@ -98,7 +140,7 @@ public Integer GetTopicSpecifiedHighestRecord(String topic) {
 }
 
 /**
- * Set the highest score for a specific topic
+ * Sets the highest score for a specific topic.
  *
  * @param topic the name of the topic
  * @param score the highest score to set
@@ -106,7 +148,6 @@ public Integer GetTopicSpecifiedHighestRecord(String topic) {
 public void SetTopicSpecifiedHighestRecord(String topic, Integer score) {
   ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
   if (ts == null) {
-    // 如果该科目不存在，则添加并设置最高分
     m_record_.addScore(topic, score);
     ts = m_record_.getTopicScores(topic);
   }

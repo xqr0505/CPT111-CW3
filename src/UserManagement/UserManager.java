@@ -12,12 +12,15 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.logging.Logger;
 
+/**
+ * Manages user accounts and score records.
+ */
 public class UserManager {
 
 private final Set<Users> m_users_ = new HashSet<>();
 
 /**
- * Load User Account and Score information
+ * Load User Account and Score information.
  *
  * @param infofp  account information file
  * @param scorefp score record information file
@@ -49,7 +52,7 @@ public UserManager LoadUserInfo(String infofp, String scorefp) throws IOExceptio
 }
 
 /**
- * Save User Account and Score Information to file
+ * Save User Account and Score Information to file.
  *
  * @param infofp  account file path
  * @param scorefp score record information file path
@@ -73,7 +76,7 @@ public UserManager SaveUserInfo(String infofp, String scorefp) throws IOExceptio
 }
 
 /**
- * Register a new user
+ * Register a new user.
  *
  * @param user user object
  * @return self, for chain-call
@@ -89,7 +92,7 @@ public UserManager RegisterUser(Users user) {
 }
 
 /**
- * Detect whether the password is matching id
+ * Detect whether the password is matching id.
  *
  * @param id     id to login
  * @param passwd password
@@ -105,7 +108,7 @@ public Users CheckLogin(String id, String passwd) {
 }
 
 /**
- * Export Account information to table
+ * Export Account information to table.
  *
  * @return account info table
  */
@@ -120,7 +123,7 @@ public Table ExportAccountInfoToTable() {
 }
 
 /**
- * Load Account info from table
+ * Load Account info from table.
  *
  * @param table account info table
  * @return self, for chain-call
@@ -138,15 +141,15 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     String userName = l[1].trim();
     String password = l[2].trim();
 
-    // 跳过所有字段均为空的行
+    // Skip lines where all fields are empty
     if (userId.isEmpty() && userName.isEmpty() && password.isEmpty()) {
       continue;
     }
 
-    // 添加调试输出
+    // Debug output
     System.out.println("Loading user: ID='" + userId);
 
-    // 检查单个字段是否为空
+    // Check if any field is empty
     if (userId.isEmpty() || userName.isEmpty() || password.isEmpty()) {
       Logger.getLogger("global").warning("Invalid user data: " + Arrays.toString(l));
       continue;
@@ -162,7 +165,7 @@ public UserManager LoadAccountInfoFromTable(Table table) {
 }
 
 /**
- * Export Score information to table
+ * Export Score information to table.
  *
  * @return score info table
  */
@@ -191,7 +194,7 @@ public Table ExportScoreInfoToTable() {
 }
 
 /**
- * Load score info from table
+ * Load score info from table.
  *
  * @param table score info table
  * @return self, for chain-call
@@ -213,7 +216,7 @@ public UserManager LoadScoreInfoFromTable(Table table) {
 
     Users user = getUserById(userId);
     if (user != null) {
-      // 添加前三次分数记录
+      // Add the first three score records
       if (!score1Str.isEmpty()) {
         try {
           int score1 = Integer.parseInt(score1Str);
@@ -239,7 +242,7 @@ public UserManager LoadScoreInfoFromTable(Table table) {
         }
       }
 
-      // 更新最高分
+      // Update the highest score
       if (!highestScoreStr.isEmpty()) {
         try {
           Integer highestScore = Integer.parseInt(highestScoreStr);
@@ -258,9 +261,8 @@ public UserManager LoadScoreInfoFromTable(Table table) {
   return this;
 }
 
-
 /**
- * Get user by ID
+ * Get user by ID.
  *
  * @param id user ID
  * @return Users object, or null if not found
@@ -275,7 +277,7 @@ public Users getUserById(String id) {
 }
 
 /**
- * Get all users
+ * Get all users.
  *
  * @return unmodifiable set of users
  */

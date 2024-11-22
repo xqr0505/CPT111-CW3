@@ -69,7 +69,7 @@ public String[] GetTitle() {
 }
 
 /**
- * Get element that lays on `row` row and `col` column
+ * Get element that lies on `row` row and `col` column
  *
  * @param row row of the element
  * @param col column of the element

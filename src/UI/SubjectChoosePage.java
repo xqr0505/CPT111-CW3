@@ -1,4 +1,5 @@
 package UI;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,70 +8,71 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import UserManagement.Users;
 
+/**
+ * SubjectChoosePage class representing the user interface for choosing a subject.
+ */
 public class SubjectChoosePage extends Application {
 
 private Users currentUser;
 
+/**
+ * Constructor for SubjectChoosePage.
+ *
+ * @param user the current user
+ */
 public SubjectChoosePage(Users user) {
   this.currentUser = user;
 }
 
 @Override
 public void start(Stage primaryStage) {
-  // 提示信息
+  // Prompt message
   Label promptLabel = new Label("Please choose your subject:");
 
-  // 创建科目按钮
+  // Create subject buttons
   Button csButton = new Button("Computer Science");
   Button eeButton = new Button("Electronic Engineering");
   Button englishButton = new Button("English");
   Button mathButton = new Button("Mathematics");
   Button returnButton = new Button("Return");
 
-  double buttonWidth = 200; // 指定按钮宽度
+  double buttonWidth = 200; // Specify button width
   csButton.setPrefWidth(buttonWidth);
   eeButton.setPrefWidth(buttonWidth);
   englishButton.setPrefWidth(buttonWidth);
   mathButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
 
-  // 设置按钮点击事件
-  csButton.setOnAction(e -> {
-    startQuiz(primaryStage, "Computer Science");
-  });
-
-  eeButton.setOnAction(e -> {
-    startQuiz(primaryStage, "Electronic Engineering");
-  });
-
-  englishButton.setOnAction(e -> {
-    startQuiz(primaryStage, "English");
-  });
-
-  mathButton.setOnAction(e -> {
-    startQuiz(primaryStage, "Mathematics");
-  });
-
+  // Set button click events
+  csButton.setOnAction(e -> startQuiz(primaryStage, "Computer Science"));
+  eeButton.setOnAction(e -> startQuiz(primaryStage, "Electronic Engineering"));
+  englishButton.setOnAction(e -> startQuiz(primaryStage, "English"));
+  mathButton.setOnAction(e -> startQuiz(primaryStage, "Mathematics"));
   returnButton.setOnAction(e -> {
     Dashboard dashboard = new Dashboard(currentUser);
     dashboard.start(primaryStage);
   });
 
-  // 布局设置
+  // Layout settings
   VBox root = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
-  // 创建场景
+  // Create scene
   Scene scene = new Scene(root, 400, 400);
 
-  // 设置舞台
+  // Set stage
   primaryStage.setTitle("Choose Subject");
   primaryStage.setScene(scene);
   primaryStage.show();
 }
 
+/**
+ * Start the quiz for the selected subject.
+ *
+ * @param primaryStage the primary stage
+ * @param subject the subject to start the quiz for
+ */
 private void startQuiz(Stage primaryStage, String subject) {
-  // 启动QuizPage，开始测验
   QuizPage quizPage = new QuizPage(currentUser, subject);
   quizPage.start(primaryStage);
 }
