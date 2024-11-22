@@ -81,6 +81,8 @@ private void showHistoryScores(Stage primaryStage, String subject) {
 
   if (scoresList == null || scoresList.isEmpty()) {
     Alert alert = new Alert(Alert.AlertType.INFORMATION, "No history scores for this subject.", ButtonType.OK);
+    alert.setHeaderText("No Scores!");
+    alert.setTitle("User Dashboard");
     alert.showAndWait();
     return;
   }

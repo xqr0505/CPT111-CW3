@@ -105,14 +105,20 @@ private void showLeaderboard(Stage primaryStage, String subject) {
   if (!topUsers.isEmpty()) {
     result = String.format("Top Users for %s with a score of %d:\n%s",
                            subject, highestScore, String.join("\n", topUsers));
+    // Display the result
+    Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
+    alert.setHeaderText("Congratulations!");
+    alert.setTitle("Leaderboard");
+    alert.showAndWait();
   } else {
     result = "No scores available for this subject.";
+    // Display the result
+    Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
+    alert.setHeaderText("No Scores!");
+    alert.setTitle("Leaderboard");
+    alert.showAndWait();
   }
 
-  // Display the result
-  Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
-  alert.setHeaderText("Leaderboard");
-  alert.setTitle("Leaderboard");
-  alert.showAndWait();
+
 }
 }

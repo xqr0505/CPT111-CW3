@@ -268,7 +268,9 @@ private void handleNextAction() {
  */
 private void showScore() {
   // Display total score and save the result
-  Alert alert = new Alert(Alert.AlertType.INFORMATION, "Quiz finished!\nYour total score is: " + totalScore, ButtonType.OK);
+  Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your total score is: " + totalScore, ButtonType.OK);
+  alert.setHeaderText("Quiz finished!");
+  alert.setTitle("Quiz Score");
   alert.showAndWait();
 
   // Record the score in the user's ScoreRecords
