@@ -30,24 +30,28 @@ public UserDashboardPage(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Prompt message
-  Label promptLabel = new Label("Please choose the subject to view history scores:");
+  Label promptLabel     =   new Label("Please choose the subject to view history scores:");
 
   // Create subject buttons
-  Button csButton = new Button("Computer Science");
-  Button eeButton = new Button("Electronic Engineering");
-  Button englishButton = new Button("English");
-  Button mathButton = new Button("Mathematics");
-  Button returnButton = new Button("Return");
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+  Button csButton       =   new Button("Computer Science");
+  Button eeButton       =   new Button("Electronic Engineering");
+  Button englishButton  =   new Button("English");
+  Button mathButton     =   new Button("Mathematics");
+  Button returnButton   =   new Button("Return");
 
-  double buttonWidth = 250; // Specify button width
+  // Specify button width
+  double buttonWidth = 250;
   csButton.setPrefWidth(buttonWidth);
   eeButton.setPrefWidth(buttonWidth);
   englishButton.setPrefWidth(buttonWidth);
   mathButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
+
+  // Set button styles
+  returnButton.setStyle("-fx-background-color: #a3c5f4;");
+  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+
 
   // Set button click events
   csButton.setOnAction(e -> showHistoryScores(primaryStage, "Computer Science"));

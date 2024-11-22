@@ -27,24 +27,28 @@ public SubjectChoosePage(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Prompt message
-  Label promptLabel = new Label("Please choose your subject:");
+  Label promptLabel       =   new Label("Please choose your subject:");
 
   // Create subject buttons
-  Button csButton = new Button("Computer Science");
-  Button eeButton = new Button("Electronic Engineering");
-  Button englishButton = new Button("English");
-  Button mathButton = new Button("Mathematics");
-  Button returnButton = new Button("Return");
+  Button csButton         =   new Button("Computer Science");
+  Button eeButton         =   new Button("Electronic Engineering");
+  Button englishButton    =   new Button("English");
+  Button mathButton       =   new Button("Mathematics");
+  Button returnButton     =   new Button("Return");
 
-  double buttonWidth = 200; // Specify button width
+  // Specify button width
+  double buttonWidth      =   200;
   csButton.setPrefWidth(buttonWidth);
   eeButton.setPrefWidth(buttonWidth);
   englishButton.setPrefWidth(buttonWidth);
   mathButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
+
+  // Set button styles
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+
   // Set button click events
   csButton.setOnAction(e -> startQuiz(primaryStage, "Computer Science"));
   eeButton.setOnAction(e -> startQuiz(primaryStage, "Electronic Engineering"));

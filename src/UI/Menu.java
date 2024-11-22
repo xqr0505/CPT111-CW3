@@ -27,18 +27,21 @@ public Menu(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Welcome message
-  Label welcomeLabel = new Label("Login success! Hi, " + currentUser.GetName());
+  Label welcomeLabel        =   new Label("Login success! Hi, " + currentUser.GetName());
 
   // Create buttons
-  Button attemptQuizButton = new Button("Attempt Quiz");
-  Button historyScoreButton = new Button("User Dashboard");
-  Button leaderboardButton = new Button("Leaderboard");
-  Button returnButton = new Button("Log Out");
+  Button attemptQuizButton  =   new Button("Attempt Quiz");
+  Button historyScoreButton =   new Button("User Dashboard");
+  Button leaderboardButton  =   new Button("Leaderboard");
+  Button returnButton       =   new Button("Log Out");
+
+  // Set button styles
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
 
-  double buttonWidth = 200; // Specify button width
+  // Specify button width
+  double buttonWidth = 200;
   attemptQuizButton.setPrefWidth(buttonWidth);
   historyScoreButton.setPrefWidth(buttonWidth);
   leaderboardButton.setPrefWidth(buttonWidth);
@@ -47,33 +50,33 @@ public void start(Stage primaryStage) {
   // Set button click events
   attemptQuizButton.setOnAction(e -> {
     // Navigate to SubjectChoosePage
-    SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);
+    SubjectChoosePage subjectChoosePage   =   new SubjectChoosePage(currentUser);
     subjectChoosePage.start(primaryStage);
   });
 
   historyScoreButton.setOnAction(e -> {
     // Navigate to HistoryScorePage
-    UserDashboardPage userDashboardPage = new UserDashboardPage(currentUser);
+    UserDashboardPage userDashboardPage   =   new UserDashboardPage(currentUser);
     userDashboardPage.start(primaryStage);
   });
 
   leaderboardButton.setOnAction(e -> {
     // Navigate to LeaderboardPage
-    LeaderboardPage leaderboardPage = new LeaderboardPage(currentUser);
+    LeaderboardPage leaderboardPage   =   new LeaderboardPage(currentUser);
     leaderboardPage.start(primaryStage);
   });
 
   returnButton.setOnAction(e -> {
-    MainPage mainPage = new MainPage();
+    MainPage mainPage  =  new MainPage();
     mainPage.start(primaryStage);
   });
 
   // Layout settings
-  VBox root = new VBox(20, welcomeLabel, attemptQuizButton, historyScoreButton, leaderboardButton, returnButton);
+  VBox root   =   new VBox(20, welcomeLabel, attemptQuizButton, historyScoreButton, leaderboardButton, returnButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
   // Create scene
-  Scene scene = new Scene(root, 400, 400);
+  Scene scene  =  new Scene(root, 400, 400);
 
   // Set stage
   primaryStage.setTitle("Menu");

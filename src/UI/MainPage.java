@@ -14,24 +14,25 @@ public class MainPage extends Application {
 
 @Override
 public void start(Stage primaryStage) {
-  Label promptLabel = new Label("Login or Register to start the quiz.");
+  Label promptLabel     =   new Label("Login or Register to start the quiz.");
 
   // Create buttons
-  Button loginButton = new Button("User Login");
-  Button registerButton = new Button("User Register");
+  Button loginButton    =   new Button("User Login");
+  Button registerButton =   new Button("User Register");
 
+  // Specify button width
   double buttonWidth = 150;
   loginButton.setPrefWidth(buttonWidth);
   registerButton.setPrefWidth(buttonWidth);
 
   // Set button click events
   loginButton.setOnAction(e -> {
-    LoginPage loginPage = new LoginPage();
+    LoginPage loginPage  =  new LoginPage();
     loginPage.start(primaryStage);
   });
 
   registerButton.setOnAction(e -> {
-    RegisterPage registerPage = new RegisterPage();
+    RegisterPage registerPage   =   new RegisterPage();
     registerPage.start(primaryStage);
   });
 

@@ -21,21 +21,21 @@ import java.util.*;
  */
 public class QuizPage extends Application {
 
-private Users currentUser;
-private String subject;
-private List<Question> questions;
-private int currentQuestionIndex = 0;
-private int totalScore = 0;
+private final   Users             currentUser;
+private final   String            subject;
+private         List<Question>    questions;
+private         int               currentQuestionIndex  =   0;
+private         int               totalScore            =   0;
 
-private Label questionLabel;
-private ToggleGroup optionsGroup;
-private List<RadioButton> optionButtons;
-private Button nextButton;
-private Button returnButton;
+private   Label             questionLabel;
+private   ToggleGroup       optionsGroup;
+private   List<RadioButton> optionButtons;
+private   Button            nextButton;
+private   Button            returnButton;
 
-private Stage primaryStage;
+private   Stage             primaryStage;
 
-private QuestionManager questionManager = Logical.getInstance().getQuestionManager();
+private   QuestionManager   questionManager = Logical.getInstance().getQuestionManager();
 
 // Map difficulty to score
 private final Map<String, Integer> difficultyScoreMap = new HashMap<>();
@@ -47,8 +47,8 @@ private final Map<String, Integer> difficultyScoreMap = new HashMap<>();
  * @param subject the subject of the quiz
  */
 public QuizPage(Users user, String subject) {
-  this.currentUser = user;
-  this.subject = subject;
+  this.currentUser  =   user;
+  this.subject      =   subject;
 
   // Initialize difficulty to score mapping
   difficultyScoreMap.put("EASY", 5);
@@ -62,26 +62,36 @@ public void start(Stage primaryStage) {
   this.primaryStage = primaryStage;
 
   // Initialize UI components
-  questionLabel = new Label();
+  questionLabel   =   new   Label();
   questionLabel.setWrapText(true);
   questionLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
-  optionsGroup = new ToggleGroup();
-  optionButtons = new ArrayList<>();
-  for (int i = 0; i < 5; i++) {
-    RadioButton optionButton = new RadioButton();
+  optionsGroup    =   new   ToggleGroup();
+  optionButtons   =   new   ArrayList<>();
+
+  // Create option buttons(set max options number to 5)
+  int maxOptions = 5;
+  for (int i = 0; i < maxOptions; i++) {
+    RadioButton optionButton  =   new RadioButton();
     optionButton.setToggleGroup(optionsGroup);
     optionButton.setPrefWidth(500);
     optionButtons.add(optionButton);
   }
 
+  // Create control buttons
   nextButton = new Button("Next");
-  nextButton.setPrefWidth(150);
   returnButton = new Button("Return");
-  returnButton.setPrefWidth(150);
+
+  // Specify button width
+  double buttonWidth = 150;
+  nextButton.setPrefWidth(buttonWidth );
+  returnButton.setPrefWidth(buttonWidth );
+
+  // Set button styles
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+
   // Set button click events
   nextButton.setOnAction(e -> handleNextAction());
   returnButton.setOnAction(e -> {
@@ -124,56 +134,8 @@ public void start(Stage primaryStage) {
  * Load questions for the quiz.
  */
 private void loadQuestions() {
-  // Load questions according to the new rule: 2 questions per difficulty, 8 questions in total
   try {
-    // Get all questions
-    Question[] allQuestions = questionManager.GetQuestions(subject);
-    List<Question> easy = new ArrayList<>();
-    List<Question> medium = new ArrayList<>();
-    List<Question> hard = new ArrayList<>();
-    List<Question> veryHard = new ArrayList<>();
-
-    for (Question q : allQuestions) {
-      String difficulty = q.getDifficulty().toString(); // Assume getDifficulty returns a string
-      switch (difficulty) {
-        case "EASY":
-          easy.add(q);
-          break;
-        case "MEDIUM":
-          medium.add(q);
-          break;
-        case "HARD":
-          hard.add(q);
-          break;
-        case "VERY_HARD":
-          veryHard.add(q);
-          break;
-        default:
-          // Unrecognized difficulty, can log or ignore
-          break;
-      }
-    }
-
-    // Randomly select 2 questions
-    List<Question> selectedQuestions = new ArrayList<>();
-    selectedQuestions.addAll(selectRandomQuestions(easy, 2));
-    selectedQuestions.addAll(selectRandomQuestions(medium, 2));
-    selectedQuestions.addAll(selectRandomQuestions(hard, 2));
-    selectedQuestions.addAll(selectRandomQuestions(veryHard, 2));
-
-    // Shuffle question order
-    Collections.shuffle(selectedQuestions);
-
-    questions = selectedQuestions;
-
-    // Shuffle options for each question
-    for (Question q : questions) {
-      List<Option> optionList = new ArrayList<>(Arrays.asList(q.getOptions()));
-      Collections.shuffle(optionList);
-      // Assume Option class can be rearranged via constructor or other methods
-      q.setOptions(List.of(optionList.toArray(new Option[0])));
-    }
-
+    questions = questionManager.loadQuestionsForQuiz(subject);
   } catch (NoTopicFoundException e) {
     // If no questions found, show error message and return
     Alert alert = new Alert(Alert.AlertType.ERROR, "No questions found for this subject.", ButtonType.OK);
@@ -182,22 +144,6 @@ private void loadQuestions() {
     SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);
     subjectChoosePage.start(primaryStage);
   }
-}
-
-/**
- * Select random questions from a list.
- *
- * @param questions the list of questions
- * @param count the number of questions to select
- * @return the selected questions
- */
-private List<Question> selectRandomQuestions(List<Question> questions, int count) {
-  List<Question> selected = new ArrayList<>();
-  Collections.shuffle(questions);
-  for (int i = 0; i < count && i < questions.size(); i++) {
-    selected.add(questions.get(i));
-  }
-  return selected;
 }
 
 /**
@@ -250,9 +196,9 @@ private void handleNextAction() {
     Option selectedOption = (Option) selectedToggle.getUserData();
     if (selectedOption.isCorrectAnswer()) {
       // Assign score based on question difficulty
-      String difficulty = questions.get(currentQuestionIndex).getDifficulty().toString();
-      int score = difficultyScoreMap.getOrDefault(difficulty, 0);
-      totalScore += score;
+      String difficulty  =  questions.get(currentQuestionIndex).getDifficulty().toString();
+      int score          =  difficultyScoreMap.getOrDefault(difficulty, 0);
+      totalScore        +=  score;
     }
   }
   // No selection is considered incorrect, no score added

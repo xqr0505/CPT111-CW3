@@ -64,4 +64,78 @@ public String[] GetTopics() {
   return m_questions_.keySet()
                      .toArray(new String[0]);
 }
+
+/**
+ * Select random questions from a list.
+ *
+ * @param questions the list of questions
+ * @param count the number of questions to select
+ * @return the selected questions
+ */
+private List<Question> selectRandomQuestions(List<Question> questions, int count) {
+  List<Question> selected = new ArrayList<>();
+  Collections.shuffle(questions);
+  for (int i = 0; i < count && i < questions.size(); i++) {
+    selected.add(questions.get(i));
+  }
+  return selected;
+}
+
+/**
+ * Load questions for the quiz.
+ *
+ * @param subject the subject of the quiz
+ * @return the list of selected questions
+ * @throws NoTopicFoundException if no questions found for the subject
+ */
+public List<Question> loadQuestionsForQuiz(String subject) throws NoTopicFoundException {
+  // Get all questions
+  Question[] allQuestions = GetQuestions(subject);
+  List<Question> easy = new ArrayList<>();
+  List<Question> medium = new ArrayList<>();
+  List<Question> hard = new ArrayList<>();
+  List<Question> veryHard = new ArrayList<>();
+
+  for (Question q : allQuestions) {
+    String difficulty = q.getDifficulty().toString(); // Assume getDifficulty returns a string
+    switch (difficulty) {
+      case "EASY":
+        easy.add(q);
+        break;
+      case "MEDIUM":
+        medium.add(q);
+        break;
+      case "HARD":
+        hard.add(q);
+        break;
+      case "VERY_HARD":
+        veryHard.add(q);
+        break;
+      default:
+        // Unrecognized difficulty, can log or ignore
+        break;
+    }
+  }
+
+  // Randomly select 2 questions
+  List<Question> selectedQuestions = new ArrayList<>();
+  selectedQuestions.addAll(selectRandomQuestions(easy, 2));
+  selectedQuestions.addAll(selectRandomQuestions(medium, 2));
+  selectedQuestions.addAll(selectRandomQuestions(hard, 2));
+  selectedQuestions.addAll(selectRandomQuestions(veryHard, 2));
+
+  // Shuffle question order
+  Collections.shuffle(selectedQuestions);
+
+  // Shuffle options for each question
+  for (Question q : selectedQuestions) {
+    List<Option> optionList = new ArrayList<>(Arrays.asList(q.getOptions()));
+    Collections.shuffle(optionList);
+    q.setOptions(List.of(optionList.toArray(new Option[0])));
+  }
+
+  return selectedQuestions;
+}
+
+
 }

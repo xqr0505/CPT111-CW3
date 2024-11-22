@@ -23,33 +23,36 @@ private UserManager userManager = Logical.getInstance()
 @Override
 public void start(Stage primaryStage) {
   // Create input fields
-  Label userIdLabel = new Label("New User ID:");
-  TextField userIdField = new TextField();
+  Label userIdLabel       =   new Label("New User ID:");
+  TextField userIdField   =   new TextField();
   userIdField.setPromptText("User ID");
 
-  Label usernameLabel = new Label("New User Name:");
-  TextField userNameField = new TextField();
+  Label usernameLabel     =   new Label("New User Name:");
+  TextField userNameField =   new TextField();
   userNameField.setPromptText("User Name");
 
-  Label passwordLabel = new Label("New Password:");
-  PasswordField passwordField = new PasswordField();
+  Label passwordLabel           =   new Label("New Password:");
+  PasswordField passwordField   =   new PasswordField();
   passwordField.setPromptText("Password");
 
-  Label confirmLabel = new Label("Confirm your Password:");
-  PasswordField confirmPasswordField = new PasswordField();
+  Label confirmLabel                  =   new Label("Confirm your Password:");
+  PasswordField confirmPasswordField  =   new PasswordField();
   confirmPasswordField.setPromptText("Confirm Password");
 
   // Create buttons
-  Button signupButton = new Button("Sign Up");
-  Button returnButton = new Button("Return");
+  Button signupButton   =   new Button("Sign Up");
+  Button returnButton   =   new Button("Return");
 
+  // Specify button width
   double buttonWidth = 100;
   signupButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
 
+  // Set button styles
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+
   // Message label
   Label messageLabel = new Label();
 
@@ -70,6 +73,7 @@ public void start(Stage primaryStage) {
       return;
     }
 
+    // Register new user
     try {
       // Create new user and register
       Users newUser = new Users(userId, userName, password);

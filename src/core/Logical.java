@@ -13,12 +13,11 @@ import java.util.logging.Logger;
  */
 public class Logical {
 
-private static final Logical s_instance_ = new Logical();
-
-private final UserManager m_users_ = new UserManager();
-private final QuestionManager m_questions_ = new QuestionManager();
-private final List<CallBackHook.Hook> m_prepareHooks_ = new ArrayList<>();
-private final List<CallBackHook.Hook> m_quitHooks_ = new ArrayList<>();
+private static final  Logical                 s_instance_     =   new Logical();
+private final         UserManager             m_users_        =   new UserManager();
+private final         QuestionManager         m_questions_    =   new QuestionManager();
+private final         List<CallBackHook.Hook> m_prepareHooks_ =   new ArrayList<>();
+private final         List<CallBackHook.Hook> m_quitHooks_    =   new ArrayList<>();
 
 private Logical() {
 }

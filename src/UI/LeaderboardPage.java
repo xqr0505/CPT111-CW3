@@ -20,7 +20,7 @@ import java.util.List;
 public class LeaderboardPage extends Application {
 
 private final UserManager userManager = Logical.getInstance().getUserManager();
-private Users currentUser;
+private       Users       currentUser;
 
 /**
  * Constructor for LeaderboardPage.
@@ -34,36 +34,41 @@ public LeaderboardPage(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Prompt message
-  Label promptLabel = new Label("Please choose the subject to view the leaderboard:");
+  Label promptLabel     =   new Label("Please choose the subject to view the leaderboard:");
 
   // Create subject buttons
-  Button csButton = new Button("Computer Science");
-  Button eeButton = new Button("Electronic Engineering");
-  Button englishButton = new Button("English");
-  Button mathButton = new Button("Mathematics");
-  Button returnButton = new Button("Return");
+  Button csButton       =   new Button("Computer Science");
+  Button eeButton       =   new Button("Electronic Engineering");
+  Button englishButton  =   new Button("English");
+  Button mathButton     =   new Button("Mathematics");
+  Button returnButton   =   new Button("Return");
 
-  double buttonWidth = 250; // Specify button width
+  // Specify button width
+  double buttonWidth    =   250;
   csButton.setPrefWidth(buttonWidth);
   eeButton.setPrefWidth(buttonWidth);
   englishButton.setPrefWidth(buttonWidth);
   mathButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
+
+  // Set button styles
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+
   // Set button click events
-  csButton.setOnAction(e -> showLeaderboard(primaryStage, "Computer Science"));
-  eeButton.setOnAction(e -> showLeaderboard(primaryStage, "Electronic Engineering"));
-  englishButton.setOnAction(e -> showLeaderboard(primaryStage, "English"));
-  mathButton.setOnAction(e -> showLeaderboard(primaryStage, "Mathematics"));
+  csButton.setOnAction(e -> showLeaderboard( "Computer Science"));
+  eeButton.setOnAction(e -> showLeaderboard("Electronic Engineering"));
+  englishButton.setOnAction(e -> showLeaderboard("English"));
+  mathButton.setOnAction(e -> showLeaderboard("Mathematics"));
   returnButton.setOnAction(e -> {
     Menu menu = new Menu(currentUser);
     menu.start(primaryStage);
   });
 
   // Layout settings
-  VBox root = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
+  VBox root = new VBox(10, promptLabel, csButton, eeButton,
+                       englishButton, mathButton, returnButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
   // Create scene
@@ -78,15 +83,13 @@ public void start(Stage primaryStage) {
 /**
  * Show leaderboard for the specified subject.
  *
- * @param primaryStage the primary stage
  * @param subject the subject to view the leaderboard for
  */
-private void showLeaderboard(Stage primaryStage, String subject) {
+private void showLeaderboard(String subject) {
   // Get all users
-  List<Users> allUsers = List.copyOf(userManager.GetAllUsers());
-
-  List<String> topUsers = new ArrayList<>();
-  int highestScore = -1;
+  List<Users>   allUsers  =   List.copyOf(userManager.GetAllUsers());
+  List<String>  topUsers  =   new ArrayList<>();
+  int highestScore        =   -1;
 
   // Iterate through all users to find the highest score
   for (Users user : allUsers) {

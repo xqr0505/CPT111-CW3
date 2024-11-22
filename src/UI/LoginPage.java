@@ -19,25 +19,28 @@ private UserManager userManager = Logical.getInstance().getUserManager();
 @Override
 public void start(Stage primaryStage) {
   // Create input fields
-  Label userIdLabel = new Label("User ID:");
-  TextField userIdField = new TextField();
+  Label userIdLabel       =   new Label("User ID:");
+  TextField userIdField   =   new TextField();
   userIdField.setPromptText("User ID");
 
-  Label passwordLabel = new Label("Password:");
-  PasswordField passwordField = new PasswordField();
+  Label passwordLabel           =   new Label("Password:");
+  PasswordField passwordField   =   new PasswordField();
   passwordField.setPromptText("Password");
 
   // Create buttons
-  Button loginButton = new Button("Log In");
-  Button returnButton = new Button("Return");
+  Button loginButton    =   new Button("Log In");
+  Button returnButton   =   new Button("Return");
 
+  // Specify button width
   double buttonWidth = 100;
   loginButton.setPrefWidth(buttonWidth);
   returnButton.setPrefWidth(buttonWidth);
 
+  // Set button styles
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+
   // Message label
   Label messageLabel = new Label();
 

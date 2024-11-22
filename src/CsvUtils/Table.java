@@ -16,6 +16,7 @@ private final   List<String[]>                table;
 public Table() {
   table = new ArrayList<>();
 }
+
 /**
  * Get total rows of the table
  *
