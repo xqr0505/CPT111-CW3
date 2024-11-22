@@ -108,7 +108,7 @@ private void showLeaderboard(String subject) {
   // Build the display message
   String result;
   if (!topUsers.isEmpty()) {
-    result = String.format("Top Users for %s with a score of %d:\n%s",
+    result = String.format("Top User(s) for %s with a score of %d:\n%s",
                            subject, highestScore, String.join("\n", topUsers));
     // Display the result
     Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
