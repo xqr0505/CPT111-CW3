@@ -1,10 +1,7 @@
 package UI;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,10 +12,10 @@ import java.util.List;
 /**
  * UserDashboardPage class representing the user interface for viewing history scores.
  */
-public class UserDashboardPage extends Application {
+public class UserDashboardPage{
 
-private Users currentUser;
-private VBox alertBox;
+private final Users currentUser;
+private       VBox  alertBox;
 
 /**
  * Constructor for UserDashboardPage.
@@ -29,7 +26,6 @@ public UserDashboardPage(Users user) {
   this.currentUser = user;
 }
 
-@Override
 public void start(Stage primaryStage) {
   // Prompt message
   Label promptLabel = new Label("Please choose the subject to view history scores:");
@@ -131,7 +127,7 @@ private void showHistoryScores(String subject) {
   for (int i = 0; i < scoresList.size(); i++) {
     Integer score = scoresList.get(i);
     if (score != null) {
-      Label scoreLabel = new Label("Attempt " + (i + 1) + ": " + score);
+      Label scoreLabel = new Label(String.format("Attempt %d:\t%3d", i + 1, score));
       scoreLabel.setStyle("-fx-font-size: 14px;");
       scoresBox.getChildren().add(scoreLabel);
     }

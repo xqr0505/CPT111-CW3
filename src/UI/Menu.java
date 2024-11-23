@@ -1,6 +1,5 @@
 package UI;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +13,7 @@ import UserManagement.Users;
 /**
  * Menu class representing the main user interface after login.
  */
-public class Menu extends Application {
+public class Menu{
 
 private Users currentUser;
 
@@ -27,7 +26,6 @@ public Menu(Users user) {
   this.currentUser = user;
 }
 
-@Override
 public void start(Stage primaryStage) {
   // Welcome message
   Label welcomeLabel  =   new Label("Login success! Hi, ");

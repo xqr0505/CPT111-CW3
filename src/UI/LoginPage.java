@@ -1,7 +1,6 @@
 package UI;
 
 import core.Logical;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -12,11 +11,10 @@ import UserManagement.UserManager;
 /**
  * LoginPage class representing the user interface for user login.
  */
-public class LoginPage extends Application {
+public class LoginPage{
 
 private UserManager userManager = Logical.getInstance().getUserManager();
 
-@Override
 public void start(Stage primaryStage) {
   // Create input fields
   Label userIdLabel       =   new Label("User ID:");

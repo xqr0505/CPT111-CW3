@@ -1,7 +1,6 @@
 package UI;
 
 import core.Logical;
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,7 +16,7 @@ import java.util.List;
 /**
  * LeaderboardPage class representing the user interface for viewing the leaderboard.
  */
-public class LeaderboardPage extends Application {
+public class LeaderboardPage{
 
 private final UserManager userManager = Logical.getInstance().getUserManager();
 private       Users       currentUser;
@@ -32,7 +31,6 @@ public LeaderboardPage(Users user) {
   this.currentUser = user;
 }
 
-@Override
 public void start(Stage primaryStage) {
   // Prompt message
   Label promptLabel     =   new Label("Please choose the subject to view the leaderboard:");

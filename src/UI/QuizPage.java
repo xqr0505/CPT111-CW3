@@ -1,8 +1,6 @@
 package UI;
 
-import QuestionManagement.Exceptions;
 import core.Logical;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,7 +19,7 @@ import java.util.*;
 /**
  * QuizPage class representing the user interface for taking a quiz.
  */
-public class QuizPage extends Application {
+public class QuizPage{
 
 private final   Users             currentUser;
 private final   String            subject;
@@ -59,7 +57,6 @@ public QuizPage(Users user, String subject) {
   difficultyScoreMap.put("VERY_HARD", 20);
 }
 
-@Override
 public void start(Stage primaryStage) {
   this.primaryStage = primaryStage;
 

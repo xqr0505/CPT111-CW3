@@ -1,6 +1,5 @@
 package UI;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -11,9 +10,9 @@ import UserManagement.Users;
 /**
  * SubjectChoosePage class representing the user interface for choosing a subject.
  */
-public class SubjectChoosePage extends Application {
+public class SubjectChoosePage{
 
-private Users currentUser;
+private final Users currentUser;
 
 /**
  * Constructor for SubjectChoosePage.
@@ -24,7 +23,6 @@ public SubjectChoosePage(Users user) {
   this.currentUser = user;
 }
 
-@Override
 public void start(Stage primaryStage) {
   // Prompt message
   Label promptLabel       =   new Label("Please choose your subject:");
