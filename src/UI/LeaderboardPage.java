@@ -81,17 +81,18 @@ public void start(Stage primaryStage) {
   VBox alertContainer = new VBox(alertBox);
   alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
 
-  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px; -fx-background-color: white;" +
-                    " -fx-border-radius: 10px; -fx-background-radius: 10px;" );
+  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px;-fx-background-color: white;" +
+                    "-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #b1b1b1;" +
+                    " -fx-border-width: 1px;");
   alertBox.setMinWidth(300);
   alertBox.setMaxWidth(300);
   alertBox.setMinHeight(300);
 
   // Main layout
-  HBox root = new HBox(10, buttonBox, alertContainer);
+  HBox root   =   new HBox(10, buttonBox, alertContainer);
 
   // Create scene
-  Scene scene = new Scene(root, 750, 400);
+  Scene scene =   new Scene(root, 750, 400);
 
   // Set stage
   primaryStage.setTitle("Leaderboard");
@@ -128,26 +129,26 @@ private void showLeaderboard(String subject) {
   // Update alert box
   alertBox.getChildren().clear();
   if (!topUsers.isEmpty()) {
-    Label titleLabel = new Label("Top User(s) \n- " + subject);
+    Label titleLabel  =   new Label("Top User(s) \n- " + subject);
     titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
 
-    Label emptyLine = new Label("");
+    Label emptyLine   =   new Label("");
 
-    VBox usersBox = new VBox();
+    VBox usersBox     =   new VBox();
     usersBox.setStyle("-fx-alignment: center; -fx-spacing: 5px;");
 
     for (String user : topUsers) {
-      Label userLabel = new Label(user);
+      Label userLabel =   new Label(user);
       userLabel.setStyle("-fx-font-size: 14px;");
       usersBox.getChildren().add(userLabel);
     }
 
-    Label scoreLabel = new Label("\nHighest Score: " + highestScore);
+    Label scoreLabel  =  new Label("\nHighest Score: " + highestScore);
     scoreLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-alignment: center;");
 
     alertBox.getChildren().addAll(titleLabel, emptyLine, usersBox, scoreLabel);
   } else {
-    Label alertLabel = new Label("No scores available for this subject.");
+    Label alertLabel  =   new Label("No scores available for this subject.");
     alertLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
     alertBox.getChildren().add(alertLabel);
   }

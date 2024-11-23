@@ -46,8 +46,8 @@ public void start(Stage primaryStage) {
 
   // Set button click events
   loginButton.setOnAction(e -> {
-    String userId = userIdField.getText();
-    String password = passwordField.getText();
+    String userId   =   userIdField.getText();
+    String password =   passwordField.getText();
 
     if (userId.isEmpty() || password.isEmpty()) {
       messageLabel.setText("Please enter User ID and Password.");

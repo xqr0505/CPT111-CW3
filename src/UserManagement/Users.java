@@ -6,16 +6,16 @@ import java.util.List;
  * Represents a user with an ID, name, password, and score records.
  */
 public class Users {
-private final String m_id_;
-private final String m_name_;
-private final ScoreRecords m_record_ = new ScoreRecords();
-private String m_passwd_;
+private final   String        m_id_;
+private final   String        m_name_;
+private final   ScoreRecords  m_record_ = new ScoreRecords();
+private         String        m_passwd_;
 
 /**
  * Constructs a new user.
  *
  * @param id the user ID
- * @param name the user name
+ * @param name the username
  * @param passwd the user password
  * @throws Exceptions.UserInformationInvalidException if the ID or name is empty
  */
@@ -26,9 +26,9 @@ public Users(String id, String name, String passwd) throws Exceptions.UserInform
   if (name.isEmpty()) {
     throw new Exceptions.UserInformationInvalidException("User's name cannot be empty");
   }
-  m_id_ = id;
-  m_name_ = name;
-  m_passwd_ = passwd;
+  m_id_     =   id;
+  m_name_   =   name;
+  m_passwd_ =   passwd;
 }
 
 /**
@@ -62,9 +62,9 @@ public Users setPasswd(String passwd) {
 }
 
 /**
- * Gets the user name.
+ * Gets the username.
  *
- * @return the user name
+ * @return the username
  */
 public String GetName() {
   return m_name_;
@@ -135,8 +135,7 @@ public List<Integer> GetTopicSpecifiedRecentRecords(String topic) {
  */
 public Integer GetTopicSpecifiedHighestRecord(String topic) {
   ScoreRecords.TopicScores ts = m_record_.getTopicScores(topic);
-  Integer highest = ts != null ? ts.getHighestScore() : null;
-  return highest;
+  return ts != null ? ts.getHighestScore() : null;
 }
 
 /**

@@ -30,11 +30,11 @@ public Menu(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Welcome message
-  Label welcomeLabel = new Label("Login success! Hi, ");
+  Label welcomeLabel  =   new Label("Login success! Hi, ");
   welcomeLabel.setStyle("-fx-font-size: 16px;");
-  Text userNameText = new Text(currentUser.GetName());
+  Text userNameText   =   new Text(currentUser.GetName());
   userNameText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-  TextFlow textFlow = new TextFlow(welcomeLabel, userNameText);
+  TextFlow textFlow   =   new TextFlow(welcomeLabel, userNameText);
   textFlow.setTextAlignment(TextAlignment.CENTER);
 
   // Create buttons

@@ -79,8 +79,9 @@ public void start(Stage primaryStage) {
   VBox alertContainer = new VBox(alertBox);
   alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
 
-  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px; -fx-background-color: white;" +
-                    " -fx-border-radius: 10px; -fx-background-radius: 10px;");
+  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px;-fx-background-color: white;" +
+                    "-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #b1b1b1;" +
+                    " -fx-border-width: 1px;");
   alertBox.setMinWidth(300);
   alertBox.setMaxWidth(300);
   alertBox.setMinHeight(300);

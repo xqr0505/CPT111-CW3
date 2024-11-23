@@ -2,7 +2,6 @@ package UserManagement;
 
 import CsvUtils.CsvReader;
 import CsvUtils.CsvWriter;
-import CsvUtils.Exceptions;
 import CsvUtils.Table;
 
 import java.io.*;
