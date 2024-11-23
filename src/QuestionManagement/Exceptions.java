@@ -39,7 +39,6 @@ public static class NotEnoughQuestionsException
   public NotEnoughQuestionsException(String e) {
     super(e);
   }
-
 }
 }
 

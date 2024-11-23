@@ -6,17 +6,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import UserManagement.Users;
 import java.util.List;
 
 /**
- * HistoryScorePage class representing the user interface for viewing history scores.
+ * UserDashboardPage class representing the user interface for viewing history scores.
  */
 public class UserDashboardPage extends Application {
 
 private Users currentUser;
+private VBox alertBox;
 
 /**
  * Constructor for UserDashboardPage.
@@ -30,14 +32,18 @@ public UserDashboardPage(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Prompt message
-  Label promptLabel     =   new Label("Please choose the subject to view history scores:");
+  Label promptLabel = new Label("Please choose the subject to view history scores:");
+
+  // Reminder message
+  Label reminderLabel = new Label("Please select a subject from the left.");
+  reminderLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
 
   // Create subject buttons
-  Button csButton       =   new Button("Computer Science");
-  Button eeButton       =   new Button("Electronic Engineering");
-  Button englishButton  =   new Button("English");
-  Button mathButton     =   new Button("Mathematics");
-  Button returnButton   =   new Button("Return");
+  Button csButton = new Button("Computer Science");
+  Button eeButton = new Button("Electronic Engineering");
+  Button englishButton = new Button("English");
+  Button mathButton = new Button("Mathematics");
+  Button returnButton = new Button("Return");
 
   // Specify button width
   double buttonWidth = 250;
@@ -52,7 +58,6 @@ public void start(Stage primaryStage) {
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
 
-
   // Set button click events
   csButton.setOnAction(e -> showHistoryScores("Computer Science"));
   eeButton.setOnAction(e -> showHistoryScores("Electronic Engineering"));
@@ -64,11 +69,27 @@ public void start(Stage primaryStage) {
   });
 
   // Layout settings
-  VBox root = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
-  root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
+  VBox buttonBox = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
+  buttonBox.setStyle("-fx-alignment: center; -fx-padding: 50px;");
+  buttonBox.setMinWidth(400);
+  buttonBox.setMaxWidth(400);
+
+  // Initialize alertBox
+  alertBox = new VBox(reminderLabel);
+  VBox alertContainer = new VBox(alertBox);
+  alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
+
+  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px; -fx-background-color: white;" +
+                    " -fx-border-radius: 10px; -fx-background-radius: 10px;");
+  alertBox.setMinWidth(300);
+  alertBox.setMaxWidth(300);
+  alertBox.setMinHeight(300);
+
+  // Main layout
+  HBox root = new HBox(10, buttonBox, alertContainer);
 
   // Create scene
-  Scene scene = new Scene(root, 400, 400);
+  Scene scene = new Scene(root, 750, 400);
 
   // Set stage
   primaryStage.setTitle("User Dashboard");
@@ -85,34 +106,42 @@ private void showHistoryScores(String subject) {
   // Get the user's recent scores for the subject
   List<Integer> scoresList = currentUser.GetTopicSpecifiedRecentRecords(subject);
 
+  // Update alert box
+  alertBox.getChildren().clear();
   if (scoresList == null || scoresList.isEmpty()) {
-    Alert alert = new Alert(Alert.AlertType.INFORMATION, "No history scores for this subject.", ButtonType.OK);
-    alert.setHeaderText("No Scores!");
-    alert.setTitle("User Dashboard");
-    alert.showAndWait();
+    Label alertLabel = new Label("No history scores for this subject.");
+    alertLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
+    alertBox.getChildren().add(alertLabel);
     return;
   }
 
   // Get the highest score
   Integer highestScore = currentUser.GetTopicSpecifiedHighestRecord(subject);
 
-  // Build the score display string
-  StringBuilder scoreText = new StringBuilder("Your last 3 scores for " + subject + ":\n");
+  // Build the score display elements
+  Label titleLabel = new Label(currentUser.GetName()+"： History Scores \n- " + subject);
+  titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
+
+  Label emptyLine = new Label("");
+
+  VBox scoresBox = new VBox();
+  scoresBox.setStyle("-fx-alignment: center; -fx-spacing: 5px;");
+
   for (int i = 0; i < scoresList.size(); i++) {
     Integer score = scoresList.get(i);
     if (score != null) {
-      scoreText.append("Attempt ").append(i + 1).append(": ").append(score).append("\n");
+      Label scoreLabel = new Label("Attempt " + (i + 1) + ": " + score);
+      scoreLabel.setStyle("-fx-font-size: 14px;");
+      scoresBox.getChildren().add(scoreLabel);
     }
   }
 
   if (highestScore != null) {
-    scoreText.append("Highest Score: ").append(highestScore).append("\n");
+    Label highestScoreLabel = new Label("\nHighest Score: " + highestScore);
+    highestScoreLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-alignment: center;");
+    alertBox.getChildren().addAll(titleLabel, emptyLine, scoresBox, highestScoreLabel);
+  } else {
+    alertBox.getChildren().addAll(titleLabel, emptyLine, scoresBox);
   }
-
-  // Display the scores
-  Alert alert = new Alert(Alert.AlertType.INFORMATION, scoreText.toString(), ButtonType.OK);
-  alert.setHeaderText("History Score");
-  alert.setTitle("User Dashboard");
-  alert.showAndWait();
 }
 }

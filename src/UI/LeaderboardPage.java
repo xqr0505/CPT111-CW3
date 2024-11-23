@@ -3,9 +3,9 @@ package UI;
 import core.Logical;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import UserManagement.UserManager;
@@ -21,6 +21,7 @@ public class LeaderboardPage extends Application {
 
 private final UserManager userManager = Logical.getInstance().getUserManager();
 private       Users       currentUser;
+private       VBox        alertBox;
 
 /**
  * Constructor for LeaderboardPage.
@@ -36,6 +37,9 @@ public void start(Stage primaryStage) {
   // Prompt message
   Label promptLabel     =   new Label("Please choose the subject to view the leaderboard:");
 
+  // Reminder message
+  Label reminderLabel = new Label("Please select a subject from the left.");
+  reminderLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
   // Create subject buttons
   Button csButton       =   new Button("Computer Science");
   Button eeButton       =   new Button("Electronic Engineering");
@@ -57,7 +61,7 @@ public void start(Stage primaryStage) {
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
 
   // Set button click events
-  csButton.setOnAction(e -> showLeaderboard( "Computer Science"));
+  csButton.setOnAction(e -> showLeaderboard("Computer Science"));
   eeButton.setOnAction(e -> showLeaderboard("Electronic Engineering"));
   englishButton.setOnAction(e -> showLeaderboard("English"));
   mathButton.setOnAction(e -> showLeaderboard("Mathematics"));
@@ -67,12 +71,27 @@ public void start(Stage primaryStage) {
   });
 
   // Layout settings
-  VBox root = new VBox(10, promptLabel, csButton, eeButton,
-                       englishButton, mathButton, returnButton);
-  root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
+  VBox buttonBox = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
+  buttonBox.setStyle("-fx-alignment: center; -fx-padding: 50px;");
+  buttonBox.setMinWidth(400);
+  buttonBox.setMaxWidth(400);
+
+  // Initialize alertBox
+  alertBox = new VBox(reminderLabel);
+  VBox alertContainer = new VBox(alertBox);
+  alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
+
+  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px; -fx-background-color: white;" +
+                    " -fx-border-radius: 10px; -fx-background-radius: 10px;" );
+  alertBox.setMinWidth(300);
+  alertBox.setMaxWidth(300);
+  alertBox.setMinHeight(300);
+
+  // Main layout
+  HBox root = new HBox(10, buttonBox, alertContainer);
 
   // Create scene
-  Scene scene = new Scene(root, 400, 400);
+  Scene scene = new Scene(root, 750, 400);
 
   // Set stage
   primaryStage.setTitle("Leaderboard");
@@ -105,25 +124,32 @@ private void showLeaderboard(String subject) {
     }
   }
 
-  // Build the display message
-  String result;
+
+  // Update alert box
+  alertBox.getChildren().clear();
   if (!topUsers.isEmpty()) {
-    result = String.format("Top User(s) for %s with a score of %d:\n%s",
-                           subject, highestScore, String.join("\n", topUsers));
-    // Display the result
-    Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
-    alert.setHeaderText("Congratulations!");
-    alert.setTitle("Leaderboard");
-    alert.showAndWait();
+    Label titleLabel = new Label("Top User(s) \n- " + subject);
+    titleLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-alignment: center;");
+
+    Label emptyLine = new Label("");
+
+    VBox usersBox = new VBox();
+    usersBox.setStyle("-fx-alignment: center; -fx-spacing: 5px;");
+
+    for (String user : topUsers) {
+      Label userLabel = new Label(user);
+      userLabel.setStyle("-fx-font-size: 14px;");
+      usersBox.getChildren().add(userLabel);
+    }
+
+    Label scoreLabel = new Label("\nHighest Score: " + highestScore);
+    scoreLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-alignment: center;");
+
+    alertBox.getChildren().addAll(titleLabel, emptyLine, usersBox, scoreLabel);
   } else {
-    result = "No scores available for this subject.";
-    // Display the result
-    Alert alert = new Alert(Alert.AlertType.INFORMATION, result);
-    alert.setHeaderText("No Scores!");
-    alert.setTitle("Leaderboard");
-    alert.showAndWait();
+    Label alertLabel = new Label("No scores available for this subject.");
+    alertLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
+    alertBox.getChildren().add(alertLabel);
   }
-
-
 }
 }
