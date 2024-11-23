@@ -1,5 +1,6 @@
 package UI;
 
+import QuestionManagement.Exceptions;
 import core.Logical;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import xjtlu.cpt111.assignment.quiz.model.Question;
 import xjtlu.cpt111.assignment.quiz.model.Option;
 import QuestionManagement.QuestionManager;
 import QuestionManagement.Exceptions.NoTopicFoundException;
+import QuestionManagement.Exceptions.NotEnoughQuestionsException;
 
 import java.io.IOException;
 import java.util.*;
@@ -71,6 +73,12 @@ public void start(Stage primaryStage) {
 
   // Ensure questions are loaded
   loadQuestions();
+
+  // return if questions list is null or empty
+  if (this.questions == null || this.questions.isEmpty()) {
+    System.err.println("Questions list is null or empty.");
+    return;
+  }
 
   // Create option buttons(set max options number to 5)
   int maxOptions = getMaxOptionsCount();;
@@ -148,6 +156,17 @@ private void loadQuestions() {
   } catch (NoTopicFoundException e) {
     // If no questions found, show error message and return
     Alert alert = new Alert(Alert.AlertType.ERROR, "No questions found for this subject.", ButtonType.OK);
+    alert.setTitle("No questions");
+    alert.setHeaderText(null);
+    alert.showAndWait();
+    // Return to subject selection page
+    SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);
+    subjectChoosePage.start(primaryStage);
+  }catch (NotEnoughQuestionsException e) {
+    // If not enough questions, show error message and return
+    Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
+    alert.setTitle("Not enough questions");
+    alert.setHeaderText(null);
     alert.showAndWait();
     // Return to subject selection page
     SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);

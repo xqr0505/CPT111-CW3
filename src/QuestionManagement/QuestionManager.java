@@ -116,6 +116,11 @@ public List<Question> loadQuestionsForQuiz(String subject) throws NoTopicFoundEx
         break;
     }
   }
+  // Check if there are enough questions
+  checkQuestionCount(easy, 2, "easy");
+  checkQuestionCount(medium, 2, "medium");
+  checkQuestionCount(hard, 2, "hard");
+  checkQuestionCount(veryHard, 2, "very hard");
 
   // Randomly select 2 questions
   List<Question> selectedQuestions = new ArrayList<>();
@@ -138,20 +143,35 @@ public List<Question> loadQuestionsForQuiz(String subject) throws NoTopicFoundEx
 }
 
 /**
- * Get the maximum number of options among the selected quiz questions.
+ * Gets the maximum number of options among the selected quiz questions.
  *
  * @param selectedQuestions the list of selected questions
- * @return the maximum number of options
+ * @return the maximum number of options, or 0 if the selectedQuestions list is null
  */
 public int getMaxOptionsCount(List<Question> selectedQuestions) {
-  int maxOptionsCount = 0;
-  for (Question q : selectedQuestions) {
-    int optionsCount = q.getOptions().length;
-    if (optionsCount > maxOptionsCount) {
-      maxOptionsCount = optionsCount;
+  try {
+    int maxOptions = 0;
+    for (Question q : selectedQuestions) {
+      maxOptions = Math.max(maxOptions, q.getOptions().length);
     }
+    return maxOptions;
+  } catch (NullPointerException e) {
+    System.err.println("Selected questions list is null: " + e.getMessage());
+    return 0;
   }
-  return maxOptionsCount;
 }
 
+/**
+ * Checks if the number of questions in the list meets the required count for a given difficulty.
+ *
+ * @param questions the list of questions to check
+ * @param requiredCount the required number of questions
+ * @param difficulty the difficulty level of the questions
+ * @throws IllegalArgumentException if the number of questions is less than the required count
+ */
+private void checkQuestionCount(List<Question> questions, int requiredCount, String difficulty) throws IllegalArgumentException {
+  if (questions.size() < requiredCount) {
+    throw new Exceptions.NotEnoughQuestionsException("Not enough " + difficulty + " questions in the question bank.");
+  }
+}
 }
