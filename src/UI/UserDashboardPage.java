@@ -54,10 +54,10 @@ public void start(Stage primaryStage) {
 
 
   // Set button click events
-  csButton.setOnAction(e -> showHistoryScores(primaryStage, "Computer Science"));
-  eeButton.setOnAction(e -> showHistoryScores(primaryStage, "Electronic Engineering"));
-  englishButton.setOnAction(e -> showHistoryScores(primaryStage, "English"));
-  mathButton.setOnAction(e -> showHistoryScores(primaryStage, "Mathematics"));
+  csButton.setOnAction(e -> showHistoryScores("Computer Science"));
+  eeButton.setOnAction(e -> showHistoryScores("Electronic Engineering"));
+  englishButton.setOnAction(e -> showHistoryScores("English"));
+  mathButton.setOnAction(e -> showHistoryScores("Mathematics"));
   returnButton.setOnAction(e -> {
     Menu menu = new Menu(currentUser);
     menu.start(primaryStage);
@@ -79,10 +79,9 @@ public void start(Stage primaryStage) {
 /**
  * Show history scores for the specified subject.
  *
- * @param primaryStage the primary stage
  * @param subject the subject to view history scores for
  */
-private void showHistoryScores(Stage primaryStage, String subject) {
+private void showHistoryScores(String subject) {
   // Get the user's recent scores for the subject
   List<Integer> scoresList = currentUser.GetTopicSpecifiedRecentRecords(subject);
 

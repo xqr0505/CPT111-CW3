@@ -14,6 +14,8 @@ public class MainPage extends Application {
 
 @Override
 public void start(Stage primaryStage) {
+  Label welcomeLabel    =   new Label("Welcome to the Quiz System!");
+  welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
   Label promptLabel     =   new Label("Login or Register to start the quiz.");
 
   // Create buttons
@@ -37,7 +39,7 @@ public void start(Stage primaryStage) {
   });
 
   // Layout settings
-  VBox root = new VBox(20, promptLabel, loginButton, registerButton);
+  VBox root = new VBox(20, welcomeLabel,promptLabel, loginButton, registerButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
   // Create scene

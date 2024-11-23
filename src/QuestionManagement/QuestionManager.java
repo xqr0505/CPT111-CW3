@@ -137,5 +137,21 @@ public List<Question> loadQuestionsForQuiz(String subject) throws NoTopicFoundEx
   return selectedQuestions;
 }
 
+/**
+ * Get the maximum number of options among the selected quiz questions.
+ *
+ * @param selectedQuestions the list of selected questions
+ * @return the maximum number of options
+ */
+public int getMaxOptionsCount(List<Question> selectedQuestions) {
+  int maxOptionsCount = 0;
+  for (Question q : selectedQuestions) {
+    int optionsCount = q.getOptions().length;
+    if (optionsCount > maxOptionsCount) {
+      maxOptionsCount = optionsCount;
+    }
+  }
+  return maxOptionsCount;
+}
 
 }

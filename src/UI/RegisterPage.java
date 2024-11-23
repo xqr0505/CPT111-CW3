@@ -58,12 +58,13 @@ public void start(Stage primaryStage) {
 
   // Set button click events
   signupButton.setOnAction(e -> {
-    String userId = userIdField.getText();
-    String userName = userNameField.getText();
-    String password = passwordField.getText();
-    String confirmPassword = confirmPasswordField.getText();
+    String userId           =   userIdField.getText();
+    String userName         =   userNameField.getText();
+    String password         =   passwordField.getText();
+    String confirmPassword  =   confirmPasswordField.getText();
 
-    if (userId.isEmpty() || userName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+    if (userId.isEmpty() || userName.isEmpty() ||
+        password.isEmpty() || confirmPassword.isEmpty()) {
       messageLabel.setText("Please fill in all fields.");
       return;
     }

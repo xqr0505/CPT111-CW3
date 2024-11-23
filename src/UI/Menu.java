@@ -5,6 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import UserManagement.Users;
 
@@ -27,7 +30,12 @@ public Menu(Users user) {
 @Override
 public void start(Stage primaryStage) {
   // Welcome message
-  Label welcomeLabel        =   new Label("Login success! Hi, " + currentUser.GetName());
+  Label welcomeLabel = new Label("Login success! Hi, ");
+  welcomeLabel.setStyle("-fx-font-size: 16px;");
+  Text userNameText = new Text(currentUser.GetName());
+  userNameText.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+  TextFlow textFlow = new TextFlow(welcomeLabel, userNameText);
+  textFlow.setTextAlignment(TextAlignment.CENTER);
 
   // Create buttons
   Button attemptQuizButton  =   new Button("Attempt Quiz");
@@ -72,7 +80,7 @@ public void start(Stage primaryStage) {
   });
 
   // Layout settings
-  VBox root   =   new VBox(20, welcomeLabel, attemptQuizButton, historyScoreButton, leaderboardButton, returnButton);
+  VBox root   =   new VBox(20, textFlow, attemptQuizButton, historyScoreButton, leaderboardButton, returnButton);
   root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
 
   // Create scene

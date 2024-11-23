@@ -69,8 +69,11 @@ public void start(Stage primaryStage) {
   optionsGroup    =   new   ToggleGroup();
   optionButtons   =   new   ArrayList<>();
 
+  // Ensure questions are loaded
+  loadQuestions();
+
   // Create option buttons(set max options number to 5)
-  int maxOptions = 5;
+  int maxOptions = getMaxOptionsCount();;
   for (int i = 0; i < maxOptions; i++) {
     RadioButton optionButton  =   new RadioButton();
     optionButton.setToggleGroup(optionsGroup);
@@ -123,11 +126,17 @@ public void start(Stage primaryStage) {
   primaryStage.setScene(scene);
   primaryStage.show();
 
-  // Ensure questions are loaded
-  loadQuestions();
-
   // Show the first question
   showQuestion();
+}
+
+/**
+ * Get the maximum number of options among the selected quiz questions.
+ *
+ * @return the maximum number of options
+ */
+private int getMaxOptionsCount() {
+  return questionManager.getMaxOptionsCount(questions);
 }
 
 /**
