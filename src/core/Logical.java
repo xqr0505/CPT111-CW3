@@ -79,7 +79,7 @@ public Logical RegisterAfterFunctionHook(CallBackHook.Hook hook) {
 public boolean LoadRequiredInfo() {
   boolean success = true;
   try {
-    m_users_.LoadUserInfo("resources/u.csv", "resources/s.csv");
+    m_users_.LoadUserInfo("resources/user.csv", "resources/score.csv");
     m_questions_.LoadQuestions("resources/questionsBank");
   } catch (IOException e) {
     Logger.getLogger("global")
@@ -97,7 +97,7 @@ public boolean LoadRequiredInfo() {
 public boolean SaveInfo() {
   boolean success = true;
   try {
-    m_users_.SaveUserInfo("resources/u.csv", "resources/s.csv");
+    m_users_.SaveUserInfo("resources/user.csv", "resources/score.csv");
   } catch (IOException e) {
     Logger.getLogger("global")
           .info(e.getMessage());

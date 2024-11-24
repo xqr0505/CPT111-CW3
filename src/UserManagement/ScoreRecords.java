@@ -46,7 +46,7 @@ public TopicScores getTopicScores(String topic) {
  */
 public static class TopicScores {
   private final List<Integer> recentScores;
-  private Integer highestScore;
+  private       Integer       highestScore;
 
   public TopicScores() {
     this.recentScores = new LinkedList<>();

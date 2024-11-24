@@ -79,7 +79,7 @@ public void start(Stage primaryStage) {
       userManager.RegisterUser(newUser);
 
       // Save user information to file
-      userManager.SaveUserInfo("resources/u.csv", "resources/s.csv");
+      userManager.SaveUserInfo("resources/user.csv", "resources/score.csv");
 
       // Auto login and navigate to Menu
       messageLabel.setText("Registration successful! Logging you in...");
