@@ -26,6 +26,11 @@ public UserDashboardPage(Users user) {
   this.currentUser = user;
 }
 
+/**
+ * Starts the UserDashboard UI.
+ *
+ * @param primaryStage the primary stage for this application
+ */
 public void start(Stage primaryStage) {
   // Prompt message
   Label promptLabel = new Label("Please choose the subject to view history scores:");

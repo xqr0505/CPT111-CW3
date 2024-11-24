@@ -18,7 +18,11 @@ public class RegisterPage{
 
 private UserManager userManager = Logical.getInstance()
                                          .getUserManager();
-
+/**
+ * Starts the RegisterPage UI.
+ *
+ * @param primaryStage the primary stage for this application
+ */
 public void start(Stage primaryStage) {
   // Create input fields
   Label userIdLabel       =   new Label("New User ID:");

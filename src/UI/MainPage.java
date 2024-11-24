@@ -11,6 +11,11 @@ import javafx.stage.Stage;
  */
 public class MainPage{
 
+/**
+ * Starts the MainPage UI.
+ *
+ * @param primaryStage the primary stage for this application
+ */
 public void start(Stage primaryStage) {
   Label welcomeLabel = new Label("Welcome to the Quiz System!");
   welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");

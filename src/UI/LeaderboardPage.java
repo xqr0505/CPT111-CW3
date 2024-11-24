@@ -31,6 +31,11 @@ public LeaderboardPage(Users user) {
   this.currentUser = user;
 }
 
+/**
+ * Starts the Leaderboard UI.
+ *
+ * @param primaryStage the primary stage for this application
+ */
 public void start(Stage primaryStage) {
   // Prompt message
   Label promptLabel     =   new Label("Please choose the subject to view the leaderboard:");
@@ -38,6 +43,7 @@ public void start(Stage primaryStage) {
   // Reminder message
   Label reminderLabel = new Label("Please select a subject from the left.");
   reminderLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
+
   // Create subject buttons
   Button csButton       =   new Button("Computer Science");
   Button eeButton       =   new Button("Electronic Engineering");

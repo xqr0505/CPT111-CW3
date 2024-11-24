@@ -100,7 +100,7 @@ public List<Question> loadQuestionsForQuiz(String subject) throws NoTopicFoundEx
   List<Question> veryHard = new ArrayList<>();
 
   for (Question q : allQuestions) {
-    String difficulty = q.getDifficulty().toString(); // Assume getDifficulty returns a string
+    String difficulty = q.getDifficulty().toString();
     switch (difficulty) {
       case "EASY":
         easy.add(q);
@@ -115,7 +115,6 @@ public List<Question> loadQuestionsForQuiz(String subject) throws NoTopicFoundEx
         veryHard.add(q);
         break;
       default:
-        // Unrecognized difficulty, can log or ignore
         break;
     }
   }

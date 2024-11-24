@@ -26,6 +26,11 @@ public Menu(Users user) {
   this.currentUser = user;
 }
 
+/**
+ * Starts the Menu UI.
+ *
+ * @param primaryStage the primary stage for this application
+ */
 public void start(Stage primaryStage) {
   // Welcome message
   Label welcomeLabel  =   new Label("Login success! Hi, ");

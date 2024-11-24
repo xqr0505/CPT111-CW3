@@ -57,6 +57,11 @@ public QuizPage(Users user, String subject) {
   difficultyScoreMap.put("VERY_HARD", 20);
 }
 
+/**
+ * Starts the QuizPage UI.
+ *
+ * @param primaryStage the primary stage for this application
+ */
 public void start(Stage primaryStage) {
   this.primaryStage = primaryStage;
 
