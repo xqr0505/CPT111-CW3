@@ -89,31 +89,29 @@ public ScoreRecords GetRecords() {
 }
 
 /**
- * Adds a new score record.
- *
- * @param topic the name of the topic
- * @param score the score
- * @return the user object
- */
-public Users NewRecord(String topic, Integer score) {
-  if (score == null) {
-    return this;
-  }
-  m_record_.addScore(topic, score);
-  Integer currentHighest = GetTopicSpecifiedHighestRecord(topic);
-  if (currentHighest == null || score > currentHighest) {
-    SetTopicSpecifiedHighestRecord(topic, score);
-  }
-  return this;
-}
-
-/**
  * Gets all topics the user has answered.
  *
  * @return an array of all answered topics
  */
 public String[] GetAnsweredTopics() {
   return m_record_.getAllRecords().keySet().toArray(new String[0]);
+}
+
+/**
+ * Adds a new score record.
+ *
+ * @param topic the name of the topic
+ * @param score the score
+ */
+public void NewRecord(String topic, Integer score) {
+  if (score == null) {
+    return;
+  }
+  m_record_.addScore(topic, score);
+  Integer currentHighest = GetTopicSpecifiedHighestRecord(topic);
+  if (currentHighest == null || score > currentHighest) {
+    SetTopicSpecifiedHighestRecord(topic, score);
+  }
 }
 
 /**

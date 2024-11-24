@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class LeaderboardPage{
 
-private final UserManager userManager = Logical.getInstance().getUserManager();
-private       Users       currentUser;
+private final UserManager userManager   =   Logical.getInstance().getUserManager();
+private final Users       currentUser;
 private       VBox        alertBox;
 
 /**

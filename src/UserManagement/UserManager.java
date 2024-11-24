@@ -129,9 +129,14 @@ public Table ExportAccountInfoToTable() {
  */
 public UserManager LoadAccountInfoFromTable(Table table) {
   for (String[] l : table.GetTable()) {
-    if (l.length <= 0) {
+    // Skip completely empty lines
+    if (Arrays.stream(l).allMatch(String::isEmpty)) {
       continue;
-    } else if (l.length < 3) {
+    }
+
+    // Log and skip lines with incomplete information
+    if (l.length < 3 || l[0].trim().isEmpty() || l[1].trim().isEmpty() || l[2].trim().isEmpty()) {
+      Logger.getLogger("global").warning("Skipping invalid or incomplete user record: " + Arrays.toString(l));
       continue;
     }
 
@@ -139,16 +144,14 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     String userName = l[1].trim();
     String password = l[2].trim();
 
-    // Debug output
-    System.out.println("Loading user: ID='" + userId);
+    // Print user ID when the user content is correctly loaded
+    System.out.println("Loading user: ID='" + userId + "'");
 
-    // Check if any field is empty
-    if (userId.isEmpty() || userName.isEmpty() || password.isEmpty()) {
-      continue;
-    }
 
     try {
       RegisterUser(new Users(userId, userName, password));
+    } catch (UserManagement.Exceptions.DuplicateUserException e) {
+      Logger.getLogger("global").warning("Duplicate user ID found: " + userId + ". Skipping user.");
     } catch (UserManagement.Exceptions.UserInformationInvalidException e) {
       Logger.getLogger("global").warning("Failed to register user: " + e.getMessage());
     }
@@ -193,12 +196,12 @@ public Table ExportScoreInfoToTable() {
  */
 public UserManager LoadScoreInfoFromTable(Table table) {
   for (String[] l : table.GetTable()) {
-    // Skip empty lines or lines with insufficient fields
-    if (l.length < 6 || Arrays.stream(l).allMatch(String::isEmpty)) {
-      Logger.getLogger("global").warning("Skipping invalid or empty score record: " + Arrays.toString(l));
+    // Skip completely empty rows or lines with incomplete information
+    if (l == null || l.length == 0||Arrays.stream(l).allMatch(String::isEmpty)||l.length < 6) {
       continue;
     }
 
+    // Parse and process the line
     String userId = l[0].trim();
     String topic = l[1].trim();
     String score1Str = l[2].trim();
@@ -209,11 +212,9 @@ public UserManager LoadScoreInfoFromTable(Table table) {
     Users user = getUserById(userId);
     if (user != null) {
       try {
-        // Add the first three score records
         if (!score1Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score1Str));
         if (!score2Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score2Str));
         if (!score3Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score3Str));
-        // Update the highest score
         if (!highestScoreStr.isEmpty()) {
           int highestScore = Integer.parseInt(highestScoreStr);
           user.SetTopicSpecifiedHighestRecord(topic, highestScore);
@@ -227,6 +228,7 @@ public UserManager LoadScoreInfoFromTable(Table table) {
   }
   return this;
 }
+
 
 /**
  * Get user by ID.
