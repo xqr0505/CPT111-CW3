@@ -47,6 +47,8 @@ public UserManager LoadUserInfo(String infofp, String scorefp) throws IOExceptio
   Table scoreTable = CsvReader.ConstructTableFromCSV(content);
   LoadScoreInfoFromTable(scoreTable);
 
+  System.out.println("Total users loaded: " + m_users_.size());
+
   return this;
 }
 
@@ -143,10 +145,6 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     String userId = l[0].trim();
     String userName = l[1].trim();
     String password = l[2].trim();
-
-    // Print user ID when the user content is correctly loaded
-    System.out.println("Loading user: ID='" + userId + "'");
-
 
     try {
       RegisterUser(new Users(userId, userName, password));
