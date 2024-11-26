@@ -43,4 +43,22 @@ public static class DuplicateUserException extends RuntimeException {
     super(e);
   }
 }
+
+/**
+ * Exception thrown when a user is not found.
+ */
+public static class UserNotFoundException extends Exception {
+  public UserNotFoundException(String message) {
+    super(message);
+  }
+}
+
+/**
+ * Exception thrown when the password is incorrect.
+ */
+public static class IncorrectPasswordException extends Exception {
+  public IncorrectPasswordException(String message) {
+    super(message);
+  }
+}
 }

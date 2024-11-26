@@ -65,12 +65,6 @@ public void start(Stage primaryStage) {
     String password         =   passwordField.getText();
     String confirmPassword  =   confirmPasswordField.getText();
 
-    if (userId.isEmpty() || userName.isEmpty() ||
-        password.isEmpty() || confirmPassword.isEmpty()) {
-      messageLabel.setText("Please fill in all fields.");
-      return;
-    }
-
     if (!password.equals(confirmPassword)) {
       messageLabel.setText("Passwords do not match.");
       return;
@@ -86,14 +80,13 @@ public void start(Stage primaryStage) {
       userManager.SaveUserInfo("resources/user.csv", "resources/score.csv");
 
       // Auto login and navigate to Menu
-      messageLabel.setText("Registration successful! Logging you in...");
       Menu menu = new Menu(newUser); // Create Menu page
       menu.start(primaryStage); // Navigate to Menu
 
     } catch (DuplicateUserException ex) {
       messageLabel.setText("User ID already exists.");
     } catch (UserManagement.Exceptions.UserInformationInvalidException ex) {
-      messageLabel.setText("Invalid user information.");
+        messageLabel.setText("User ID, name, and password cannot be empty");
     } catch (IOException ex) {
       messageLabel.setText("Error saving user information.");
     }

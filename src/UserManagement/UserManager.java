@@ -93,19 +93,23 @@ public UserManager RegisterUser(Users user) {
 }
 
 /**
- * Detect whether the password is matching id.
+ * Checks the login credentials of a user.
  *
- * @param id     id to login
- * @param passwd password
- * @return null if not matching, user if correct
+ * @param userId   the user ID
+ * @param password the password
+ * @return the Users object if the login is successful
+ * @throws Exceptions.UserNotFoundException if the user ID is not found
+ * @throws Exceptions.IncorrectPasswordException if the password is incorrect
  */
-public Users CheckLogin(String id, String passwd) {
-  for (Users user : m_users_) {
-    if (user.GetId().equals(id) && user.CheckPasswd(passwd)) {
-      return user;
-    }
+public Users CheckLogin(String userId, String password) throws Exceptions.UserNotFoundException, Exceptions.IncorrectPasswordException {
+  Users user = getUserById(userId);
+  if (user == null) {
+    throw new Exceptions.UserNotFoundException("User not found: " + userId);
   }
-  return null;
+  if (!user.CheckPasswd(password)) {
+    throw new Exceptions.IncorrectPasswordException("Incorrect password for user: " + userId);
+  }
+  return user;
 }
 
 /**

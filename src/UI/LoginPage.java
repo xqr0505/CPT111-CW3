@@ -1,5 +1,6 @@
 package UI;
 
+import UserManagement.Exceptions;
 import core.Logical;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -57,13 +58,15 @@ public void start(Stage primaryStage) {
       return;
     }
 
-    Users user = userManager.CheckLogin(userId, password);
-    if (user != null) {
+    try {
+      Users user = userManager.CheckLogin(userId, password);
       // Login successful, navigate to menu
       Menu menu = new Menu(user);
       menu.start(primaryStage);
-    } else {
-      messageLabel.setText("Invalid User ID or Password.");
+    } catch (Exceptions.UserNotFoundException ex) {
+      messageLabel.setText("User not found.");
+    } catch (Exceptions.IncorrectPasswordException ex) {
+      messageLabel.setText("Incorrect password.");
     }
   });
 
