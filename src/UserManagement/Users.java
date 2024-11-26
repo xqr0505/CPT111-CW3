@@ -98,14 +98,18 @@ public String[] GetAnsweredTopics() {
 }
 
 /**
- * Adds a new score record.
+ * Adds a new score record for a specific topic.
  *
  * @param topic the name of the topic
- * @param score the score
+ * @param score the score to be added
+ * @throws Exceptions.ScoreValueOutOfRangeException if the score is out of the valid range (0-100)
  */
 public void NewRecord(String topic, Integer score) {
   if (score == null) {
     return;
+  }
+  if (score < 0 || score > 100) {
+    throw new Exceptions.ScoreValueOutOfRangeException("Score value is out of range: " + score);
   }
   m_record_.addScore(topic, score);
   Integer currentHighest = GetTopicSpecifiedHighestRecord(topic);

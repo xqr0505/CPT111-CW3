@@ -210,32 +210,11 @@ public UserManager LoadScoreInfoFromTable(Table table) {
     Users user = getUserById(userId);
     if (user != null) {
       try {
-        if (!score1Str.isEmpty()) {
-          int score1 = Integer.parseInt(score1Str);
-          if (score1 < 0 || score1 > 100) {
-            throw new Exceptions.ScoreValueOutOfRangeException("Score1 value is out of range: " + score1 + " for user: " + userId);
-          }
-          user.NewRecord(topic, score1);
-        }
-        if (!score2Str.isEmpty()) {
-          int score2 = Integer.parseInt(score2Str);
-          if (score2 < 0 || score2 > 100) {
-            throw new Exceptions.ScoreValueOutOfRangeException("Score2 value is out of range: " + score2 + " for user: " + userId);
-          }
-          user.NewRecord(topic, score2);
-        }
-        if (!score3Str.isEmpty()) {
-          int score3 = Integer.parseInt(score3Str);
-          if (score3 < 0 || score3 > 100) {
-            throw new Exceptions.ScoreValueOutOfRangeException("Score3 value is out of range: " + score3 + " for user: " + userId);
-          }
-          user.NewRecord(topic, score3);
-        }
+        if (!score1Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score1Str));
+        if (!score2Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score2Str));
+        if (!score3Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score3Str));
         if (!highestScoreStr.isEmpty()) {
           int highestScore = Integer.parseInt(highestScoreStr);
-          if (highestScore < 0 || highestScore > 100) {
-            throw new Exceptions.ScoreValueOutOfRangeException("Highest score value is out of range: " + highestScore + " for user: " + userId);
-          }
           user.SetTopicSpecifiedHighestRecord(topic, highestScore);
         }
       } catch (NumberFormatException e) {
