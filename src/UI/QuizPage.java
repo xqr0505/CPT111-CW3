@@ -88,7 +88,7 @@ public void start(Stage primaryStage) {
     RadioButton optionButton  =   new RadioButton();
     optionButton.setToggleGroup(optionsGroup);
     optionButton.setPrefWidth(500);
-    optionButton.setStyle("-fx-padding: 5 5 0 70;");
+    optionButton.setStyle("-fx-padding: 5 5 0 50;");
     optionButtons.add(optionButton);
   }
 
@@ -130,7 +130,7 @@ public void start(Stage primaryStage) {
   root.getChildren().add(buttonBox);
 
   // Create scene
-  Scene scene = new Scene(root, 500, 400);
+  Scene scene = new Scene(root, 600, 400);
 
   // Set stage
   primaryStage.setTitle("Quiz - " + subject);
