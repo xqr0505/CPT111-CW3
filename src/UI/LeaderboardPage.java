@@ -1,5 +1,7 @@
 package UI;
 
+import QuestionManagement.Exceptions;
+import QuestionManagement.QuestionManager;
 import core.Logical;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,9 +20,10 @@ import java.util.List;
  */
 public class LeaderboardPage{
 
-private final UserManager userManager   =   Logical.getInstance().getUserManager();
-private final Users       currentUser;
-private       VBox        alertBox;
+private final QuestionManager questionManager;
+private final UserManager     userManager   =   Logical.getInstance().getUserManager();
+private final Users           currentUser;
+private       VBox            alertBox;
 
 /**
  * Constructor for LeaderboardPage.
@@ -29,62 +32,81 @@ private       VBox        alertBox;
  */
 public LeaderboardPage(Users user) {
   this.currentUser = user;
+  this.questionManager = Logical.getInstance().getQuestionManager();
 }
 
 /**
- * Starts the Leaderboard UI.
+ * Starts the LeaderboardPage UI.
  *
  * @param primaryStage the primary stage for this application
  */
 public void start(Stage primaryStage) {
   // Prompt message
-  Label promptLabel     =   new Label("Please choose the subject to view the leaderboard:");
+  Label promptLabel = new Label("Please choose the subject to view the leaderboard:");
 
   // Reminder message
   Label reminderLabel = new Label("Please select a subject from the left.");
   reminderLabel.setStyle("-fx-font-size: 14px; -fx-text-alignment: center;");
 
-  // Create subject buttons
-  Button csButton       =   new Button("Computer Science");
-  Button eeButton       =   new Button("Electronic Engineering");
-  Button englishButton  =   new Button("English");
-  Button mathButton     =   new Button("Mathematics");
-  Button returnButton   =   new Button("Return");
+  // Create a VBox to hold subject buttons
+  VBox buttonBox = new VBox(10, promptLabel);
+  buttonBox.setStyle("-fx-alignment: center; -fx-padding: 50px;");
+  buttonBox.setMinWidth(400);
+  buttonBox.setMaxWidth(400);
 
-  // Specify button width
-  double buttonWidth    =   250;
-  csButton.setPrefWidth(buttonWidth);
-  eeButton.setPrefWidth(buttonWidth);
-  englishButton.setPrefWidth(buttonWidth);
-  mathButton.setPrefWidth(buttonWidth);
-  returnButton.setPrefWidth(buttonWidth);
+  // Get topics from QuestionManager
+  String[] topics;
+  try {
+    topics = questionManager.GetTopics();
+    if (topics.length == 0) {
+      throw new Exceptions.NoTopicFoundException("No topics available in the question bank.");
+    }
+  } catch (Exception e) {
+    Label errorLabel = new Label("No subjects available.");
+    buttonBox.getChildren().add(errorLabel);
+    Button returnButton = new Button("Return");
+    buttonBox.getChildren().add(returnButton);
+    returnButton.setPrefWidth(250);
+    returnButton.setStyle("-fx-background-color: #a3c5f4;");
+    returnButton.setOnMouseEntered(ev -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
+    returnButton.setOnMouseExited(ev -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+    returnButton.setOnAction(ev -> {
+      Menu menu = new Menu(currentUser);
+      menu.start(primaryStage);
+    });
+    VBox root = new VBox(10, promptLabel, buttonBox);
+    root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
+    Scene scene = new Scene(root, 400, 400);
+    primaryStage.setTitle("Leaderboard");
+    primaryStage.setScene(scene);
+    primaryStage.show();
+    return;
+  }
 
-  // Set button styles
+  // Dynamically create buttons based on topics
+  for (String topic : topics) {
+    Button topicButton = new Button(topic);
+    topicButton.setPrefWidth(250);
+    topicButton.setOnAction(e -> showLeaderboard(topic));
+    buttonBox.getChildren().add(topicButton);
+  }
+
+  // Create return button
+  Button returnButton = new Button("Return");
+  returnButton.setPrefWidth(250);
   returnButton.setStyle("-fx-background-color: #a3c5f4;");
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-
-  // Set button click events
-  csButton.setOnAction(e -> showLeaderboard("Computer Science"));
-  eeButton.setOnAction(e -> showLeaderboard("Electronic Engineering"));
-  englishButton.setOnAction(e -> showLeaderboard("English"));
-  mathButton.setOnAction(e -> showLeaderboard("Mathematics"));
   returnButton.setOnAction(e -> {
     Menu menu = new Menu(currentUser);
     menu.start(primaryStage);
   });
-
-  // Layout settings
-  VBox buttonBox = new VBox(10, promptLabel, csButton, eeButton, englishButton, mathButton, returnButton);
-  buttonBox.setStyle("-fx-alignment: center; -fx-padding: 50px;");
-  buttonBox.setMinWidth(400);
-  buttonBox.setMaxWidth(400);
+  buttonBox.getChildren().add(returnButton);
 
   // Initialize alertBox
   alertBox = new VBox(reminderLabel);
   VBox alertContainer = new VBox(alertBox);
   alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
-
   alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px;-fx-background-color: white;" +
                     "-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #b1b1b1;" +
                     " -fx-border-width: 1px;");
@@ -93,10 +115,10 @@ public void start(Stage primaryStage) {
   alertBox.setMinHeight(300);
 
   // Main layout
-  HBox root   =   new HBox(10, buttonBox, alertContainer);
+  HBox root = new HBox(10, buttonBox, alertContainer);
 
   // Create scene
-  Scene scene =   new Scene(root, 750, 400);
+  Scene scene = new Scene(root, 750, 400);
 
   // Set stage
   primaryStage.setTitle("Leaderboard");

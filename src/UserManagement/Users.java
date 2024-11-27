@@ -20,8 +20,14 @@ private         String        m_passwd_;
  * @throws Exceptions.UserInformationInvalidException if the ID or name is empty
  */
 public Users(String id, String name, String passwd) throws Exceptions.UserInformationInvalidException {
-  if (id.isEmpty() || name.isEmpty() || passwd.isEmpty()) {
-    throw new Exceptions.UserInformationInvalidException("User ID, name, and password cannot be empty");
+  if (id.isEmpty()) {
+    throw new Exceptions.UserInformationInvalidException("User ID cannot be empty");
+  }
+  if (name.isEmpty()) {
+    throw new Exceptions.UserInformationInvalidException("User name cannot be empty");
+  }
+  if (passwd.isEmpty()) {
+    throw new Exceptions.UserInformationInvalidException("User password cannot be empty");
   }
   m_id_     =   id;
   m_name_   =   name;

@@ -16,8 +16,8 @@ import java.io.IOException;
  */
 public class RegisterPage{
 
-private UserManager userManager = Logical.getInstance()
-                                         .getUserManager();
+private final UserManager userManager = Logical.getInstance()
+                                               .getUserManager();
 /**
  * Starts the RegisterPage UI.
  *
@@ -86,7 +86,7 @@ public void start(Stage primaryStage) {
     } catch (DuplicateUserException ex) {
       messageLabel.setText("User ID already exists.");
     } catch (UserManagement.Exceptions.UserInformationInvalidException ex) {
-        messageLabel.setText("User ID, name, and password cannot be empty");
+      messageLabel.setText("User ID, name, and password cannot be empty");
     } catch (IOException ex) {
       messageLabel.setText("Error saving user information.");
     }

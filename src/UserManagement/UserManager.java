@@ -140,12 +140,6 @@ public UserManager LoadAccountInfoFromTable(Table table) {
       continue;
     }
 
-    // Log and skip lines with incomplete information
-    if (l.length < 3 || l[0].trim().isEmpty() || l[1].trim().isEmpty() || l[2].trim().isEmpty()) {
-      Logger.getLogger("global").warning("Skipping invalid or incomplete user record: " + Arrays.toString(l));
-      continue;
-    }
-
     String userId = l[0].trim();
     String userName = l[1].trim();
     String password = l[2].trim();
@@ -155,7 +149,7 @@ public UserManager LoadAccountInfoFromTable(Table table) {
     } catch (UserManagement.Exceptions.DuplicateUserException e) {
       Logger.getLogger("global").warning("Duplicate user ID found: " + userId + ". Skipping user.");
     } catch (UserManagement.Exceptions.UserInformationInvalidException e) {
-      Logger.getLogger("global").warning("Failed to register user: " + e.getMessage());
+      Logger.getLogger("global").warning("Failed to register user: " +Arrays.toString(l)+ e.getMessage()+". Skipping user.");
     }
   }
   return this;

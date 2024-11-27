@@ -20,8 +20,8 @@ import java.util.*;
  * QuizPage class representing the user interface for taking a quiz.
  */
 public class QuizPage{
-
 private final   Users             currentUser;
+private final   QuestionManager   questionManager = Logical.getInstance().getQuestionManager();
 private final   String            subject;
 private         List<Question>    questions;
 private         int               currentQuestionIndex  =   0;
@@ -35,7 +35,7 @@ private   Button            returnButton;
 
 private   Stage             primaryStage;
 
-private   QuestionManager   questionManager = Logical.getInstance().getQuestionManager();
+
 
 // Map difficulty to score
 private final Map<String, Integer> difficultyScoreMap = new HashMap<>();
