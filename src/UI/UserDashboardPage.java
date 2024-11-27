@@ -19,7 +19,6 @@ import java.util.List;
 public class UserDashboardPage {
 
 private final Users           currentUser;
-private final QuestionManager questionManager;
 private       VBox            alertBox;
 
 /**
@@ -29,7 +28,6 @@ private       VBox            alertBox;
  */
 public UserDashboardPage(Users user) {
   this.currentUser = user;
-  this.questionManager = Logical.getInstance().getQuestionManager();
 }
 
 /**
@@ -54,10 +52,9 @@ public void start(Stage primaryStage) {
   // Specify button width
   double buttonWidth = 200;
 
-  // Get topics from QuestionManager
-  String[] topics;
+  // Get topics from the current user's answered topics
+  String[] topics = currentUser.getAllTopicsAnswered();
   try {
-    topics = questionManager.GetTopics();
     if (topics.length == 0) {
       throw new Exceptions.NoTopicFoundException("No topics available in the question bank.");
     }

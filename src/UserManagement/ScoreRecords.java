@@ -42,6 +42,15 @@ public TopicScores getTopicScores(String topic) {
 }
 
 /**
+ * Get the set of all topics that have a score record.
+ *
+ * @return the set of topics
+ */
+public Set<String> keySet() {
+  return records.keySet();
+}
+
+/**
  * Inner class representing the score records for a topic
  */
 public static class TopicScores {
@@ -95,4 +104,5 @@ public static class TopicScores {
     highestScore = score;
   }
 }
+
 }

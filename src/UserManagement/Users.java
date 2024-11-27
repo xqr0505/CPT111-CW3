@@ -1,6 +1,9 @@
 package UserManagement;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 
 /**
  * Represents a user with an ID, name, password, and score records.
@@ -156,5 +159,14 @@ public void SetTopicSpecifiedHighestRecord(String topic, Integer score) {
     ts = m_record_.getTopicScores(topic);
   }
   ts.setHighestScore(score);
+}
+
+/**
+ * Get all topics answered
+ *
+ * @return an array of topics that have a score record
+ */
+public String[] getAllTopicsAnswered() {
+  return m_record_.keySet().toArray(new String[0]);
 }
 }

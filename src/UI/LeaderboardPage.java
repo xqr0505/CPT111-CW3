@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class LeaderboardPage{
 
-private final QuestionManager questionManager;
 private final UserManager     userManager   =   Logical.getInstance().getUserManager();
 private final Users           currentUser;
 private       VBox            alertBox;
@@ -32,7 +31,6 @@ private       VBox            alertBox;
  */
 public LeaderboardPage(Users user) {
   this.currentUser = user;
-  this.questionManager = Logical.getInstance().getQuestionManager();
 }
 
 /**
@@ -57,17 +55,12 @@ public void start(Stage primaryStage) {
   // Specify button width
   double buttonWidth = 200;
 
-  // Get topics from QuestionManager
-  String[] topics;
-  try {
-    topics = questionManager.GetTopics();
-    if (topics.length == 0) {
-      throw new Exceptions.NoTopicFoundException("No topics available in the question bank.");
-    }
-  } catch (Exception e) {
+  // Get topics from all users' answered topics
+  String[] topics = userManager.getAllTopicsAnsweredByAnyUser();
+  if (topics.length == 0) {
     Label errorLabel = new Label("No subjects available.");
     buttonBox.getChildren().add(errorLabel);
-    Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
+    Button returnButton = UIUtils.createReturnButton("Return", buttonWidth, ev -> {
       Menu menu = new Menu(currentUser);
       menu.start(primaryStage);
     });
@@ -90,7 +83,7 @@ public void start(Stage primaryStage) {
   }
 
   // Create return button
-  Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
+  Button returnButton = UIUtils.createReturnButton("Return", buttonWidth, ev -> {
     Menu menu = new Menu(currentUser);
     menu.start(primaryStage);
   });
@@ -99,15 +92,8 @@ public void start(Stage primaryStage) {
   // Initialize alertBox
   alertBox = new VBox(reminderLabel);
   VBox alertContainer = new VBox(alertBox);
-  alertContainer.setStyle("-fx-padding: 10px; " +
-                          "-fx-alignment: center;");
-  alertBox.setStyle("-fx-alignment: center;" +
-                    " -fx-padding: 20px;" +
-                    "-fx-background-color: white;" +
-                    "-fx-border-radius: 10px;" +
-                    " -fx-background-radius: 10px;" +
-                    " -fx-border-color: #b1b1b1;" +
-                    " -fx-border-width: 1px;");
+  alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
+  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px; -fx-background-color: white; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #b1b1b1; -fx-border-width: 1px;");
   alertBox.setMinWidth(300);
   alertBox.setMaxWidth(300);
   alertBox.setMinHeight(300);

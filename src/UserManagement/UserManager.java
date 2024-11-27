@@ -192,8 +192,8 @@ public Table ExportScoreInfoToTable() {
  */
 public UserManager LoadScoreInfoFromTable(Table table) {
   for (String[] l : table.GetTable()) {
-    // Skip completely empty rows or lines with incomplete information
-    if (l == null || l.length == 0 || Arrays.stream(l).allMatch(String::isEmpty) || l.length < 6) {
+    // Skip completely empty lines
+    if (l == null || l.length == 0 || Arrays.stream(l).allMatch(String::isEmpty)) {
       continue;
     }
 
@@ -250,4 +250,21 @@ public Users getUserById(String id) {
 public Set<Users> GetAllUsers() {
   return Collections.unmodifiableSet(m_users_);
 }
+
+/**
+ * Get all topics answered by any user.
+ *
+ * @return an array of all answered topics
+ */
+public String[] getAllTopicsAnsweredByAnyUser() {
+  Set<String> allTopics = new HashSet<>();
+  for (Users user : m_users_) {
+    String[] answeredTopics = user.getAllTopicsAnswered();
+    for (String topic : answeredTopics) {
+      allTopics.add(topic);
+    }
+  }
+  return allTopics.toArray(new String[0]);
 }
+}
+
