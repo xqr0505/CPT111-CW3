@@ -167,6 +167,7 @@ public void SetTopicSpecifiedHighestRecord(String topic, Integer score) {
  * @return an array of topics that have a score record
  */
 public String[] getAllTopicsAnswered() {
-  return m_record_.keySet().toArray(new String[0]);
+  return m_record_.keySet()
+                  .toArray(new String[0]);
 }
 }

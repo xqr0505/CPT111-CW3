@@ -54,11 +54,7 @@ public void start(Stage primaryStage) {
 
   // Get topics from the current user's answered topics
   String[] topics = currentUser.getAllTopicsAnswered();
-  try {
-    if (topics.length == 0) {
-      throw new Exceptions.NoTopicFoundException("No topics available in the question bank.");
-    }
-  } catch (Exception e) {
+  if (topics.length == 0) {
     Label errorLabel = new Label("No subjects available.");
     buttonBox.getChildren().add(errorLabel);
     Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
