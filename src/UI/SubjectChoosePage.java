@@ -45,6 +45,9 @@ public void start(Stage primaryStage) {
   VBox subjectsBox = new VBox(10);
   subjectsBox.setStyle("-fx-alignment: center;");
 
+  // Specify button width
+  double buttonWidth = 200;
+
   // Get topics from QuestionManager
   String[] topics;
   try {
@@ -55,12 +58,7 @@ public void start(Stage primaryStage) {
   } catch (NoTopicFoundException e) {
     Label errorLabel = new Label("No subjects available. ");
     subjectsBox.getChildren().add(errorLabel);
-    Button returnButton = new Button("Return");
-    returnButton.setPrefWidth(250);
-    returnButton.setStyle("-fx-background-color: #a3c5f4;");
-    returnButton.setOnMouseEntered(ev -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-    returnButton.setOnMouseExited(ev -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-    returnButton.setOnAction(ev -> {
+    Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
       Menu menu = new Menu(currentUser);
       menu.start(primaryStage);
     });
@@ -79,12 +77,7 @@ public void start(Stage primaryStage) {
     Logger.getLogger(SubjectChoosePage.class.getName()).log(Level.SEVERE, "Error retrieving topics: ", e);
     Label errorLabel = new Label("An unexpected error occurred. ");
     subjectsBox.getChildren().add(errorLabel);
-    Button returnButton = new Button("Return");
-    returnButton.setPrefWidth(250);
-    returnButton.setStyle("-fx-background-color: #a3c5f4;");
-    returnButton.setOnMouseEntered(ev -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-    returnButton.setOnMouseExited(ev -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-    returnButton.setOnAction(ev -> {
+    Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
       Menu menu = new Menu(currentUser);
       menu.start(primaryStage);
     });
@@ -103,18 +96,13 @@ public void start(Stage primaryStage) {
   // Dynamically create buttons based on topics
   for (String topic : topics) {
     Button topicButton = new Button(topic);
-    topicButton.setPrefWidth(200);
+    topicButton.setPrefWidth(buttonWidth);
     topicButton.setOnAction(e -> startQuiz(primaryStage, topic));
     subjectsBox.getChildren().add(topicButton);
   }
 
   // Create return button
-  Button returnButton = new Button("Return");
-  returnButton.setPrefWidth(200);
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-  returnButton.setOnAction(e -> {
+  Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
     Menu menu = new Menu(currentUser);
     menu.start(primaryStage);
   });

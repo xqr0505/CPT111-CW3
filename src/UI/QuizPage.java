@@ -91,19 +91,16 @@ public void start(Stage primaryStage) {
     optionButtons.add(optionButton);
   }
 
-  // Create control buttons
-  nextButton = new Button("Next");
-  returnButton = new Button("Return");
-
   // Specify button width
   double buttonWidth = 150;
+  // Create control buttons
+  nextButton = new Button("Next");
   nextButton.setPrefWidth(buttonWidth );
-  returnButton.setPrefWidth(buttonWidth );
-
-  // Set button styles
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+  returnButton = UIUtils.createReturnButton("Return", buttonWidth, e -> {
+    // Return to subject selection page
+    SubjectChoosePage subjectChoosePage = new SubjectChoosePage(currentUser);
+    subjectChoosePage.start(primaryStage);
+  });
 
   // Set button click events
   nextButton.setOnAction(e -> handleNextAction());

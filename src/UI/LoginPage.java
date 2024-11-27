@@ -31,19 +31,15 @@ public void start(Stage primaryStage) {
   PasswordField passwordField   =   new PasswordField();
   passwordField.setPromptText("Password");
 
-  // Create buttons
-  Button loginButton    =   new Button("Log In");
-  Button returnButton   =   new Button("Return");
-
   // Specify button width
   double buttonWidth = 100;
+  // Create buttons
+  Button loginButton    =   new Button("Log In");
   loginButton.setPrefWidth(buttonWidth);
-  returnButton.setPrefWidth(buttonWidth);
-
-  // Set button styles
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+  Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
+    MainPage mainPage = new MainPage();
+    mainPage.start(primaryStage);
+  });
 
   // Message label
   Label messageLabel = new Label();
@@ -68,11 +64,6 @@ public void start(Stage primaryStage) {
     } catch (Exceptions.IncorrectPasswordException ex) {
       messageLabel.setText("Incorrect password.");
     }
-  });
-
-  returnButton.setOnAction(e -> {
-    MainPage mainPage = new MainPage();
-    mainPage.start(primaryStage);
   });
 
   // Layout settings

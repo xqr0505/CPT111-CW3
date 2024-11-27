@@ -54,6 +54,9 @@ public void start(Stage primaryStage) {
   buttonBox.setMinWidth(400);
   buttonBox.setMaxWidth(400);
 
+  // Specify button width
+  double buttonWidth = 200;
+
   // Get topics from QuestionManager
   String[] topics;
   try {
@@ -64,16 +67,11 @@ public void start(Stage primaryStage) {
   } catch (Exception e) {
     Label errorLabel = new Label("No subjects available.");
     buttonBox.getChildren().add(errorLabel);
-    Button returnButton = new Button("Return");
-    buttonBox.getChildren().add(returnButton);
-    returnButton.setPrefWidth(250);
-    returnButton.setStyle("-fx-background-color: #a3c5f4;");
-    returnButton.setOnMouseEntered(ev -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-    returnButton.setOnMouseExited(ev -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-    returnButton.setOnAction(ev -> {
+    Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
       Menu menu = new Menu(currentUser);
       menu.start(primaryStage);
     });
+    buttonBox.getChildren().add(returnButton);
     VBox root = new VBox(10, promptLabel, buttonBox);
     root.setStyle("-fx-alignment: center; -fx-padding: 50px;");
     Scene scene = new Scene(root, 400, 400);
@@ -86,18 +84,13 @@ public void start(Stage primaryStage) {
   // Dynamically create buttons based on topics
   for (String topic : topics) {
     Button topicButton = new Button(topic);
-    topicButton.setPrefWidth(250);
+    topicButton.setPrefWidth(buttonWidth);
     topicButton.setOnAction(e -> showLeaderboard(topic));
     buttonBox.getChildren().add(topicButton);
   }
 
   // Create return button
-  Button returnButton = new Button("Return");
-  returnButton.setPrefWidth(250);
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-  returnButton.setOnAction(e -> {
+  Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
     Menu menu = new Menu(currentUser);
     menu.start(primaryStage);
   });
@@ -106,9 +99,14 @@ public void start(Stage primaryStage) {
   // Initialize alertBox
   alertBox = new VBox(reminderLabel);
   VBox alertContainer = new VBox(alertBox);
-  alertContainer.setStyle("-fx-padding: 10px; -fx-alignment: center;");
-  alertBox.setStyle("-fx-alignment: center; -fx-padding: 20px;-fx-background-color: white;" +
-                    "-fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-color: #b1b1b1;" +
+  alertContainer.setStyle("-fx-padding: 10px; " +
+                          "-fx-alignment: center;");
+  alertBox.setStyle("-fx-alignment: center;" +
+                    " -fx-padding: 20px;" +
+                    "-fx-background-color: white;" +
+                    "-fx-border-radius: 10px;" +
+                    " -fx-background-radius: 10px;" +
+                    " -fx-border-color: #b1b1b1;" +
                     " -fx-border-width: 1px;");
   alertBox.setMinWidth(300);
   alertBox.setMaxWidth(300);

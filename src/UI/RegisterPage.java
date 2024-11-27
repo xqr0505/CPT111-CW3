@@ -41,19 +41,16 @@ public void start(Stage primaryStage) {
   PasswordField confirmPasswordField  =   new PasswordField();
   confirmPasswordField.setPromptText("Confirm Password");
 
-  // Create buttons
-  Button signupButton   =   new Button("Sign Up");
-  Button returnButton   =   new Button("Return");
-
   // Specify button width
   double buttonWidth = 100;
-  signupButton.setPrefWidth(buttonWidth);
-  returnButton.setPrefWidth(buttonWidth);
 
-  // Set button styles
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
+  // Create buttons
+  Button signupButton   =   new Button("Sign Up");
+  signupButton.setPrefWidth(buttonWidth);
+  Button returnButton = UIUtils.createReturnButton("Return",buttonWidth, ev -> {
+    MainPage mainPage = new MainPage();
+    mainPage.start(primaryStage);
+  });
 
   // Message label
   Label messageLabel = new Label();

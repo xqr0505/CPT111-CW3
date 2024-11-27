@@ -40,23 +40,20 @@ public void start(Stage primaryStage) {
   TextFlow textFlow   =   new TextFlow(welcomeLabel, userNameText);
   textFlow.setTextAlignment(TextAlignment.CENTER);
 
-  // Create buttons
-  Button attemptQuizButton  =   new Button("Attempt Quiz");
-  Button historyScoreButton =   new Button("User Dashboard");
-  Button leaderboardButton  =   new Button("Leaderboard");
-  Button returnButton       =   new Button("Log Out");
-
-  // Set button styles
-  returnButton.setStyle("-fx-background-color: #a3c5f4;");
-  returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
-  returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
-
   // Specify button width
   double buttonWidth = 200;
+
+  // Create buttons
+  Button attemptQuizButton  =   new Button("Attempt Quiz");
   attemptQuizButton.setPrefWidth(buttonWidth);
+  Button historyScoreButton =   new Button("User Dashboard");
   historyScoreButton.setPrefWidth(buttonWidth);
+  Button leaderboardButton  =   new Button("Leaderboard");
   leaderboardButton.setPrefWidth(buttonWidth);
-  returnButton.setPrefWidth(buttonWidth);
+    Button returnButton = UIUtils.createReturnButton("Log out", buttonWidth, e -> {
+    MainPage mainPage  =  new MainPage();
+    mainPage.start(primaryStage);
+  });
 
   // Set button click events
   attemptQuizButton.setOnAction(e -> {
@@ -75,11 +72,6 @@ public void start(Stage primaryStage) {
     // Navigate to LeaderboardPage
     LeaderboardPage leaderboardPage   =   new LeaderboardPage(currentUser);
     leaderboardPage.start(primaryStage);
-  });
-
-  returnButton.setOnAction(e -> {
-    MainPage mainPage  =  new MainPage();
-    mainPage.start(primaryStage);
   });
 
   // Layout settings
