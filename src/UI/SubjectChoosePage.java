@@ -28,8 +28,8 @@ private final QuestionManager questionManager;
  * @param user the current user
  */
 public SubjectChoosePage(Users user) {
-  this.currentUser = user;
-  this.questionManager = Logical.getInstance().getQuestionManager();
+  this.currentUser      =   user;
+  this.questionManager  =   Logical.getInstance().getQuestionManager();
 }
 
 /**
@@ -115,8 +115,8 @@ public void start(Stage primaryStage) {
   returnButton.setOnMouseEntered(e -> returnButton.setStyle("-fx-background-color: #d0e1f9"));
   returnButton.setOnMouseExited(e -> returnButton.setStyle("-fx-background-color: #a3c5f4;"));
   returnButton.setOnAction(e -> {
-    MainPage mainPage = new MainPage();
-    mainPage.start(primaryStage);
+    Menu menu = new Menu(currentUser);
+    menu.start(primaryStage);
   });
   subjectsBox.getChildren().add(returnButton);
 
