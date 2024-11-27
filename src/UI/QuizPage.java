@@ -78,7 +78,6 @@ public void start(Stage primaryStage) {
 
   // return if questions list is null or empty
   if (this.questions == null || this.questions.isEmpty()) {
-    System.err.println("Questions list is null or empty.");
     return;
   }
 
