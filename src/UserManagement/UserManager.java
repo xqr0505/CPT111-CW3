@@ -208,20 +208,40 @@ public UserManager LoadScoreInfoFromTable(Table table) {
     Users user = getUserById(userId);
     if (user != null) {
       try {
+        if (topic.isEmpty()) {
+          Logger.getLogger("global").warning("No topic information for user: " + userId + ". Skipping record.");
+          continue;
+        }
+        if (user.GetRecords().getAllRecords().containsKey(topic)) {
+          Logger.getLogger("global").warning("Record already exists for user: " + userId + " and topic: " + topic + ". Skipping record.");
+          continue;
+        }
+
         if (!score1Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score1Str));
         if (!score2Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score2Str));
         if (!score3Str.isEmpty()) user.NewRecord(topic, Integer.parseInt(score3Str));
         if (!highestScoreStr.isEmpty()) {
           int highestScore = Integer.parseInt(highestScoreStr);
-          user.SetTopicSpecifiedHighestRecord(topic, highestScore);
+          List<Integer> recentScores = user.GetTopicSpecifiedRecentRecords(topic);
+          boolean skipRecord = false;
+          for (Integer score : recentScores) {
+            if (score != null && score > highestScore) {
+              Logger.getLogger("global").warning("Highest score is lower than a recent score for user: " + userId + ". Skipping record.");
+              skipRecord = true;
+              break;
+            }
+          }
+          if (!skipRecord) {
+            user.SetTopicSpecifiedHighestRecord(topic, highestScore);
+          }
         }
       } catch (NumberFormatException e) {
-        Logger.getLogger("global").warning("Invalid score format in record: " + Arrays.toString(l));
+        Logger.getLogger("global").warning("Invalid score format in record: " + Arrays.toString(l)+ ". Skipping record.");
       } catch (Exceptions.ScoreValueOutOfRangeException e) {
-        Logger.getLogger("global").warning(e.getMessage());
+        Logger.getLogger("global").warning("Invalid score value in record: " + Arrays.toString(l)+ ". Skipping record.");
       }
     } else {
-      Logger.getLogger("global").warning("User not found for score record: " + Arrays.toString(l));
+      Logger.getLogger("global").warning("User not found for score record: " + Arrays.toString(l)+ ". Skipping record.");
     }
   }
   return this;

@@ -20,27 +20,29 @@ private final Map<String, List<Question>> m_questions_ = new HashMap<>();
  */
 public QuestionManager LoadQuestions(String fp) {
   Question[] questions = IOUtilities.readQuestions(fp);
-
   if (questions == null || questions.length == 0) {
-    Logger.getLogger("global").info("No questions found in the question bank.");
     return this;
   }
   for (var q : questions) {
     if (q.getOptions() == null || q.getOptions().length < 2) {
-      Logger.getLogger("global").info("Illegal question detracted: Options are null or less than 2.");
+      Logger.getLogger("global")
+            .info("Illegal question detracted: Less than 2 options.");
       continue;
     }
-    if (Arrays.stream(q.getOptions()).filter(Option::isCorrectAnswer).count() != 1) {
-      Logger.getLogger("global").info("Illegal question detracted: There must be exactly one correct answer.");
+    if (Arrays.stream(q.getOptions())
+              .filter(Option::isCorrectAnswer)
+              .count() != 1) {
+      Logger.getLogger("global")
+            .info("Illegal question detracted: There must be exactly one correct answer.");
       continue;
     }
-    if (!m_questions_.containsKey(q.getTopic())) {
+    if (! m_questions_.containsKey(q.getTopic())) {
       m_questions_.put(q.getTopic(), new ArrayList<>());
     }
-    m_questions_.get(q.getTopic()).add(q);
+    m_questions_.get(q.getTopic())
+                .add(q);
   }
-
-  return this;
+return this;
 }
 
 /**

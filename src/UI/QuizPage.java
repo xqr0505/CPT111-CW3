@@ -253,7 +253,9 @@ private void showScore() {
 
   try {
     // Save score information
-    Logical.getInstance().getUserManager().SaveUserInfo("resources/user.csv", "resources/score.csv");
+    Logical.getInstance()
+           .getUserManager()
+           .SaveUserInfo("resources/user.csv", "resources/score.csv");
   } catch (IOException ex) {
     // Handle save error
     Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Error saving score information.", ButtonType.OK);
