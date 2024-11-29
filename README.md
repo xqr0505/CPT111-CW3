@@ -11,7 +11,8 @@ Users can sign up by providing user ID(must be unique), name, and password. User
 User can log in with their ID and password, and are verified against the stored CSV data.
 ### 2. Quiz Functionality
 **2.1 Topic Selection:**
-User can select a topic from Computer Science, Electronic Engineering, English and Mathematics
+User can select a topic from the exist topics in the question bank.
+
 **2.2 Question Selection:**
 1. Question are randomly selected from XML files in questionsBank.
 2. Only validate questions are selected. 

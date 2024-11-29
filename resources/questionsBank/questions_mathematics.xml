@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <questions>
-    <question difficulty="EASY">
+    <question difficulty="HARD">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 1</questionString>
-        <option answer="true">option 1-1</option>
-        <option>option 1-2</option>
-        <option>option 1-3</option>
-        <option>option 1-4</option>
-    </question>
-    <question difficulty="EASY">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 2</questionString>
-        <option answer="true">option 2-1</option>
-        <option>option 2-2</option>
-        <option>option 2-3</option>
-        <option>option 2-4</option>
+        <questionString>What is the derivative of cos(x)?</questionString>
+        <option>sin(x)</option>
+        <option answer="true">-sin(x)</option>
+        <option>cos(x)</option>
+        <option>-cos(x)</option>
     </question>
     <question difficulty="EASY">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 3</questionString>
-        <option answer="true">option 3-1</option>
-        <option>option 3-2</option>
+        <questionString>What is the product of 5 and 8?</questionString>
+        <option>30</option>
+        <option answer="true">40</option>
+        <option>50</option>
+        <option>20</option>
+    </question>
+    <question difficulty="MEDIUM">
+        <topic>Mathematics</topic>
+        <questionString>What is the cube root of 27?</questionString>
+        <option>2</option>
+        <option answer="true">3</option>
+        <option>4</option>
+    </question>
+    <question difficulty="VERY_HARD">
+        <topic>Mathematics</topic>
+        <questionString>What is the derivative of ln(x)?</questionString>
+        <option>x</option>
+        <option answer="true">1/x</option>
+        <option>e^x</option>
+        <option>x^2</option>
+    </question>
+    <question difficulty="HARD">
+        <topic>Mathematics</topic>
+        <questionString>What is the value of e (Euler's number) to 3 decimal places?</questionString>
+        <option>2.716</option>
+        <option>2.718</option>
+        <option answer="true">2.718</option>
+        <option>2.720</option>
+        <option>2.715</option>
+    </question>
+    <question difficulty="VERY_HARD">
+        <topic>Mathematics</topic>
+        <questionString>If x = 2, then the expression 3x^4 - 2x^3 + 5x^2 equals 44.</questionString>
+        <option>true</option>
+        <option answer="true">false</option>
+    </question>
+    <question difficulty="MEDIUM">
+        <topic>Mathematics</topic>
+        <questionString>What is the area of a triangle with base 8 cm and height 6 cm?</questionString>
+        <option>18 cm²</option>
+        <option answer="true">24 cm²</option>
     </question>
     <question difficulty="EASY">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 4</questionString>
-        <option answer="true">option 4-1</option>
-        <option>option 4-2</option>
-        <option>option 4-3</option>
-        <option>option 4-4</option>
-    </question>
-    <question difficulty="MEDIUM">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 5</questionString>
-        <option answer="true">option 5-1</option>
-        <option>option 5-2</option>
-        <option>option 5-3</option>
-        <option>option 5-4</option>
-    </question>
-    <question difficulty="MEDIUM">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 6</questionString>
-        <option answer="true">option 6-1</option>
-        <option>option 6-2</option>
-        <option>option 6-3</option>
-    </question>
-    <question difficulty="MEDIUM">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 7</questionString>
-        <option answer="true">option 7-1</option>
-        <option>option 7-2</option>
-    </question>
-    <question difficulty="MEDIUM">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 8</questionString>
-        <option answer="true">option 8-1</option>
-        <option>option 8-2</option>
-        <option>option 8-3</option>
-        <option>option 8-4</option>
+        <questionString>What is the solution to the equation 3x - 7 = 8?</questionString>
+        <option>x = 1</option>
+        <option answer="true">x = 5</option>
+        <option>x = 3</option>
+        <option>x = 0</option>
     </question>
     <question difficulty="HARD">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 9</questionString>
-        <option answer="true">option 9-1</option>
-        <option>option 9-2</option>
-        <option>option 9-3</option>
-        <option>option 9-4</option>
+        <questionString>What is the derivative of sin(x)?</questionString>
+        <option>-cos(x)</option>
+        <option answer="true">cos(x)</option>
+        <option>-sin(x)</option>
+        <option>sin(x)</option>
+    </question>
+    <question difficulty="EASY">
+        <topic>Mathematics</topic>
+        <questionString>What is the sum of 7 and 9?</questionString>
+        <option>14</option>
+        <option answer="true">16</option>
+        <option>18</option>
+        <option>15</option>
+    </question>
+    <question difficulty="MEDIUM">
+        <topic>Mathematics</topic>
+        <questionString>What is the square root of 144?</questionString>
+        <option>10</option>
+        <option answer="true">12</option>
+    </question>
+    <question difficulty="VERY_HARD">
+        <topic>Mathematics</topic>
+        <questionString>What is the integral of e^x dx?</questionString>
+        <option>e^x</option>
+        <option answer="true">e^x + C</option>
+        <option>ln(x) + C</option>
+        <option>x^2 + C</option>
     </question>
     <question difficulty="HARD">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 10</questionString>
-        <option answer="true">option 10-1</option>
-        <option>option 10-2</option>
-        <option>option 10-3</option>
-        <option>option 10-4</option>
-    </question>
-    <question difficulty="HARD">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 11</questionString>
-        <option answer="true">option 11-1</option>
-        <option>option 11-2</option>
-    </question>
-    <question difficulty="HARD">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 12</questionString>
-        <option answer="true">option 12-1</option>
-        <option>option 12-2</option>
-        <option>option 12-3</option>
-        <option>option 12-4</option>
+        <questionString>What is the value of pi to 4 decimal places?</questionString>
+        <option>3.12</option>
+        <option>3.1416</option>
+        <option>3.1412</option>
+        <option answer="true">3.1416</option>
+        <option>3.14</option>
+        <option>3.143</option>
     </question>
     <question difficulty="VERY_HARD">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 13</questionString>
-        <option answer="true">option 13-1</option>
-        <option>option 13-2</option>
-        <option>option 13-3</option>
-        <option>option 13-4</option>
+        <questionString>If x=3, then the expression x^6+5^x equals 1001.</questionString>
+        <option>true</option>
+        <option answer="true">false</option>
     </question>
-    <question difficulty="VERY_HARD">
+    <question difficulty="MEDIUM">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 14</questionString>
-        <option answer="true">option 14-1</option>
-        <option>option 14-2</option>
-        <option>option 14-3</option>
-        <option>option 14-4</option>
+        <questionString>What is the perimeter of a rectangle with length 6 cm and width 4 cm?</questionString>
+        <option>22 cm</option>
+        <option answer="true">20 cm</option>
     </question>
-    <question difficulty="VERY_HARD">
+    <question difficulty="EASY">
         <topic>Mathematics</topic>
-        <questionString>Mathematics Question 15</questionString>
-        <option answer="true">option 15-1</option>
-        <option>option 15-2</option>
-    </question>
-    <question difficulty="VERY_HARD">
-        <topic>Mathematics</topic>
-        <questionString>Mathematics Question 16</questionString>
-        <option answer="true">option 16-1</option>
-        <option>option 16-2</option>
-        <option>option 16-3</option>
-        <option>option 16-4</option>
+        <questionString>What is the solution to the equation 2x + 5 = 15?</questionString>
+        <option>x = 3</option>
+        <option answer="true">x = 5</option>
+        <option>x = 10</option>
+        <option>x = 0</option>
     </question>
 </questions>
-

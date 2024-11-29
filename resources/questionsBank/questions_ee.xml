@@ -1,122 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <questions>
-    <question difficulty="EASY">
+    <question difficulty="HARD">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 1</questionString>
-        <option answer="true">option 1-1</option>
-        <option>option 1-2</option>
-        <option>option 1-3</option>
-        <option>option 1-4</option>
-    </question>
-    <question difficulty="EASY">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 2</questionString>
-        <option answer="true">option 2-1</option>
-        <option>option 2-2</option>
-        <option>option 2-3</option>
-        <option>option 2-4</option>
+        <questionString>Which type of transistor configuration offers the highest input impedance?</questionString>
+        <option>Common Base</option>
+        <option answer="true">Common Collector</option>
+        <option>Common Emitter</option>
     </question>
     <question difficulty="EASY">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 3</questionString>
-        <option answer="true">option 3-1</option>
-        <option>option 3-2</option>
+        <questionString>What is the unit of capacitance?</questionString>
+        <option>Henry</option>
+        <option answer="true">Farad</option>
+        <option>Ohm</option>
+        <option>Volt</option>
+    </question>
+    <question difficulty="MEDIUM">
+        <topic>Electronic Engineering</topic>
+        <questionString>What does an OR gate output when both of its inputs are low (0)?</questionString>
+        <option>High (1)</option>
+        <option answer="true">Low (0)</option>
+    </question>
+    <question difficulty="VERY_HARD">
+        <topic>Electronic Engineering</topic>
+        <questionString>What is the function of a decoupling capacitor in an electronic circuit?</questionString>
+        <option>To increase the voltage of the circuit</option>
+        <option answer="true">To filter out high-frequency noise and stabilize the power supply</option>
+        <option>To change the resistance value</option>
+        <option>To amplify the current</option>
+    </question>
+    <question difficulty="HARD">
+        <topic>Electronic Engineering</topic>
+        <questionString>Which semiconductor device is commonly used for light detection?</questionString>
+        <option>LED</option>
+        <option answer="true">Photodiode</option>
+        <option>Transistor</option>
+        <option>Zener Diode</option>
     </question>
     <question difficulty="EASY">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 4</questionString>
-        <option answer="true">option 4-1</option>
-        <option>option 4-2</option>
-        <option>option 4-3</option>
-        <option>option 4-4</option>
+        <questionString>How many bits are in a byte?</questionString>
+        <option>4</option>
+        <option answer="true">8</option>
+        <option>16</option>
+        <option>32</option>
     </question>
     <question difficulty="MEDIUM">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 5</questionString>
-        <option answer="true">option 5-1</option>
-        <option>option 5-2</option>
-        <option>option 5-3</option>
-        <option>option 5-4</option>
+        <questionString>In a diode, which region is responsible for allowing current to flow in one direction?</questionString>
+        <option>Depletion Region</option>
+        <option answer="true">Forward Bias Region</option>
+    </question>
+    <question difficulty="VERY_HARD">
+        <topic>Electronic Engineering</topic>
+        <questionString>What is the advantage of using a surface-mount technology (SMT) over through-hole technology in circuit board assembly?</questionString>
+        <option>It is easier to repair</option>
+        <option answer="true">It allows for smaller component sizes and higher component density on the board</option>
+        <option>It requires less soldering equipment</option>
+        <option>It has better heat dissipation</option>
+    </question>
+    <question difficulty="HARD">
+        <topic>Electronic Engineering</topic>
+        <questionString>Which type of amplifier is known for high efficiency but may introduce distortion?</questionString>
+        <option>Class A</option>
+        <option answer="true">Class D</option>
+        <option>Class B</option>
+        <option>Class AB</option>
+    </question>
+    <question difficulty="EASY">
+        <topic>Electronic Engineering</topic>
+        <questionString>What is the SI unit of electric resistance?</questionString>
+        <option>Watt</option>
+        <option answer="true">Ohm</option>
+        <option>Volt</option>
+        <option>Ampere</option>
     </question>
     <question difficulty="MEDIUM">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 6</questionString>
-        <option answer="true">option 6-1</option>
-        <option>option 6-2</option>
-        <option>option 6-3</option>
+        <questionString>In digital logic, what does a NOT gate do?</questionString>
+        <option>It performs an AND operation.</option>
+        <option answer="true">It inverts the input signal.</option>
+    </question>
+    <question difficulty="VERY_HARD">
+        <topic>Electronic Engineering</topic>
+        <questionString>What is the main purpose of a phase-locked loop (PLL) in electronics?</questionString>
+        <option>To amplify a signal</option>
+        <option answer="true">To synchronize the phase of an output signal with an input signal</option>
+        <option>To measure resistance</option>
+        <option>To stabilize voltage</option>
+    </question>
+    <question difficulty="HARD">
+        <topic>Electronic Engineering</topic>
+        <questionString>Which material is commonly used as the base substrate in integrated circuits?</questionString>
+        <option>Copper</option>
+        <option>Germanium</option>
+        <option answer="true">Silicon</option>
+        <option>Gallium Arsenide</option>
+    </question>
+    <question difficulty="EASY">
+        <topic>Electronic Engineering</topic>
+        <questionString>What is the frequency range of human hearing?</questionString>
+        <option>10 Hz to 10 kHz</option>
+        <option answer="true">20 Hz to 20 kHz</option>
+        <option>50 Hz to 15 kHz</option>
+        <option>100 Hz to 30 kHz</option>
     </question>
     <question difficulty="MEDIUM">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 7</questionString>
-        <option answer="true">option 7-1</option>
-        <option>option 7-2</option>
-    </question>
-    <question difficulty="MEDIUM">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 8</questionString>
-        <option answer="true">option 8-1</option>
-        <option>option 8-2</option>
-        <option>option 8-3</option>
-        <option>option 8-4</option>
-    </question>
-    <question difficulty="HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 9</questionString>
-        <option answer="true">option 9-1</option>
-        <option>option 9-2</option>
-        <option>option 9-3</option>
-        <option>option 9-4</option>
-    </question>
-    <question difficulty="HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 10</questionString>
-        <option answer="true">option 10-1</option>
-        <option>option 10-2</option>
-        <option>option 10-3</option>
-        <option>option 10-4</option>
-    </question>
-    <question difficulty="HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 11</questionString>
-        <option answer="true">option 11-1</option>
-        <option>option 11-2</option>
-    </question>
-    <question difficulty="HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 12</questionString>
-        <option answer="true">option 12-1</option>
-        <option>option 12-2</option>
-        <option>option 12-3</option>
-        <option>option 12-4</option>
+        <questionString>In an RLC circuit, what does the "L" stand for?</questionString>
+        <option>Load</option>
+        <option answer="true">Inductance</option>
     </question>
     <question difficulty="VERY_HARD">
         <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 13</questionString>
-        <option answer="true">option 13-1</option>
-        <option>option 13-2</option>
-        <option>option 13-3</option>
-        <option>option 13-4</option>
-    </question>
-    <question difficulty="VERY_HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 14</questionString>
-        <option answer="true">option 14-1</option>
-        <option>option 14-2</option>
-        <option>option 14-3</option>
-        <option>option 14-4</option>
-    </question>
-    <question difficulty="VERY_HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 15</questionString>
-        <option answer="true">option 15-1</option>
-        <option>option 15-2</option>
-    </question>
-    <question difficulty="VERY_HARD">
-        <topic>Electronic Engineering</topic>
-        <questionString>Electronic Engineering Question 16</questionString>
-        <option answer="true">option 16-1</option>
-        <option>option 16-2</option>
-        <option>option 16-3</option>
-        <option>option 16-4</option>
+        <questionString>Which of the following is true about a Zener diode?</questionString>
+        <option>It allows current to flow only in one direction.</option>
+        <option answer="true">It can regulate voltage in the reverse breakdown region.</option>
+        <option>It is primarily used as a signal rectifier.</option>
+        <option>It cannot operate at high frequencies.</option>
     </question>
 </questions>
