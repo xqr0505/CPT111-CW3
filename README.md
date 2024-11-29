@@ -1,10 +1,10 @@
-# CPT111 Group Course Work 3 For Year 2024
+CPT111 Group Course Work 3 For Year 2024
 ==========================================
 ## Project Description
 **A simple quiz system** built using Java that implements the user interface using JavaFX. It provides functionalities for users to register, log in, take quizzes, view their score history, and check leaderboards.
 ### 1. User Management
 **1.1 Registration:**
-Users can sign up by providing user ID(must be unique), name, and password. Users will be automatically logged in after successful registration. The system can save the user information in to a CSV file(u.csv).
+Users can sign up by providing user ID(must be unique), name, and password. Users will be automatically logged in after successful registration. The system can save the user information in to a CSV file.
 - user.csv:  3 columns(`user id`, `user name`, and `password`)
 
 **1.2 Login:**
@@ -26,7 +26,7 @@ User can select a topic from the exist topics in the question bank.
 6. The total score: 100(easy: 5 points, medium: 10 points, hard: 15 points, very hard: 20 points)
 
 **2.3 Score Management:**
-User scores are stored and updated in a CSV file(s.csv)
+User scores are stored and updated in a CSV file
 - score.csv:  6 columns(`userId`, `topic`, `score1`, `score2`, `score3`（the previous 3 tests attempted) , `highestScore`)
 ### 3. User dashboard and Leaderboard
 **3.1  User dashboard:**
